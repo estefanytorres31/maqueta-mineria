@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "electron",
+    "rootDir": "src/main",
+    "resolveJsonModule": true,
+    "declaration": false,
+    "types": ["node"]
+  },
+  "include": ["src/main/**/*.ts"]
+}

@@ -1,0 +1,45 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+package-lock.json
+.sandbox/
+.electron-cache/
+.env
+package-lock.json
+.npmrc
+electron/
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+#reglas de desarrollo
+Reglas-desarrollo.txt
+#archivos de desarrollo
+design.md 
+memory.md
+problems.md
+tasks.md
+requirements.md
+
+#carpeta de instalación escritorio
+releases/
+releases-win/
+releases-linux/
