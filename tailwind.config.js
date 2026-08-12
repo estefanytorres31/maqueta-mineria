@@ -5,6 +5,15 @@ export default {
     "./src/renderer/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    screens: {
+      sm:  '640px',
+      md:  '768px',
+      lg:  '990px',
+      xl:  '1200px',
+      '2xl': '1440px',
+      '3xl': '1780px',
+      '4k':  '2400px',
+    },
     extend: {
       colors: {
         'industrial': {

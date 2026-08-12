@@ -14,7 +14,7 @@ export default function ProgressBar({
   color = 'bg-electric-500',
   label,
   showValue = true,
-  height = 'h-2',
+  height = 'h-1.5',
   className = ''
 }: ProgressBarProps) {
   const percentage = Math.max(0, Math.min(100, (value / max) * 100))
@@ -24,7 +24,6 @@ export default function ProgressBar({
       {(label || showValue) && (
         <div className="flex justify-between items-center mb-1">
           {label && <span className="text-xs text-gray-400">{label}</span>}
-          {showValue && <span className="text-xs font-mono text-gray-200 font-semibold">{percentage.toFixed(0)}%</span>}
         </div>
       )}
       <div className={`progress-bar-track ${height}`}>

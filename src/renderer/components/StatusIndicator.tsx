@@ -23,17 +23,19 @@ export default function StatusIndicator({
   }
 
   const config = statusConfig[status]
-  const iconSize = size === 'sm' ? 16 : 20
+  const isSm = size === 'sm'
+  const iconSize = isSm ? 18 : 20
+  const iconBox = isSm ? 'w-8 h-8 rounded-md' : 'w-9 h-9 rounded-lg'
 
   return (
-    <div className={`kpi-card flex flex-col items-center gap-1.5 p-2.5 ${className}`}>
-      <div className={`w-9 h-9 rounded-lg bg-industrial-800 border border-industrial-700 flex items-center justify-center ${config.color}`}>
+    <div className={`flex flex-col items-center justify-center gap-1 md:gap-1.5 py-1.5 px-1 md:px-1.5 ${className}`}>
+      <div className={`${iconBox} bg-industrial-800/80 border border-industrial-700 flex items-center justify-center ${config.color}`}>
         <Icon size={iconSize} />
       </div>
-      <div className="text-[10px] uppercase tracking-wider text-gray-400 font-semibold">{label}</div>
-      <div className="flex items-center gap-1">
-        <span className={`status-dot ${config.dot} ${config.glow}`} />
-        <span className={`text-xs font-bold ${config.color}`}>{status}</span>
+      <div className={`${isSm ? 'text-[10px] leading-[11px]' : 'text-[10px] md:text-[11px] leading-[12px]'} uppercase tracking-wider text-gray-300 font-bold text-center`}>{label}</div>
+      <div className="flex items-center gap-1 leading-none">
+        <span className={`status-dot ${isSm ? 'w-1.5 h-1.5' : 'w-2 h-2'} ${config.dot} ${config.glow}`} />
+        <span className={`${isSm ? 'text-[9px]' : 'text-[10px]'} font-bold ${config.color} leading-none`}>{status}</span>
       </div>
     </div>
   )

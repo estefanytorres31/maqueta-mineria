@@ -28,7 +28,7 @@ export default function KpiCard({
       {icon && <div className="mb-2">{icon}</div>}
       <div className="metric-label mb-1">{label}</div>
       <div className="flex items-baseline gap-1">
-        <span className={`font-mono font-bold text-xl md:text-2xl ${color}`}>
+        <span className={`font-mono font-bold text-xs md:text-sm ${color}`}>
           {typeof value === 'number' ? value.toLocaleString(undefined, { maximumFractionDigits: 2 }) : value}
         </span>
         {unit && <span className="text-xs text-gray-400 font-medium">{unit}</span>}

@@ -21,6 +21,16 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    emptyOutDir: true
+    emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'charts-vendor': ['recharts'],
+          'icons-vendor': ['lucide-react'],
+          'state-vendor': ['zustand']
+        }
+      }
+    }
   }
 })

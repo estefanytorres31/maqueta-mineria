@@ -1,6 +1,14 @@
-import { app, BrowserWindow, ipcMain, Menu, shell } from 'electron'
+import { app, BrowserWindow, ipcMain, Menu, shell, screen } from 'electron'
 import path from 'path'
 import fs from 'fs'
+
+/* ======================================================================
+ *  DPI AWARENESS — EVITA QUE WINDOWS ESCALE LA APP (125% / 150%)
+ *  Para que 1920x1080 REALES = 1920x1080 CSS (no 1533x793)
+ * ====================================================================*/
+try { app.commandLine.appendSwitch('high-dpi-support', '1') } catch {}
+try { app.commandLine.appendSwitch('disable-pinch') } catch {}
+try { app.commandLine.appendSwitch('disable-accelerated-2d-canvas', '0') } catch {}
 
 const projectRoot = path.resolve(__dirname, '..')
 const distDir = path.join(projectRoot, 'dist')
@@ -52,9 +60,13 @@ function resolveIcon(): string | undefined {
 }
 
 function createWindow() {
+  // Toma la resolución REAL del monitor (workArea = sin barra de tareas)
+  const primary = screen.getPrimaryDisplay()
+  const workArea = primary.workAreaSize
+
   mainWindow = new BrowserWindow({
-    width: 1920,
-    height: 1080,
+    width: workArea.width || 1920,
+    height: workArea.height || 1080,
     minWidth: 1024,
     minHeight: 640,
     show: false,
@@ -62,11 +74,16 @@ function createWindow() {
     title: 'Sistema de maquinaria minera',
     icon: resolveIcon(),
     autoHideMenuBar: true,
+    useContentSize: true,            // width/height = tamaño CONTENIDO, no ventana
+    maximizable: true,
+    resizable: true,
+    fullscreenable: true,
     webPreferences: {
       preload: resolvePreload(),
       contextIsolation: true,
       nodeIntegration: false,
-      sandbox: false,
+      devTools: isDev,
+      sandbox: true,
       webSecurity: true,
       allowRunningInsecureContent: false
     }
@@ -74,10 +91,25 @@ function createWindow() {
 
   Menu.setApplicationMenu(null)
 
+  // MAXIMIZA a TAMAÑO REAL del workarea (sin barra de tareas)
+  try {
+    mainWindow.setBounds({
+      x: primary.workArea.x,
+      y: primary.workArea.y,
+      width: workArea.width,
+      height: workArea.height
+    })
+  } catch {}
   mainWindow.maximize()
-  mainWindow.show()
+  mainWindow.once('ready-to-show', () => mainWindow!.show())
 
   if (isDev) {
+    // DevTools EN VENTANA SEPARADA, NUNCA dentro del panel de la app
+    // (equivalente a los 3 puntos → "Undock into separate window" de Chrome)
+    mainWindow.webContents.openDevTools({
+      mode: 'detach',
+      activate: false
+    })
     mainWindow.loadURL(DEV_URL + '/login').catch(() => mainWindow!.loadURL(DEV_URL))
   } else {
     const indexHtml = path.join(distDir, 'index.html')
@@ -96,6 +128,8 @@ function createWindow() {
   mainWindow.on('closed', () => {
     mainWindow = null
   })
+
+  // (DEPRECATED aquí) el openDevTools() se movió ARRIBA, SOLO si isDev, modo detach
 }
 
 ipcMain.handle('window:minimize', () => mainWindow?.minimize())

@@ -1,0 +1,41 @@
+import { MapPin, Wifi, Cloud, Clock } from 'lucide-react'
+import { useDateTime } from '../../hooks/useDateTime'
+
+export default function SelectorHeader() {
+  const { time } = useDateTime()
+
+  return (
+    <header className="flex items-center justify-between px-3 md:px-6 xl:px-10 py-2 md:py-3 xl:py-4 border-b border-industrial-800 bg-industrial-900/50 backdrop-blur flex-shrink-0">
+      <div className="flex items-center gap-3 md:gap-4 xl:gap-6">
+        <div className="flex items-center gap-1.5">
+          <div className="text-electric-400 font-black text-xl md:text-2xl xl:text-4xl tracking-tight leading-none">
+            EDGE
+            <span className="text-white block text-sm md:text-lg xl:text-2xl mt-0.5 tracking-[0.2em]">SMART</span>
+          </div>
+        </div>
+        <div className="hidden md:block h-8 xl:h-12 w-px bg-industrial-700" />
+        <div className="hidden md:block">
+          <div className="text-gray-200 font-semibold text-xs md:text-sm xl:text-base tracking-wider">MONITOREO INTELIGENTE</div>
+          <div className="text-electric-400 text-[10px] md:text-xs xl:text-sm font-medium tracking-wide">PARA MAQUINARIA MINERA</div>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-2 md:gap-3 xl:gap-6 text-[10px] md:text-xs xl:text-sm">
+        <div className="hidden lg:flex items-center gap-1.5 text-status-ok">
+          <MapPin size={14} />
+        </div>
+        <div className="hidden lg:flex items-center gap-1.5 text-electric-400">
+          <Wifi size={14} />
+          <span className="text-gray-300">4G</span>
+        </div>
+        <div className="hidden lg:flex items-center gap-1.5 text-electric-400">
+          <Cloud size={14} />
+        </div>
+        <div className="flex items-center gap-1 md:gap-1.5 text-gray-300 font-mono">
+          <Clock size={14} className="text-electric-400" />
+          <span className="font-semibold">{time}</span>
+        </div>
+      </div>
+    </header>
+  )
+}
