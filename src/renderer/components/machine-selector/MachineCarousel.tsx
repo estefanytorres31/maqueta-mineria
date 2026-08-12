@@ -17,22 +17,22 @@ export default function MachineCarousel({ machines, selected, onSelect }: Machin
     hasMoved: false,
     movedDistance: 0
   })
+  const suppressNextClickRef = useRef(false)
 
   const handlePointerDown = (e: React.PointerEvent) => {
     if (!carouselRef.current) return
+    if (e.pointerType === 'mouse' && e.button !== 0) return
     dragState.current.isDown = true
     dragState.current.hasMoved = false
     dragState.current.movedDistance = 0
-    dragState.current.startX = e.pageX - carouselRef.current.offsetLeft
+    dragState.current.startX = e.clientX
     dragState.current.startScrollLeft = carouselRef.current.scrollLeft
-    carouselRef.current.setPointerCapture(e.pointerId)
-    carouselRef.current.style.cursor = 'grabbing'
+    suppressNextClickRef.current = false
   }
 
   const handlePointerMove = (e: React.PointerEvent) => {
     if (!dragState.current.isDown || !carouselRef.current) return
-    const x = e.pageX - carouselRef.current.offsetLeft
-    const walk = (x - dragState.current.startX) * 1.1
+    const walk = (e.clientX - dragState.current.startX) * 1.1
     dragState.current.movedDistance = Math.abs(walk)
     if (dragState.current.movedDistance > 5) {
       dragState.current.hasMoved = true
@@ -40,17 +40,21 @@ export default function MachineCarousel({ machines, selected, onSelect }: Machin
     carouselRef.current.scrollLeft = dragState.current.startScrollLeft - walk
   }
 
-  const handlePointerUp = (e: React.PointerEvent) => {
-    if (!carouselRef.current) return
+  const handlePointerStop = (_e: React.PointerEvent) => {
+    if (!dragState.current.isDown) return
+    if (dragState.current.hasMoved && dragState.current.movedDistance > 8) {
+      suppressNextClickRef.current = true
+    }
     dragState.current.isDown = false
-    carouselRef.current.releasePointerCapture?.(e.pointerId)
-    carouselRef.current.style.cursor = ''
+    dragState.current.hasMoved = false
   }
 
-  const handleCardClickCapture = (e: React.MouseEvent) => {
-    if (dragState.current.hasMoved && dragState.current.movedDistance > 8) {
+  const handleClickCapture = (e: React.MouseEvent) => {
+    if (suppressNextClickRef.current) {
+      suppressNextClickRef.current = false
       e.preventDefault()
       e.stopPropagation()
+      return false
     }
   }
 
@@ -62,10 +66,12 @@ export default function MachineCarousel({ machines, selected, onSelect }: Machin
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
-        onPointerCancel={handlePointerUp}
-        onPointerLeave={handlePointerUp}
-        onClickCapture={handleCardClickCapture}
+        onPointerUp={handlePointerStop}
+        onPointerCancel={handlePointerStop}
+        onPointerLeave={(e) => {
+          if (dragState.current.isDown) handlePointerStop(e)
+        }}
+        onClickCapture={handleClickCapture}
       >
         {machines.map(machine => (
           <MachineCard

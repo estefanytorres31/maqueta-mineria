@@ -4,8 +4,7 @@ import {
   Activity, 
   BarChart3, 
   MapPin, 
-  Bell, 
-  Settings 
+  Bell
 } from 'lucide-react'
 import { useNavigationStore } from '../stores/navigationStore'
 import { useTelemetryStore } from '../stores/telemetryStore'
@@ -25,8 +24,7 @@ export default function BottomNavigation({ className = '' }: BottomNavigationPro
     { id: 'operation', icon: Activity, label: 'OPERACIÓN' },
     { id: 'productivity', icon: BarChart3, label: 'PRODUCTIVIDAD' },
     { id: 'gps', icon: MapPin, label: 'GPS' },
-    { id: 'alerts', icon: Bell, label: 'ALERTAS', badge: alertsCount },
-    { id: 'settings', icon: Settings, label: 'CONFIGURACIÓN' }
+    { id: 'alerts', icon: Bell, label: 'ALERTAS', badge: alertsCount }
   ]
 
   return (
@@ -35,7 +33,7 @@ export default function BottomNavigation({ className = '' }: BottomNavigationPro
       role="navigation"
       aria-label="Navegación principal"
     >
-      <div className="grid grid-cols-7 w-full">
+      <div className="grid grid-cols-6 w-full">
         {navItems.map((item, idx) => {
           const Icon = item.icon
           const isActive = currentPage === item.id
