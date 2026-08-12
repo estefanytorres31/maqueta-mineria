@@ -1,11 +1,5 @@
 import { useState } from 'react'
 import { 
-  Pickaxe, 
-  Loader2, 
-  Truck, 
-  Wrench, 
-  HardHat, 
-  Settings, 
   User, 
   LogIn, 
   Users,
@@ -16,27 +10,9 @@ import {
 } from 'lucide-react'
 import { useNavigationStore } from '../stores/navigationStore'
 import { MACHINES } from '../data/machines'
-import { Machine, MachineType } from '../types'
+import { Machine } from '../types'
 import StatusBar from '../components/StatusBar'
 import { useDateTime } from '../hooks/useDateTime'
-
-const machineIcons: Record<MachineType, React.ElementType> = {
-  excavator: Pickaxe,
-  loader: Loader2,
-  scoop: Truck,
-  tractor: HardHat,
-  drill: Wrench,
-  other: Settings
-}
-
-const machinePlaceholders: Record<MachineType, string> = {
-  excavator: '🚜',
-  loader: '🚛',
-  scoop: '🚚',
-  tractor: '🚜',
-  drill: '⛏️',
-  other: '🚧'
-}
 
 export default function MachineSelector() {
   const [selected, setSelected] = useState<Machine | null>(MACHINES[0])
@@ -49,15 +25,15 @@ export default function MachineSelector() {
     goToDashboard(machine)
   }
 
-  const handleLogin = () => {
-    if (!selected) return
-    goToDashboard(selected)
-  }
+  // const handleLogin = () => {
+  //   if (!selected) return
+  //   goToDashboard(selected)
+  // }
 
-  const handleGuest = () => {
-    if (!selected) return
-    goToDashboard(selected)
-  }
+  // const handleGuest = () => {
+  //   if (!selected) return
+  //   goToDashboard(selected)
+  // }
 
   return (
     <div className="w-full h-full flex flex-col bg-gradient-to-br from-industrial-950 via-industrial-900 to-industrial-950">
@@ -106,7 +82,6 @@ export default function MachineSelector() {
 
         <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 md:gap-4 mb-8 md:mb-12 flex-1 content-start">
           {MACHINES.map(machine => {
-            const Icon = machineIcons[machine.type]
             const isSelected = selected?.id === machine.id
             return (
               <button
@@ -134,19 +109,37 @@ export default function MachineSelector() {
                 </div>
 
                 <div className="flex-1 flex items-center justify-center w-full my-2 md:my-3">
-                  <div className="w-full aspect-square max-w-[160px] rounded-lg bg-gradient-to-b from-industrial-750/50 to-industrial-900 border border-industrial-700 flex items-center justify-center overflow-hidden">
-                    <div className="text-5xl md:text-6xl lg:text-7xl drop-shadow-2xl filter grayscale-[10%]">
-                      {machinePlaceholders[machine.type]}
-                    </div>
+                  <div className="w-full aspect-square max-w-[180px] rounded-lg bg-gradient-to-b from-industrial-750/40 via-industrial-850/60 to-industrial-900 border border-industrial-700 flex items-center justify-center overflow-hidden p-2">
+                    <img
+                      src={machine.imageUrl}
+                      alt={machine.name}
+                      loading="lazy"
+                      className="w-full h-full object-contain select-none pointer-events-none drop-shadow-[0_4px_10px_rgba(0,0,0,0.6)]"
+                      style={{
+                        filter: isSelected
+                          ? 'drop-shadow(0 0 10px rgba(20, 184, 255, 0.45))'
+                          : 'drop-shadow(0 4px 10px rgba(0,0,0,0.6))'
+                      }}
+                    />
                   </div>
                 </div>
 
-                <div className={`w-full rounded-md py-2 flex items-center justify-center transition-all ${
+                <div className={`w-full rounded-md py-1.5 h-12 md:h-14 flex items-center justify-center transition-all ${
                   isSelected 
-                    ? 'bg-electric-500/15 border border-electric-500/30 text-electric-400' 
-                    : 'bg-industrial-750/50 text-gray-400 group-hover:text-electric-400 group-hover:border-electric-500/20 border border-transparent'
+                    ? 'bg-electric-500/15 border border-electric-500/30' 
+                    : 'bg-industrial-750/50 group-hover:border-electric-500/20 border border-transparent'
                 }`}>
-                  <Icon size={28} />
+                  <img
+                    src={machine.iconUrl}
+                    alt={`${machine.name} icon`}
+                    loading="lazy"
+                    className="h-7 md:h-9 w-auto object-contain select-none pointer-events-none"
+                    style={{
+                      filter: isSelected
+                        ? 'drop-shadow(0 0 6px rgba(20, 184, 255, 0.55)) brightness(1.05)'
+                        : 'drop-shadow(0 2px 4px rgba(0,0,0,0.55)) brightness(0.92)'
+                    }}
+                  />
                 </div>
               </button>
             )
@@ -170,7 +163,7 @@ export default function MachineSelector() {
             <div className="flex gap-3 md:gap-4 flex-col sm:flex-row">
               <button
                 type="button"
-                onClick={handleLogin}
+                //onClick={handleLogin}
                 className="btn-primary flex items-center justify-center gap-2 md:px-8 md:py-4 text-base font-bold min-h-[52px] cursor-pointer"
               >
                 <LogIn size={20} />
@@ -178,7 +171,7 @@ export default function MachineSelector() {
               </button>
               <button
                 type="button"
-                onClick={handleGuest}
+                //onClick={handleGuest}
                 className="btn-secondary flex items-center justify-center gap-2 md:px-6 md:py-4 min-h-[52px] cursor-pointer"
               >
                 <Users size={20} />

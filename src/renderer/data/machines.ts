@@ -7,7 +7,9 @@ export const MACHINES: Machine[] = [
     name: 'RETROEXCAVADORA',
     model: 'CAT 375L',
     code: 'EQ-002',
-    category: 'EXCAVADORA HIDRÁULICA'
+    category: 'EXCAVADORA HIDRÁULICA',
+    imageUrl: '/maquinaria/retroexcavadora.png',
+    iconUrl: '/maquinaria/iconos/retroexcavadora.png'
   },
   {
     id: 'cat-980k',
@@ -15,7 +17,9 @@ export const MACHINES: Machine[] = [
     name: 'CARGADOR FRONTAL',
     model: 'CAT 980K',
     code: 'EQ-005',
-    category: 'CARGADOR DE RUEDAS'
+    category: 'CARGADOR DE RUEDAS',
+    imageUrl: '/maquinaria/cargador frontal.png',
+    iconUrl: '/maquinaria/iconos/cargador frontal.png'
   },
   {
     id: 'cat-r1700',
@@ -23,7 +27,9 @@ export const MACHINES: Machine[] = [
     name: 'SCOOP / LHD',
     model: 'CAT R1700',
     code: 'EQ-008',
-    category: 'CARGA-DESCARGA SUBTERRÁNEO'
+    category: 'CARGA-DESCARGA SUBTERRÁNEO',
+    imageUrl: '/maquinaria/scoop.png',
+    iconUrl: '/maquinaria/iconos/scoop.png'
   },
   {
     id: 'cat-d11t',
@@ -31,7 +37,9 @@ export const MACHINES: Machine[] = [
     name: 'TRACTOR ORUGA',
     model: 'CAT D11T',
     code: 'EQ-012',
-    category: 'TRACTOR DE CADENAS'
+    category: 'TRACTOR DE CADENAS',
+    imageUrl: '/maquinaria/tractor oruga.png',
+    iconUrl: '/maquinaria/iconos/tractor oruga.png'
   },
   {
     id: 'cat-md6200',
@@ -39,7 +47,9 @@ export const MACHINES: Machine[] = [
     name: 'PERFORADORA',
     model: 'CAT MD6200',
     code: 'EQ-015',
-    category: 'PERFORADORA ROTATIVA'
+    category: 'PERFORADORA ROTATIVA',
+    imageUrl: '/maquinaria/perforadora.png',
+    iconUrl: '/maquinaria/iconos/perforadora.png'
   },
   {
     id: 'cat-777g',
@@ -47,7 +57,9 @@ export const MACHINES: Machine[] = [
     name: 'OTRA MAQUINARIA',
     model: 'CAT 777G',
     code: 'EQ-020',
-    category: 'CAMIÓN DE ACARREO'
+    category: 'CAMIÓN DE ACARREO',
+    imageUrl: '/maquinaria/camion.png',
+    iconUrl: '/maquinaria/iconos/camion.png'
   }
 ]
 

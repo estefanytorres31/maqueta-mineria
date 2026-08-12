@@ -27,11 +27,16 @@
     "appId": "com.perucontrols.maquetamina",
     "productName": "Sistema de maquinaria minera",
     "win": {
-      "target": ["nsis"],
+      "target": [
+        "nsis"
+      ],
       "icon": "public/logopcs.ico"
     },
     "linux": {
-      "target": ["AppImage", "deb"],
+      "target": [
+        "AppImage",
+        "deb"
+      ],
       "category": "Utility",
       "icon": "public/logopcs.png"
     },
@@ -45,7 +50,9 @@
       {
         "from": ".env",
         "to": ".",
-        "filter": ["**/*"]
+        "filter": [
+          "**/*"
+        ]
       }
     ],
     "nsis": {
@@ -60,6 +67,7 @@
     }
   },
   "dependencies": {
+    "flat-color-icons": "^1.1.0",
     "lucide-react": "^0.400.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

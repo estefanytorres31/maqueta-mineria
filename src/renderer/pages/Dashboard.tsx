@@ -13,6 +13,7 @@ import {
   CircleDot
 } from 'lucide-react'
 import { useTelemetryStore } from '../stores/telemetryStore'
+import { useNavigationStore } from '../stores/navigationStore'
 import Panel from '../components/Panel'
 import Gauge from '../components/Gauge'
 import MetricCard from '../components/MetricCard'
@@ -29,6 +30,7 @@ const statusMode: Record<OperationMode, { label: string; color: string; border: 
 
 export default function Dashboard() {
   const { telemetry } = useTelemetryStore()
+  const selectedMachine = useNavigationStore(s => s.selectedMachine)
   const { engine, fuel, hydraulic, gps, imu, productivity, operation } = telemetry
   const modeConfig = statusMode[operation.mode]
 
@@ -169,10 +171,19 @@ export default function Dashboard() {
           <Panel className="flex-1 min-h-0">
             <div className="h-full flex flex-col">
               <div className="flex-1 flex items-center justify-center min-h-0 py-2">
-                <div className="relative w-full max-w-lg max-h-full">
-                  <div className="w-full h-full flex items-center justify-center text-[180px md:text-[220px] leading-none drop-shadow-2xl" style={{ filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.6))' }}>
-                    🚜
-                  </div>
+                <div className="relative w-full max-w-3xl max-h-full flex items-center justify-center px-4">
+                  {selectedMachine?.imageUrl ? (
+                    <img
+                      src={selectedMachine.imageUrl}
+                      alt={selectedMachine.name}
+                      className="max-h-full max-w-full object-contain select-none pointer-events-none"
+                      style={{
+                        filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.65)) drop-shadow(0 0 25px rgba(20, 184, 255, 0.22))'
+                      }}
+                    />
+                  ) : (
+                    <div className="text-[180px] md:text-[220px] leading-none drop-shadow-2xl">🚜</div>
+                  )}
                 </div>
               </div>
               <div className="grid grid-cols-5 md:grid-cols-10 gap-1.5 md:gap-2 mt-3 pt-3 border-t border-industrial-700">
@@ -212,8 +223,9 @@ export default function Dashboard() {
                       {imu.roll > 0 ? '+' : ''}{imu.roll.toFixed(1)}°
                     </span>
                   </div>
-                  <div className="mt-3 flex justify-center text-4xl">
-                    🚧
+                  <div className="mt-3 flex justify-center gap-3 text-xs">
+                    <div className="text-status-warning">⬆ Pitch {imu.pitch > 0 ? '+' : ''}{imu.pitch.toFixed(1)}°</div>
+                    <div className="text-status-ok">⬇ Roll {imu.roll > 0 ? '+' : ''}{imu.roll.toFixed(1)}°</div>
                   </div>
                 </div>
               </div>
@@ -233,8 +245,9 @@ export default function Dashboard() {
                       <div className="text-white font-semibold">{gps.longitude}</div>
                     </div>
                   </div>
-                  <div className="mt-2 h-20 rounded-md bg-industrial-950 border border-industrial-800 flex items-center justify-center text-gray-600 text-xs">
-                    🗺️ MAPA
+                  <div className="mt-2 h-20 rounded-md bg-industrial-950 border border-industrial-800 flex flex-col items-center justify-center text-gray-500 text-xs gap-1">
+                    <MapPin size={16} className="text-electric-500/70" />
+                    <span>Vista previa — abrir pestaña GPS para mapa completo</span>
                   </div>
                 </div>
               </div>

@@ -18,6 +18,8 @@ export interface Machine {
   model: string
   code: string
   category: string
+  imageUrl: string
+  iconUrl: string
 }
 
 export interface EngineData {
