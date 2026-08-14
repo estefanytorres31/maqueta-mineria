@@ -10,8 +10,8 @@ export default function MainLayout({ children }: MainLayoutProps) {
   return (
     <div className="w-full h-full flex flex-col">
       <Header />
-      <main className="flex-1 overflow-auto p-3 lg:p-4 bg-industrial-900">
-        <div className="fade-in min-h-full">
+      <main className="flex-1 overflow-hidden p-0.5 lg:p-0.5 xl:p-1.5 bg-industrial-900">
+        <div className="fade-in h-full w-full">
           {children}
         </div>
       </main>

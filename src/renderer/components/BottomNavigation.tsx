@@ -21,8 +21,6 @@ export default function BottomNavigation({ className = '' }: BottomNavigationPro
   const navItems: { id: Page; icon: React.ElementType; label: string; badge?: number }[] = [
     { id: 'home', icon: Home, label: 'INICIO' },
     { id: 'fuel', icon: Fuel, label: 'COMBUSTIBLE' },
-    { id: 'operation', icon: Activity, label: 'OPERACIÓN' },
-    { id: 'productivity', icon: BarChart3, label: 'PRODUCTIVIDAD' },
     { id: 'gps', icon: MapPin, label: 'GPS' },
     { id: 'alerts', icon: Bell, label: 'ALERTAS', badge: alertsCount }
   ]
@@ -33,7 +31,7 @@ export default function BottomNavigation({ className = '' }: BottomNavigationPro
       role="navigation"
       aria-label="Navegación principal"
     >
-      <div className="grid grid-cols-6 w-full">
+      <div className="grid grid-cols-4 w-full">
         {navItems.map((item, idx) => {
           const Icon = item.icon
           const isActive = currentPage === item.id
@@ -45,7 +43,7 @@ export default function BottomNavigation({ className = '' }: BottomNavigationPro
               <button
                 type="button"
                 onClick={() => setPage(item.id)}
-                className={`group relative flex flex-row items-center justify-center gap-2 w-full min-h-[56px] md:min-h-[60px] px-1.5 md:px-3 py-1.5 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-500/50 ${
+                className={`group relative flex flex-row items-center justify-center gap-1.5 w-full min-h-[42px] md:min-h-[44px] lg:min-h-[44px] xl:min-h-[52px] 2xl:min-h-[56px] px-1 md:px-2 py-0.5 md:py-1 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-500/50 ${
                   isActive
                     ? 'text-electric-400'
                     : 'text-gray-400 hover:text-white hover:bg-industrial-800/70'

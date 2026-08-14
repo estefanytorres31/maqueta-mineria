@@ -24,17 +24,17 @@ export default function KpiCard({
   color = 'text-white'
 }: KpiCardProps) {
   return (
-    <div className={`bg-industrial-850 border ${highlight ? 'border-electric-500/40 shadow-glow-blue' : 'border-industrial-700'} rounded-lg p-3 flex flex-col ${className}`}>
-      {icon && <div className="mb-2">{icon}</div>}
-      <div className="metric-label mb-1">{label}</div>
-      <div className="flex items-baseline gap-1">
-        <span className={`font-mono font-bold text-xs md:text-sm ${color}`}>
+    <div className={`bg-industrial-850 border ${highlight ? 'border-electric-500/40 shadow-glow-blue' : 'border-industrial-700'} rounded-md p-1 md:p-1 lg:p-1 flex flex-col min-w-0 ${className}`}>
+      {icon && <div className="mb-0.5 md:mb-0.5">{icon}</div>}
+      <div className="metric-label mb-0.5 md:mb-0.25 leading-tight text-wrap whitespace-normal break-words line-clamp-2">{label}</div>
+      <div className="flex items-baseline gap-0.5 min-w-0">
+        <span className={`font-mono font-bold text-[11px] md:text-[11px] lg:text-[11px] xl:text-xs 2xl:text-sm ${color} leading-none`}>
           {typeof value === 'number' ? value.toLocaleString(undefined, { maximumFractionDigits: 2 }) : value}
         </span>
-        {unit && <span className="text-xs text-gray-400 font-medium">{unit}</span>}
+        {unit && <span className="text-[9px] md:text-[9px] text-gray-400 font-medium leading-none">{unit}</span>}
       </div>
       {(trendValue || subLabel || subValue) && (
-        <div className="mt-1 text-[10px] text-gray-500">
+        <div className="mt-0.25 text-[9px] text-gray-500 leading-tight">
           {trendValue}
           {subLabel && (
             <span>

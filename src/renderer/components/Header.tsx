@@ -36,61 +36,61 @@ export default function Header() {
   ]
 
   return (
-    <header className="bg-industrial-850 border-b border-industrial-700 px-4 py-2 flex items-center gap-4 flex-shrink-0">
+    <header className="bg-industrial-850 border-b border-industrial-700 px-2 md:px-3 lg:px-4 py-1 md:py-1.5 lg:py-2 flex items-center gap-2 md:gap-3 lg:gap-4 flex-shrink-0">
       <div 
-        className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
+        className="flex items-center gap-1.5 cursor-pointer hover:opacity-80 transition-opacity"
         onClick={() => setPage('selector')}
       >
-        <div className="text-electric-400 font-black text-xl tracking-tight">
-          EDGE<span className="text-white">SMART</span>
+        <div className="font-black text-lg md:text-xl lg:text-2xl tracking-tight leading-none">
+          <span className="text-white">EDGE</span><span className="text-electric-400">SMART</span>
         </div>
       </div>
 
-      <div className="h-8 w-px bg-industrial-700 mx-2" />
+      <div className="h-7 md:h-8 w-px bg-industrial-700 mx-0.5 md:mx-1 lg:mx-2" />
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 md:gap-3 lg:gap-4">
         <div>
-          <div className="text-yellow-400 font-bold text-lg leading-tight">{selectedMachine.model}</div>
-          <div className="text-gray-400 text-xs">{selectedMachine.category}</div>
-        </div>
-        <div className="px-2 py-1 rounded bg-industrial-750 border border-industrial-600 text-electric-400 font-mono text-sm font-semibold">
-          {selectedMachine.code}
+          <div className="text-yellow-400 font-black text-base md:text-lg lg:text-xl leading-tight tracking-wide">{selectedMachine.model}</div>
+          <div className="flex items-center gap-2 md:gap-3">
+            <span className="text-gray-400 text-[10px] md:text-xs lg:text-xs">{selectedMachine.category}</span>
+            <span className="text-gray-500 font-mono text-[10px] md:text-xs lg:text-xs">{selectedMachine.code}</span>
+          </div>
         </div>
       </div>
 
       <div className="flex-1" />
 
-      <div className="hidden md:flex items-center gap-4 text-sm">
+      <div className="hidden md:flex items-center gap-3 md:gap-4 lg:gap-5 text-xs md:text-xs lg:text-sm">
         <div className="flex items-center gap-1.5 text-status-ok">
-          <MapPin size={16} />
-          <span className="text-gray-300 text-xs">GPS</span>
+          <MapPin size={15} />
+          <span className="text-gray-200 font-semibold">GPS</span>
         </div>
-        <div className="flex items-center gap-1.5 text-electric-400">
-          <Wifi size={16} />
-          <span className="text-gray-300 text-xs">4G</span>
+        <div className="flex items-center gap-1.5 text-status-ok">
+          <Wifi size={15} />
+          <span className="text-gray-200 font-semibold">4G</span>
         </div>
-        <div className="flex items-center gap-1.5 text-electric-400">
-          <Cloud size={16} />
-          <span className="text-gray-300 text-xs">CLOUD</span>
+        <div className="flex items-center gap-1.5 text-status-ok">
+          <Cloud size={15} />
+          <span className="text-gray-200 font-semibold">CLOUD</span>
         </div>
       </div>
 
       <div className="h-6 w-px bg-industrial-700 mx-1 hidden md:block" />
 
-      <div className="hidden md:flex items-center gap-3 text-sm text-gray-300 font-mono">
+      <div className="hidden md:flex items-center gap-3 md:gap-4 text-xs md:text-xs lg:text-sm text-gray-300 font-mono">
         <div className="flex items-center gap-1.5">
-          <Calendar size={14} className="text-electric-400" />
+          <Calendar size={13} className="text-gray-400" />
           <span>{date}</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <Clock size={14} className="text-electric-400" />
+          <Clock size={13} className="text-gray-400" />
           <span>{time}</span>
         </div>
       </div>
 
-      <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-industrial-800 border border-status-ok/30">
+      <div className="flex items-center gap-1.5 md:gap-2">
         <CircleDot size={10} className="text-status-ok animate-pulse" fill="currentColor" />
-        <span className={`text-sm font-semibold ${telemetry.online ? 'text-status-ok' : 'text-status-offline'}`}>
+        <span className={`text-xs md:text-xs lg:text-sm font-bold ${telemetry.online ? 'text-status-ok' : 'text-status-offline'}`}>
           {telemetry.online ? 'ONLINE' : 'OFFLINE'}
         </span>
       </div>

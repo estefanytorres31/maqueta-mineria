@@ -1,4 +1,5 @@
 import { SensorStatus } from '../types'
+import { CircleCheck, AlertTriangle, XCircle, CloudOff } from 'lucide-react'
 
 interface StatusIndicatorProps {
   label: string
@@ -15,27 +16,34 @@ export default function StatusIndicator({
   size = 'md',
   className = ''
 }: StatusIndicatorProps) {
-  const statusConfig: Record<SensorStatus, { color: string; dot: string; glow: string }> = {
-    OK: { color: 'text-status-ok', dot: 'bg-status-ok', glow: 'shadow-glow-green' },
-    WARNING: { color: 'text-status-warning', dot: 'bg-status-warning', glow: 'shadow-glow-orange' },
-    ERROR: { color: 'text-status-danger', dot: 'bg-status-danger', glow: 'shadow-glow-red animate-pulse' },
-    OFFLINE: { color: 'text-status-offline', dot: 'bg-status-offline', glow: '' }
+  const statusConfig: Record<SensorStatus, { StatusIcon: React.ElementType; iconColor: string; bgColor?: string }> = {
+    OK: { StatusIcon: CircleCheck, iconColor: 'text-status-ok' },
+    WARNING: { StatusIcon: AlertTriangle, iconColor: 'text-status-warning' },
+    ERROR: { StatusIcon: XCircle, iconColor: 'text-status-danger' },
+    OFFLINE: { StatusIcon: CloudOff, iconColor: 'text-status-offline' }
   }
 
-  const config = statusConfig[status]
+  const { StatusIcon, iconColor } = statusConfig[status]
   const isSm = size === 'sm'
-  const iconSize = isSm ? 18 : 20
-  const iconBox = isSm ? 'w-8 h-8 rounded-md' : 'w-9 h-9 rounded-lg'
+  const iconBoxSize = isSm
+    ? 'w-7 h-7 md:w-7 lg:w-9 xl:w-10 rounded-lg'
+    : 'w-8 h-8 md:w-8 lg:w-10 xl:w-11 rounded-xl'
+  const iconSize = isSm ? 18 : 24
+  const statusIconSize = isSm ? 16 : 22
+  const labelSize = isSm
+    ? 'text-[9px] md:text-[8px] lg:text-[10px] xl:text-[11px]'
+    : 'text-[10px] md:text-[9px] lg:text-[11px] xl:text-[12px]'
 
   return (
-    <div className={`flex flex-col items-center justify-center gap-1 md:gap-1.5 py-1.5 px-1 md:px-1.5 ${className}`}>
-      <div className={`${iconBox} bg-industrial-800/80 border border-industrial-700 flex items-center justify-center ${config.color}`}>
-        <Icon size={iconSize} />
+    <div className={`flex flex-col items-center justify-center gap-1 md:gap-1 py-1 md:py-1.5 lg:py-2 min-w-0 w-full ${className}`}>
+      <div className={`${iconBoxSize} bg-industrial-800/60 border border-industrial-700/40 flex items-center justify-center text-white shadow-sm`}>
+        <Icon size={iconSize} strokeWidth={1.8} />
       </div>
-      <div className={`${isSm ? 'text-[10px] leading-[11px]' : 'text-[10px] md:text-[11px] leading-[12px]'} uppercase tracking-wider text-gray-300 font-bold text-center`}>{label}</div>
-      <div className="flex items-center gap-1 leading-none">
-        <span className={`status-dot ${isSm ? 'w-1.5 h-1.5' : 'w-2 h-2'} ${config.dot} ${config.glow}`} />
-        <span className={`${isSm ? 'text-[9px]' : 'text-[10px]'} font-bold ${config.color} leading-none`}>{status}</span>
+      <div className={`${labelSize} uppercase tracking-wider text-white font-black text-center whitespace-normal break-words line-clamp-2 leading-tight`}>
+        {label}
+      </div>
+      <div className="flex items-center justify-center leading-none mt-0.25">
+        <StatusIcon size={statusIconSize} className={`${iconColor}`} />
       </div>
     </div>
   )

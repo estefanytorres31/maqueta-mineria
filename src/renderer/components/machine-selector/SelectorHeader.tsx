@@ -20,6 +20,12 @@ export default function SelectorHeader() {
         </div>
       </div>
 
+      <div className="hidden md:flex items-center justify-center flex-1 min-w-0">
+        <div className="text-white font-black text-sm md:text-base xl:text-3xl tracking-widest uppercase leading-none">
+          Peru Controls System S.A.C.
+        </div>
+      </div>
+
       <div className="flex items-center gap-2 md:gap-3 xl:gap-6 text-[10px] md:text-xs xl:text-sm">
         <div className="hidden lg:flex items-center gap-1.5 text-status-ok">
           <MapPin size={14} />

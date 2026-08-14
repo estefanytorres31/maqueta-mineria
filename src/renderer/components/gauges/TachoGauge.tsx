@@ -4,6 +4,7 @@ interface TachoGaugeProps {
   warningRpm?: number
   dangerRpm?: number
   size?: number
+  className?: string
 }
 
 export default function TachoGauge({
@@ -11,7 +12,8 @@ export default function TachoGauge({
   maxRpm = 3000,
   warningRpm = 2400,
   dangerRpm = 2700,
-  size = 170
+  size = 170,
+  className = ''
 }: TachoGaugeProps) {
   const startDeg = -120
   const endDeg = 120
@@ -55,7 +57,7 @@ export default function TachoGauge({
   const dangerPct = dangerRpm / maxRpm
 
   return (
-    <div className="relative flex-shrink-0" style={{ width: W, height: H }}>
+    <div className={`relative flex-shrink-0 ${className}`} style={{ width: W, height: H }}>
       <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`}>
         <path d={arcPath(startDeg, endDeg, rOuter)}
           stroke="#111E2D" strokeWidth={size * 0.07} fill="none" strokeLinecap="round" />
