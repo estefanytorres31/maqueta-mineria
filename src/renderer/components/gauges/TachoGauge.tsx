@@ -57,7 +57,7 @@ export default function TachoGauge({
   const dangerPct = dangerRpm / maxRpm
 
   return (
-    <div className={`relative flex-shrink-0 ${className}`} style={{ width: W, height: H }}>
+    <div className={`relative flex-shrink ${className}`} style={{ width: W, height: H }}>
       <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`}>
         <path d={arcPath(startDeg, endDeg, rOuter)}
           stroke="#111E2D" strokeWidth={size * 0.07} fill="none" strokeLinecap="round" />
@@ -65,7 +65,7 @@ export default function TachoGauge({
         <path
           d={arcPath(startDeg, startDeg + sweepDeg * warnPct, rOuter)}
           stroke="#14B8FF" strokeWidth={size * 0.05} fill="none" strokeLinecap="butt"
-          style={{ filter: 'drop-shadow(0 0 6px rgba(20,184,255,0.65))' }}
+          
         />
         <path
           d={arcPath(startDeg + sweepDeg * warnPct, startDeg + sweepDeg * dangerPct, rOuter)}
@@ -106,7 +106,7 @@ export default function TachoGauge({
 
         <text x={cx} y={cy + rOuter * 0.95} textAnchor="middle"
           className="fill-gray-300 font-mono font-bold uppercase tracking-[0.2em]"
-          style={{ fontSize: size * 0.08 }}
+          style={{ fontSize: size * 0.1 }}
         >
           ×1000
         </text>

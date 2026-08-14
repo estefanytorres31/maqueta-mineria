@@ -2,6 +2,7 @@ import { Gauge, MapPin } from 'lucide-react'
 import SectionPanel from '../SectionPanel'
 import MiniGauge from '../gauges/MiniGauge'
 import SvgExcavatorIcon from '../icons/SvgExcavatorIcon'
+import { GiMineTruck as TruckIcon } from 'react-icons/gi'
 import { GpsData, ImuData } from '../../types'
 
 interface MovementPanelProps {
@@ -10,64 +11,85 @@ interface MovementPanelProps {
 }
 
 export default function MovementPanel({ gps, imu }: MovementPanelProps) {
+  const pitchGaugePct = Math.round(Math.min(100, Math.max(0, ((imu.pitch + 10) / 20) * 100)))
+  const rollGaugePct = Math.round(Math.min(100, Math.max(0, ((imu.roll + 10) / 20) * 100)))
+  const pitchColor = Math.abs(imu.pitch) > 5 ? '#F59E0B' : Math.abs(imu.pitch) > 8 ? '#EF4444' : '#8B5CF6'
+  const rollColor = Math.abs(imu.roll) > 5 ? '#F59E0B' : Math.abs(imu.roll) > 8 ? '#EF4444' : '#8B5CF6'
+
   return (
     <SectionPanel
-      title="MOVIMIENTO"
-      icon={<Gauge size={12} className="text-electric-400" />}
+      title="PITCH & ROLL"
+      icon={<Gauge size={18} className="md:size-[18px] lg:size-[22px] xl:size-[24px] flex-shrink-0" style={{ color: '#8B5CF6' }} />}
+      iconColor="text-[#8B5CF6]"
+      titleColorClass="text-[#8B5CF6]"
+      borderClass="border-[#8B5CF6]/60"
+      bodyClass="shadow-[0_0_40px_-10px_rgba(139,92,246,0.2)]"
+      grow
     >
-      <div className="grid grid-cols-3 divide-x divide-industrial-700/60 p-2 md:p-1 lg:p-1">
-        
-        {/* Velocidad */}
-        <div className="flex flex-col items-center justify-between px-1.5 lg:px-2 md:px-2 py-0.5">
-          
-            <div className="text-[8px] lg:text-[9px] md:text-[8px] text-gray-400 uppercase tracking-wider font-semibold mb-1 lg:mb-1.5 md:mb-1.5 text-center">VELOCIDAD</div>
-            <div className="grid grid-cols-2 items-center gap-1.5 lg:gap-2 md:gap-2 w-full">
-              <div className="text-left h-full flex items-center">
-                <span className="font-mono font-black text-2xl lg:text-[28px] md:text-2xl text-white leading-none tracking-tight">{gps.speed.toFixed(1)}</span>
-                <span className="text-[9px] lg:text-[10px] md:text-[9px] text-gray-400 font-semibold mt-0.5">km/h</span>
+      <div className="p-0.5 md:p-0.5 lg:p-1 xl:p-1 h-full flex flex-col min-h-0 gap-0">
+        <div className="grid grid-cols-2 divide-x flex-1 min-h-0">
+          {/* ========== COL 1: PITCH & ROLL INCLINACIÓN ========== */}
+          <div className="flex flex-col items-center justify-center px-0.5 md:px-0.5 lg:px-1 xl:px-1 py-0.25 md:py-0.25 min-w-0 h-full">
+            <div className="text-[6.5px] md:text-[8px] lg:text-[10px] xl:text-[11px] text-gray-300 uppercase tracking-[0.1em] font-bold text-center whitespace-nowrap">
+              INCLINACIÓN
+            </div>
+            <div className="grid grid-cols-2 gap-0.5 md:gap-0.5 lg:gap-1 xl:gap-1 w-full flex-1 min-h-0 mt-0.5 md:mt-0.5">
+              {/* Pitch */}
+              <div className="flex flex-col items-center justify-center min-w-0 h-full">
+                <div className="text-[6.5px] md:text-[7px] lg:text-[9px] xl:text-[10px] text-gray-300 uppercase tracking-[0.1em] font-bold text-center whitespace-nowrap">
+                  PITCH
+                </div>
+                <div className="flex items-baseline gap-0.5 min-w-0 mt-0.25 md:mt-0.25 lg:mt-0.5">
+                  <span className="font-mono font-black text-base md:text-base lg:text-lg xl:text-lg text-white leading-none tracking-tighter whitespace-nowrap">
+                    {imu.pitch > 0 ? '+' : ''}{imu.pitch.toFixed(1)}
+                  </span>
+                  <span className="text-[10px] md:text-[10px] lg:text-[11px] xl:text-[11px] font-bold leading-none" style={{ color: pitchColor }}>°</span>
+                </div>
+                <div className="w-10 h-10 md:w-10 md:h-10 lg:w-12 lg:h-12 xl:w-12 xl:h-12 mb-0.5">
+                  <MiniGauge value={pitchGaugePct} max={100} unit="" warningThreshold={70} dangerThreshold={90} color="#8B5CF6" size={48} className="!w-full !h-full" />
+                </div>
               </div>
-              <div className="flex flex-col gap-0.5 lg:gap-1 md:gap-0.5 h-full items-center">
-                <MiniGauge value={Math.round(gps.speed * 10) / 10} max={10} unit="km/h" warningThreshold={8} color="#0EA5E9" size={36} className="md:hidden lg:hidden" />
-                <MiniGauge value={Math.round(gps.speed * 10) / 10} max={10} unit="km/h" warningThreshold={8} color="#0EA5E9" size={44} className="hidden md:block lg:block xl:hidden" />
-                <MiniGauge value={Math.round(gps.speed * 10) / 10} max={10} unit="km/h" warningThreshold={8} color="#0EA5E9" size={54} className="hidden xl:block" />
+              {/* Roll */}
+              <div className="flex flex-col items-center justify-center min-w-0 h-full">
+                <div className="text-[6.5px] md:text-[7px] lg:text-[9px] xl:text-[10px] text-gray-300 uppercase tracking-[0.1em] font-bold text-center whitespace-nowrap">
+                  ROLL
+                </div>
+                <div className="flex items-baseline gap-0.5 min-w-0 mt-0.25 md:mt-0.25 lg:mt-0.5">
+                  <span className="font-mono font-black text-base md:text-base lg:text-lg xl:text-lg text-white leading-none tracking-tighter whitespace-nowrap">
+                    {imu.roll > 0 ? '+' : ''}{imu.roll.toFixed(1)}
+                  </span>
+                  <span className="text-[10px] md:text-[10px] lg:text-[11px] xl:text-[11px] font-bold leading-none" style={{ color: rollColor }}>°</span>
+                </div>
+                <div className="w-10 h-10 md:w-10 md:h-10 lg:w-12 lg:h-12 xl:w-12 xl:h-12 mb-0.5">
+                  <MiniGauge value={rollGaugePct} max={100} unit="" warningThreshold={70} dangerThreshold={90} color="#8B5CF6" size={48} className="!w-full !h-full" />
+                </div>
               </div>
             </div>
-        </div>
+            <div className="flex justify-between text-[6px] md:text-[6.5px] lg:text-[7px] xl:text-[7px] text-gray-400 font-semibold px-0.5 tracking-wider w-full">
+              <span>-10°</span>
+              <span>0°</span>
+              <span>+10°</span>
+            </div>
+          </div>
 
-        {/* Inclinación IMU */}
-        <div className="flex flex-col items-center justify-center px-1.5 lg:px-2 md:px-2 py-0.5">
-          <div className="text-[8px] lg:text-[9px] md:text-[8px] text-gray-400 uppercase tracking-wider font-semibold mb-1 lg:mb-1.5 md:mb-1.5 text-center">INCLINACIÓN (IMU)</div>
-          <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-1.5 lg:gap-3 md:gap-2 w-full">
-            <div className="text-left">
-              <div className="text-[7px] lg:text-[8px] md:text-[8px] text-gray-500 font-semibold uppercase tracking-wider mb-0.5">PITCH</div>
-              <div className={`font-mono font-bold text-base lg:text-sm md:text-base leading-none tracking-tight ${imu.pitch > 3 ? 'text-status-warning' : 'text-white'}`}>
-                {imu.pitch > 0 ? '+' : ''}{imu.pitch.toFixed(1)}°
-              </div>
+          {/* ========== COL 2: UBICACIÓN GPS ========== */}
+          <div className="flex flex-col items-center justify-center px-0.5 md:px-0.5 lg:px-1 xl:px-1 py-0.25 md:py-0.25 min-w-0 h-full">
+            <div className="text-[6.5px] md:text-[8px] lg:text-[10px] xl:text-[11px] text-gray-300 uppercase tracking-[0.1em] font-bold text-center whitespace-nowrap w-full">
+              UBICACIÓN GPS
             </div>
-            <div className="flex flex-col items-center justify-center leading-none px-0.5">
-              <SvgExcavatorIcon className="w-8 h-8 lg:w-10 lg:h-10 md:w-9 md:h-9 text-gray-400" />
-            </div>
-            <div className="text-right">
-              <div className="text-[7px] lg:text-[8px] md:text-[8px] text-gray-500 font-semibold uppercase tracking-wider mb-0.5">ROLL</div>
-              <div className={`font-mono font-bold text-base lg:text-sm md:text-base leading-none tracking-tight ${Math.abs(imu.roll) > 3 ? 'text-status-warning' : 'text-white'}`}>
-                {imu.roll > 0 ? '+' : ''}{imu.roll.toFixed(1)}°
+            <div className="flex flex-col items-center justify-center w-full flex-1 min-h-0 gap-0.5 lg:gap-0.5">
+              <MapPin size={20} className="flex-shrink-0" style={{ color: '#8B5CF6' }} strokeWidth={2} />
+              <div className="flex flex-col gap-0.25 w-full items-center min-w-0">
+                <div className="font-mono text-[8px] md:text-[8.5px] lg:text-[9px] xl:text-[10px] text-white font-medium whitespace-nowrap tracking-wide">
+                  {gps.latitude}
+                </div>
+                <div className="font-mono text-[8px] md:text-[8.5px] lg:text-[9px] xl:text-[10px] text-white font-medium whitespace-nowrap tracking-wide">
+                  {gps.longitude}
+                </div>
               </div>
             </div>
           </div>
         </div>
-
-        {/* GPS */}
-        <div className="flex flex-col justify-center px-1.5 lg:px-2 md:px-2 py-0.5">
-          <div className="text-[8px] lg:text-[9px] md:text-[8px] text-gray-400 uppercase tracking-wider font-semibold mb-1 lg:mb-1.5 md:mb-1.5 text-center">UBICACIÓN GPS</div>
-          <div className="grid grid-cols-2 gap-1.5 lg:gap-1.5 md:gap-1.5 w-fit">
-            <MapPin size={24} className="text-electric-500 flex-shrink-0 justify-start" strokeWidth={2} />
-            <div className="flex flex-col gap-0.5 lg:gap-1 md:gap-0.5 h-full items-center">
-              <div className="font-mono text-[9px] lg:text-[11px] md:text-[10px] text-white font-medium whitespace-nowrap tracking-wide">{gps.latitude}</div>
-              <div className="font-mono text-[9px] lg:text-[11px] md:text-[10px] text-white font-medium whitespace-nowrap tracking-wide">{gps.longitude}</div>
-            </div>
-          </div>
-        </div>
-
       </div>
     </SectionPanel>
   )

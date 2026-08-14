@@ -1,108 +1,90 @@
-import { Fuel as FuelIcon } from 'lucide-react'
+import { Fuel as FuelIcon, Clock } from 'lucide-react'
 import SectionPanel from '../SectionPanel'
 import ProgressBar from '../ProgressBar'
-import { FuelData } from '../../types'
+import { FuelData, OperationData } from '../../types'
 
 interface FuelPanelProps {
-  fuel: Pick<FuelData, 'instantConsumption' | 'tankLevel' | 'todayConsumption' | 'idleTodayConsumption' | 'autonomy'>
+  fuel: Pick<FuelData, 'instantConsumption' | 'tankLevel' | 'todayConsumption' | 'idleTodayConsumption' | 'autonomy' | 'avgConsumption'>
+  totalHours: OperationData['totalHours']
 }
 
-function Sparkline({ value, color = '#10B981' }: { value: number; color?: string }) {
-  const pts = [
-    12.4, 15.2, 13.8, 14.5, 16.1, 14.9, 13.2, 15.6, 17.3, 16.4, 14.8, 15.9, 18.2, 16.7, value
+export default function FuelPanel({ fuel, totalHours }: FuelPanelProps) {
+  const accumulatedConsumption = Math.round(fuel.todayConsumption * 11 + fuel.idleTodayConsumption * 40)
+
+  const dataRows = [
+    { label: 'CONSUMO INSTANTÁNEO', value: fuel.instantConsumption.toFixed(1), unit: 'gal/h' },
+    { label: 'CONSUMO ACUMULADO', value: accumulatedConsumption.toLocaleString(), unit: 'gal' },
+    { label: 'CONSUMO DE HOY', value: fuel.todayConsumption.toFixed(1), unit: 'gal' },
+    { label: 'RELENTÍ HOY', value: fuel.idleTodayConsumption.toFixed(1), unit: 'gal' },
   ]
-  const max = Math.max(...pts)
-  const min = Math.min(...pts) * 0.95
-  const w = 100
-  const h = 20
-  const scaleX = (i: number) => (i / (pts.length - 1)) * w
-  const scaleY = (v: number) => h - ((v - min) / (max - min)) * (h - 4) - 2
-  const poly = pts.map((v, i) => `${scaleX(i).toFixed(1)},${scaleY(v).toFixed(1)}`).join(' ')
-  const lastIdx = pts.length - 1
-  return (
-    <svg viewBox={`0 0 ${w} ${h}`} className="w-full h-5" preserveAspectRatio="none">
-      <defs>
-        <linearGradient id="sparkFill" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0%" stopColor={color} stopOpacity="0.35" />
-          <stop offset="100%" stopColor={color} stopOpacity="0" />
-        </linearGradient>
-      </defs>
-      <polygon
-        points={`0,${h} ${poly} ${w},${h}`}
-        fill="url(#sparkFill)"
-      />
-      <polyline
-        points={poly}
-        fill="none"
-        stroke={color}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <circle cx={scaleX(lastIdx)} cy={scaleY(value)} r="2" fill={color} />
-    </svg>
-  )
-}
 
-export default function FuelPanel({ fuel }: FuelPanelProps) {
   return (
     <SectionPanel
       title="COMBUSTIBLE"
-      icon={<FuelIcon size={14} className="text-fuel-primary" />}
+      icon={<FuelIcon size={18} className="text-status-ok md:size-[18px] lg:size-[22px] xl:size-[24px]" />}
+      iconColor="text-status-ok"
+      titleColorClass="text-status-ok"
+      borderClass="border-status-ok/60"
+      bodyClass="shadow-[0_0_32px_-10px_rgba(16,185,129,0.12)]"
+      grow
     >
-      <div className="p-0.5 md:p-1 lg:p-1 xl:p-1.5 h-full flex flex-col min-h-0 gap-0.5 md:gap-0.5 lg:gap-1">
-        <div className="grid grid-cols-2 divide-x divide-industrial-700/60 flex-1 min-h-0">
-          <div className="flex flex-col px-0.5 md:px-0.5 lg:px-1 xl:px-1 py-0.25 md:py-0.25 lg:py-0.5 min-w-0 h-full gap-0.25 md:gap-0.25 lg:gap-0.5">
-            <div className="flex items-center gap-0.5 md:gap-0.5 lg:gap-1 min-w-0">
-              <FuelIcon size={10} className="text-gray-500 flex-shrink-0" />
-              <span className="text-[7px] md:text-[7.5px] lg:text-[8px] xl:text-[9px] text-gray-400 uppercase tracking-wider font-semibold truncate">CONSUMO INST.</span>
-            </div>
-            <div className="flex flex-col gap-0.25 md:gap-0.25 lg:gap-0.5 min-w-0 mt-auto">
-              <div className="flex items-baseline gap-0.5 md:gap-0.5 min-w-0">
-                <div className="font-mono font-black text-xl md:text-xl lg:text-2xl xl:text-2xl text-white leading-none tracking-tight">
-                  {fuel.instantConsumption.toFixed(1)}
+      <div className="p-0.5 md:p-0.5 lg:p-1 xl:p-1.5 h-full flex flex-col min-h-0 gap-1 md:gap-1 lg:gap-1.5">
+        <div className="grid grid-cols-2 divide-x divide-status-ok/40 flex-1 min-h-0 gap-0">
+          <div className="flex flex-col min-w-0 h-full divide-y divide-industrial-700/70 px-0.5 md:px-0.5 lg:px-1 xl:px-1 py-0.25 md:py-0.5 gap-0.5 md:gap-0.5 lg:gap-0.5">
+            {dataRows.map((row, i) => (
+              <div key={i} className={`flex flex-col min-w-0 flex-1 min-h-0 justify-center ${i > 0 ? 'pt-0.5 md:pt-0.5' : ''}`}>
+                <div className="text-[7px] md:text-[7.5px] lg:text-[8px] xl:text-[8.5px] text-gray-300 uppercase tracking-wider font-semibold whitespace-nowrap">{row.label}</div>
+                <div className="flex items-baseline gap-0.5 min-w-0 mt-0.25">
+                  <div className="font-mono font-black text-xl md:text-xl lg:text-2xl xl:text-2xl text-white leading-none tracking-tight">
+                    {row.value}
+                  </div>
+                  <span className="text-[9px] md:text-[9.5px] lg:text-[10px] xl:text-[10px] text-status-ok font-bold leading-none whitespace-nowrap mt-0.25">
+                    {row.unit}
+                  </span>
                 </div>
-                <span className="text-[8px] md:text-[8.5px] lg:text-[9px] xl:text-[9.5px] text-gray-400 font-bold leading-none whitespace-nowrap">gal/h</span>
               </div>
-              <div className="w-full min-w-0"><Sparkline value={fuel.instantConsumption} /></div>
-            </div>
+            ))}
           </div>
-          <div className="flex flex-col px-0.5 md:px-0.5 lg:px-1 xl:px-1 py-0.25 md:py-0.25 lg:py-0.5 min-w-0 h-full gap-0.25 md:gap-0.25 lg:gap-0.5">
-            <div className="flex items-center justify-between min-w-0 gap-0.5">
-              <span className="text-[7px] md:text-[7.5px] lg:text-[8px] xl:text-[9px] text-gray-400 uppercase tracking-wider font-semibold truncate">NIVEL TANQUE</span>
-              <FuelIcon size={12} className="text-fuel-primary flex-shrink-0" />
-            </div>
-            <div className="flex flex-col gap-0.25 md:gap-0.25 lg:gap-0.5 min-w-0 mt-auto">
-              <div className="flex items-baseline gap-0.5 md:gap-0.5 min-w-0">
-                <span className="font-mono font-black text-xl md:text-xl lg:text-2xl xl:text-2xl text-fuel-primary leading-none tracking-tight">
-                  {fuel.tankLevel.toFixed(0)}
-                </span>
-                <span className="text-[9px] md:text-[9.5px] lg:text-[10px] xl:text-[11px] text-gray-400 font-bold">%</span>
+
+          <div className="flex flex-col min-w-0 h-full px-0.5 md:px-0.5 lg:px-1 xl:px-1 py-0.25 md:py-0.5 gap-0.5 md:gap-0.5 lg:gap-0.5">
+            <div className="flex flex-col flex-1 min-h-0">
+              <div className="flex items-center justify-between gap-0.5 min-w-0">
+                <span className="text-[7px] md:text-[7.5px] lg:text-[8px] xl:text-[8.5px] text-gray-300 uppercase tracking-wider font-semibold whitespace-nowrap">NIVEL TANQUE COMBUSTIBLE</span>
               </div>
-              <ProgressBar value={fuel.tankLevel} color="bg-fuel-primary" height="h-1.5 md:h-1.5 lg:h-2" rounded />
+              <div className="flex items-center justify-between gap-1 mt-0.25 min-w-0">
+                <div className="flex items-baseline gap-0.5 min-w-0">
+                  <span className="font-mono font-black text-3xl md:text-3xl lg:text-4xl xl:text-4xl text-white leading-none tracking-tighter">
+                    {fuel.tankLevel.toFixed(0)}
+                  </span>
+                  <span className="text-[12px] md:text-sm lg:text-base xl:text-base text-gray-300 font-bold leading-none">%</span>
+                </div>
+                <FuelIcon size={32} className="text-gray-300/70 md:size-[32px] lg:size-[36px] xl:size-[38px] flex-shrink-0" />
+              </div>
+              <div className="min-w-0">
+                <ProgressBar value={fuel.tankLevel} color="bg-status-ok" height="h-3 md:h-3 lg:h-3.5 xl:h-4" rounded />
+                <div className="flex justify-between text-[6px] md:text-[7px] lg:text-[7.5px] text-gray-400 font-semibold mt-0.25 tracking-wider">
+                  <span>0</span>
+                  <span>1/2</span>
+                  <span>1</span>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div className="border-t border-industrial-700/60 my-0.25 md:my-0.25 lg:my-0.25" />
+            <div className="border-t border-industrial-700/70 my-0.25" />
 
-        <div className="grid grid-cols-3 divide-x divide-industrial-700/60 flex-shrink-0">
-          <div className="flex flex-col items-start justify-center gap-0.25 md:gap-0.25 lg:gap-0.5 px-0.5 md:px-0.5 lg:px-1 xl:px-1 py-0.25 md:py-0.25 lg:py-0.5 min-w-0">
-            <div className="text-[6.5px] md:text-[7px] lg:text-[7.5px] xl:text-[8px] text-gray-400 uppercase tracking-wider font-bold truncate w-full text-start">CONSUMO HOY</div>
-            <div className="font-mono font-bold text-[10px] md:text-[10.5px] lg:text-[11px] xl:text-xs text-white leading-none whitespace-nowrap">
-              {fuel.todayConsumption.toFixed(1)} <span className="text-[6.5px] md:text-[7px] lg:text-[7.5px] text-gray-400 font-semibold">gal</span>
-            </div>
-          </div>
-          <div className="flex flex-col items-start justify-center gap-0.25 md:gap-0.25 lg:gap-0.5 px-0.5 md:px-0.5 lg:px-1 xl:px-1 py-0.25 md:py-0.25 lg:py-0.5 min-w-0">
-            <div className="text-[6.5px] md:text-[7px] lg:text-[7.5px] xl:text-[8px] text-gray-400 uppercase tracking-wider font-bold truncate w-full text-start">RALENTÍ HOY</div>
-            <div className="font-mono font-bold text-[10px] md:text-[10.5px] lg:text-[11px] xl:text-xs text-white leading-none whitespace-nowrap">
-              {fuel.idleTodayConsumption.toFixed(1)} <span className="text-[6.5px] md:text-[7px] lg:text-[7.5px] text-gray-400 font-semibold">gal</span>
-            </div>
-          </div>
-          <div className="flex flex-col items-start justify-center gap-0.25 md:gap-0.25 lg:gap-0.5 px-0.5 md:px-0.5 lg:px-1 xl:px-1 py-0.25 md:py-0.25 lg:py-0.5 min-w-0">
-            <div className="text-[6.5px] md:text-[7px] lg:text-[7.5px] xl:text-[8px] text-gray-400 uppercase tracking-wider font-bold truncate w-full text-start">AUTONOMÍA</div>
-            <div className="font-mono font-bold text-[10px] md:text-[10.5px] lg:text-[11px] xl:text-xs text-status-ok leading-none whitespace-nowrap">
-              {fuel.autonomy.toFixed(1)} <span className="text-[6.5px] md:text-[7px] lg:text-[7.5px] text-gray-400 font-semibold">h</span>
+            <div className="flex flex-col flex-1 min-h-0">
+              <span className="text-[7px] md:text-[7.5px] lg:text-[8px] xl:text-[8.5px] text-gray-300 uppercase tracking-wider font-semibold whitespace-nowrap">AUTONOMÍA COMBUSTIBLE</span>
+              <div className="flex items-center justify-between gap-1 mt-0.25 min-w-0">
+                <div className="flex items-baseline gap-0.5 min-w-0">
+                  <span className="font-mono font-black text-2xl md:text-2xl lg:text-3xl xl:text-3xl text-white leading-none tracking-tighter">
+                    {fuel.autonomy.toFixed(1)}
+                  </span>
+                  <span className="text-[10px] md:text-[11px] lg:text-xs xl:text-xs text-status-ok font-bold leading-none mt-0.25">
+                    h
+                  </span>
+                </div>
+                <Clock size={28} className="text-status-ok md:size-[28px] lg:size-[30px] xl:size-[32px] flex-shrink-0" strokeWidth={1.5} />
+              </div>
             </div>
           </div>
         </div>
