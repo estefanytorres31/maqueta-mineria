@@ -15,15 +15,15 @@ export default function MachineCard({ machine, isSelected, onClick, variant = 'g
       type="button"
       data-machine-card={isGrid ? undefined : true}
       onClick={onClick}
-      className={`group snap-center ${isGrid ? 'my-0' : 'shrink-0'} ${isGrid ? 'w-full h-auto aspect-[3/4] xl:aspect-[1/1] 2xl:aspect-[9/16]' : 'w-[44%] sm:w-[38%] md:w-[30%] lg:w-[25%] h-full min-h-0'} relative rounded-lg md:rounded-xl border-2 p-1 sm:p-1.5 md:p-2 lg:p-2.5 xl:p-2 2xl:p-2.5 flex flex-col items-center justify-between gap-0.5 sm:gap-1 md:gap-1.5 xl:gap-1 2xl:gap-1.5 transition-all duration-200 overflow-hidden ${
+      className={`group snap-center ${isGrid ? 'my-0' : 'shrink-0'} ${isGrid ? 'w-full h-auto aspect-[3/4] xl:aspect-[1/1] 2xl:aspect-[1/2]' : 'w-[44%] sm:w-[38%] md:w-[30%] lg:w-[25%] h-full min-h-0'} relative rounded-lg md:rounded-xl border-2 p-1 sm:p-1.5 md:p-2 lg:p-2.5 xl:p-2 2xl:p-2.5 flex flex-col items-center justify-between gap-0.5 sm:gap-1 md:gap-1.5 xl:gap-1 2xl:gap-1.5 transition-all overflow-hidden ${
         isSelected
-          ? `bg-industrial-800/80 border-electric-500 shadow-glow-blue ${isGrid ? 'shadow-[0_0_28px_rgba(20,184,255,0.35)] border-[3px]' : 'scale-[1.02]'}`
+          ? `bg-industrial-800/80 border-electric-500 shadow-glow-blue shadow-[0_0_28px_rgba(20,184,255,0.35)] ${isGrid ? 'border-[3px]' : 'scale-[1.02]'}`
           : 'bg-industrial-850/60 border-industrial-700 hover:border-industrial-500 hover:bg-industrial-800/80'
       }`}
     >
 
       <div className="w-full text-left flex-shrink-0 px-1 sm:px-1.5 md:px-1.5 lg:px-1.5 xl:px-2 2xl:px-2.5">
-        <div className={`${isGrid ? 'text-[9px] sm:text-[10px] md:text-xs lg:text-xs xl:text-[12px] 2xl:text-[13px]' : 'text-[8px] sm:text-[10px] md:text-xs xl:text-sm 2xl:text-base'} font-bold text-gray-200 uppercase tracking-wide sm:tracking-wider md:tracking-[0.08em] xl:tracking-wide 2xl:tracking-wide truncate leading-tight`}>
+        <div className={`${isGrid ? 'text-[9px] sm:text-[10px] md:text-xs lg:text-xs xl:text-[12px] 2xl:text-[12px]' : 'text-[8px] sm:text-[10px] md:text-xs xl:text-sm 2xl:text-base'} font-bold text-gray-200 uppercase tracking-wide sm:tracking-wider md:tracking-[0.08em] xl:tracking-wide 2xl:tracking-wide truncate leading-tight`}>
           {machine.name} 
         </div>
       </div>
@@ -34,7 +34,7 @@ export default function MachineCard({ machine, isSelected, onClick, variant = 'g
             src={machine.imageUrl}
             alt={machine.name}
             loading="lazy"
-            className="max-w-full max-h-full w-auto h-auto xl:w-[90%] xl:h-[90%] xl:object-contain 2xl:scale-110 2xl:object-contain object-contain select-none pointer-events-none drop-shadow-[0_3px_12px_rgba(0,0,0,0.68)]"
+            className="max-w-full max-h-full w-auto h-auto xl:w-[90%] xl:h-[90%] xl:object-contain 2xl:scale-y-125 scale-x-110 2xl:object-contain object-contain select-none pointer-events-none drop-shadow-[0_3px_12px_rgba(0,0,0,0.68)]"
           />
         </div>
       </div>

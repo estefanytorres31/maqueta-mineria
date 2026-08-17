@@ -1,6 +1,29 @@
 import { create } from 'zustand'
 import { Page, Machine, SystemStatus } from '../types'
-import { MACHINES } from '../data/machines'
+import { MACHINES, getMachineById } from '../data/machines'
+
+const LAST_MACHINE_STORAGE_KEY = 'edge-smart:last-selected-machine-id'
+
+const readLastSelectedMachine = (): Machine | null => {
+  if (typeof window === 'undefined') return null
+  try {
+    const lastId = window.localStorage.getItem(LAST_MACHINE_STORAGE_KEY)
+    if (!lastId) return null
+    const found = getMachineById(lastId)
+    return found ?? null
+  } catch {
+    return null
+  }
+}
+
+const writeLastSelectedMachine = (machine: Machine | null) => {
+  if (typeof window === 'undefined') return
+  try {
+    if (machine) window.localStorage.setItem(LAST_MACHINE_STORAGE_KEY, machine.id)
+    else window.localStorage.removeItem(LAST_MACHINE_STORAGE_KEY)
+  } catch {
+  }
+}
 
 interface NavigationState {
   currentPage: Page
@@ -15,9 +38,14 @@ interface NavigationState {
   setSystemStatus: (status: Partial<SystemStatus>) => void
 }
 
+const hydrateInitialSelected = (): Machine | null => {
+  const persisted = readLastSelectedMachine()
+  return persisted ?? (MACHINES[0] ?? null)
+}
+
 export const useNavigationStore = create<NavigationState>((set, get) => ({
   currentPage: 'selector',
-  selectedMachine: null,
+  selectedMachine: hydrateInitialSelected(),
   systemStatus: {
     storage: 'OK',
     sensors: 'OK',
@@ -32,18 +60,26 @@ export const useNavigationStore = create<NavigationState>((set, get) => ({
   },
   setMachine: (machine) => {
     if (get().selectedMachine?.id === machine.id) return
+    writeLastSelectedMachine(machine)
     set({ selectedMachine: machine })
   },
   goToDashboard: (machine) => {
     const next = machine ?? get().selectedMachine
-    if (next) set({ selectedMachine: next, currentPage: 'home' })
-    else set({ currentPage: 'selector' })
+    if (next) {
+      writeLastSelectedMachine(next)
+      set({ selectedMachine: next, currentPage: 'home' })
+    } else {
+      set({ currentPage: 'selector' })
+    }
   },
-  clearMachine: () => set({ selectedMachine: null, currentPage: 'selector' }),
+  clearMachine: () => {
+    writeLastSelectedMachine(null)
+    set({ selectedMachine: null, currentPage: 'selector' })
+  },
   setFullscreen: (fs) => set({ isFullscreen: fs }),
   setSystemStatus: (status) => set((s) => ({
     systemStatus: { ...s.systemStatus, ...status }
   }))
 }))
 
-export { MACHINES }
+export { MACHINES, LAST_MACHINE_STORAGE_KEY, readLastSelectedMachine }

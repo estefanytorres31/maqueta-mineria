@@ -11,7 +11,7 @@ export default function EfficiencyPanel({ productivity }: EfficiencyPanelProps) 
   return (
     <SectionPanel
       title="EFICIENCIA"
-      icon={<BarChart3 size={14} className="text-status-warning md:size-[14px] lg:size-[15px] xl:size-[16px]" />}
+      icon={<BarChart3 size={14} className="text-status-warning md:size-[18px] lg:size-[22px] xl:size-[24px]" />}
     >
       <div className="p-0.5 md:p-0.5 lg:p-0.75 xl:p-1 h-full flex flex-col min-h-0 gap-0.25 md:gap-0.25 lg:gap-0.5">
         <div className="grid grid-cols-2 divide-x divide-industrial-700/60 flex-1 min-h-0">

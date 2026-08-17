@@ -1,4 +1,5 @@
 export type MachineType = 
+  | 'retroexcavator' 
   | 'excavator' 
   | 'loader' 
   | 'scoop' 
@@ -27,6 +28,7 @@ export interface EngineData {
   coolantTemp: number
   oilPressure: number
   oilTemp: number
+  voltage: number
   status: SensorStatus
 }
 

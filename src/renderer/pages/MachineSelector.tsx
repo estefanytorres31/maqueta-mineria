@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigationStore } from '../stores/navigationStore'
 import { MACHINES } from '../data/machines'
 import { Machine } from '../types'
@@ -6,12 +6,27 @@ import SelectorHeader from '../components/machine-selector/SelectorHeader'
 import MachineCard from '../components/machine-selector/MachineCard'
 import MachineCarousel from '../components/machine-selector/MachineCarousel'
 
+const getInitialSelected = (): Machine => {
+  const persisted = useNavigationStore.getState().selectedMachine
+  return persisted ?? MACHINES[0]
+}
+
 export default function MachineSelector() {
-  const [selected, setSelected] = useState<Machine | null>(MACHINES[0])
+  const persistedInitial = getInitialSelected()
+  const [selected, setSelected] = useState<Machine | null>(persistedInitial)
+  const globalSelectedMachine = useNavigationStore(s => s.selectedMachine)
   const goToDashboard = useNavigationStore(s => s.goToDashboard)
+  const setMachine = useNavigationStore(s => s.setMachine)
+
+  useEffect(() => {
+    if (globalSelectedMachine && globalSelectedMachine.id !== selected?.id) {
+      setSelected(globalSelectedMachine)
+    }
+  }, [globalSelectedMachine, selected?.id])
 
   const handleCardClick = (machine: Machine) => {
     setSelected(machine)
+    setMachine(machine)
     goToDashboard(machine)
   }
 
@@ -30,7 +45,7 @@ export default function MachineSelector() {
         </div>
 
         <div className="flex-1 min-h-0 w-full flex items-center justify-center overflow-hidden">
-          <div className="hidden xl:grid xl:grid-cols-6 w-full h-auto max-h-full max-w-[2000px] 2xl:max-w-[2600px] mx-auto gap-3 xl:gap-4 2xl:gap-3 px-0 xl:px-6 2xl:px-0.5 place-content-center items-center">
+          <div className="hidden xl:grid xl:grid-cols-7 w-full h-auto max-h-full max-w-[2000px] 2xl:max-w-[2600px] mx-auto gap-3 xl:gap-4 2xl:gap-3 px-0 xl:px-6 2xl:px-0.5 place-content-center items-center">
             {MACHINES.map(machine => (
               <MachineCard
                 key={machine.id}

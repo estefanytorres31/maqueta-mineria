@@ -74,7 +74,6 @@ export default function TachoGauge({
         <path
           d={arcPath(startDeg + sweepDeg * dangerPct, endDeg, rOuter)}
           stroke="#EF4444" strokeWidth={size * 0.05} fill="none" strokeLinecap="round"
-          style={{ filter: 'drop-shadow(0 0 4px rgba(239,68,68,0.55))' }}
         />
 
         {Array.from({ length: 13 }).map((_, i) => {
@@ -112,7 +111,7 @@ export default function TachoGauge({
         </text>
 
         <g transform={`rotate(${needleDeg} ${cx} ${cy})`}
-           style={{ transition: 'transform 0.35s cubic-bezier(.2,.85,.2,1.1)' }}>
+            style={{ transition: 'transform 0.35s cubic-bezier(.2,.85,.2,1.1)' }}>
           <polygon
             points={`${cx},${cy - rNeedle * 1.01}  ${cx - size * 0.035},${cy + size * 0.04}  ${cx + size * 0.035},${cy + size * 0.04}`}
             fill="#000000" opacity="0.35"

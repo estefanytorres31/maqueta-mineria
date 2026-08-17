@@ -61,15 +61,14 @@ export default function Co2Panel({ fuel }: Co2PanelProps) {
             <div className="text-[9px] md:text-[10px] lg:text-[11px] xl:text-xs text-gray-400 uppercase tracking-[0.1em] font-semibold">
               EMISIONES TOTALES
             </div>
-            <div className="font-mono font-black text-4xl md:text-4xl lg:text-5xl xl:text-6xl text-white leading-[0.9] tracking-tighter mt-1"
-                 style={{ textShadow: '0 2px 24px rgba(255,255,255,0.07)' }}>
+            <div className="font-mono font-black text-4xl md:text-3xl lg:text-4xl xl:text-5xl text-white leading-[0.9] tracking-tighter mt-1">
               {co2Today.toFixed(2)}
             </div>
             <div className="text-[11px] md:text-xs lg:text-sm xl:text-base text-status-ok font-bold mt-0.5 leading-none tracking-wider">
               t CO₂
             </div>
           </div>
-          <div className="flex-1 min-w-0 flex items-end justify-end h-full pb-1">
+          <div className="flex-1 min-w-0 flex items-center justify-end h-full py-4">
             <Co2Sparkline value={co2Today} />
           </div>
         </div>

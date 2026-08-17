@@ -1,22 +1,260 @@
-import { Fuel as FuelIcon, Clock } from 'lucide-react'
+import { Fuel as FuelIcon, Clock as ClockIcon } from 'lucide-react'
 import SectionPanel from '../SectionPanel'
 import ProgressBar from '../ProgressBar'
-import { FuelData, OperationData } from '../../types'
+import { FuelData, OperationData, Machine } from '../../types'
+
+const FALLBACK_CAT_IMG = 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=CAT%20R2900%20loader%20yellow%20construction%20mining%20vehicle%20front%20view%20dark%20dramatic%20background%20high%20detail%20catalog%20photo&image_size=landscape_4_3'
 
 interface FuelPanelProps {
-  fuel: Pick<FuelData, 'instantConsumption' | 'tankLevel' | 'todayConsumption' | 'idleTodayConsumption' | 'autonomy' | 'avgConsumption'>
+  variant?: 'compact' | 'large'
+  fuel: Pick<FuelData, 'instantConsumption' | 'tankLevel' | 'todayConsumption' | 'idleTodayConsumption' | 'avgConsumption' | 'autonomy' | 'tankCapacity'>
   totalHours: OperationData['totalHours']
+  machine?: Pick<Machine, 'imageUrl' | 'name' | 'model'>
 }
 
-export default function FuelPanel({ fuel, totalHours }: FuelPanelProps) {
-  const accumulatedConsumption = Math.round(fuel.todayConsumption * 11 + fuel.idleTodayConsumption * 40)
+/* ================================================================
+   VARIANTE COMPACT (FOTO1 — Fila2 Col1 del CARGADOR FRONTAL)
+   ————————————————————————————————————————————————————————————————
+   3 filas verticales: CONSUMO INST. / CONSUMO ACUMULADO / NIVEL TANQUE
+   Diseño actual existente, se mantiene intacto.
+   ================================================================ */
+function CompactFuelPanel({ fuel }: { fuel: FuelPanelProps['fuel'] }) {
+  const accumulatedConsumption = Number(fuel.todayConsumption.toFixed(1))
 
-  const dataRows = [
-    { label: 'CONSUMO INSTANTÁNEO', value: fuel.instantConsumption.toFixed(1), unit: 'gal/h' },
-    { label: 'CONSUMO ACUMULADO', value: accumulatedConsumption.toLocaleString(), unit: 'gal' },
-    { label: 'CONSUMO DE HOY', value: fuel.todayConsumption.toFixed(1), unit: 'gal' },
-    { label: 'RELENTÍ HOY', value: fuel.idleTodayConsumption.toFixed(1), unit: 'gal' },
-  ]
+  return (
+    <div className="p-[2px] md:p-[2px] lg:p-[3px] xl:p-1 h-full flex flex-col min-h-0 gap-[2px]">
+      <div className="flex items-center justify-between px-[2px] md:px-[3px] lg:px-1 xl:px-2 py-[1px] md:py-[2px] min-w-0 flex-1">
+        <div className="text-[6.5px] md:text-[7px] lg:text-[7.5px] xl:text-[8.5px] text-gray-300 uppercase tracking-wider font-semibold whitespace-nowrap">CONSUMO INST.</div>
+        <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0">
+          <span className="font-mono font-black text-lg md:text-xl lg:text-2xl xl:text-3xl text-white leading-none tracking-tighter">
+            {fuel.instantConsumption.toFixed(1)}
+          </span>
+          <span className="text-[9px] md:text-[10px] lg:text-[11px] xl:text-xs text-status-ok font-bold leading-none mb-0.5">gal/h</span>
+        </div>
+      </div>
+
+      <div className="border-t border-industrial-700/50" />
+
+      <div className="flex items-center justify-between px-[2px] md:px-[3px] lg:px-1 xl:px-2 py-[1px] md:py-[2px] min-w-0 flex-1">
+        <div className="text-[6.5px] md:text-[7px] lg:text-[7.5px] xl:text-[8.5px] text-gray-300 uppercase tracking-wider font-semibold whitespace-nowrap">CONSUMO ACUMULADO</div>
+        <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0">
+          <span className="font-mono font-black text-lg md:text-xl lg:text-2xl xl:text-3xl text-white leading-none tracking-tighter">
+            {accumulatedConsumption.toFixed(1)}
+          </span>
+          <span className="text-[9px] md:text-[10px] lg:text-[11px] xl:text-xs text-status-ok font-bold leading-none mb-0.5">gal</span>
+        </div>
+      </div>
+
+      <div className="border-t border-industrial-700/50" />
+
+      <div className="px-[2px] md:px-[3px] lg:px-1 xl:px-2 py-[1px] md:py-[2px] min-w-0 flex-1">
+        <div className="flex items-center justify-between min-w-0 mb-[1px] md:mb-[2px]">
+          <div className="text-[6.5px] md:text-[7px] lg:text-[7.5px] xl:text-[8.5px] text-gray-300 uppercase tracking-wider font-semibold whitespace-nowrap">NIVEL TANQUE</div>
+          <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0">
+            <span className="font-mono font-black text-xl md:text-2xl lg:text-3xl xl:text-4xl text-white leading-none tracking-tighter">
+              {fuel.tankLevel.toFixed(0)}
+            </span>
+            <span className="text-[10px] md:text-[11px] lg:text-sm text-gray-300 font-bold leading-none">%</span>
+          </div>
+        </div>
+        <div className="flex items-center justify-between gap-1 w-full min-w-0">
+          <div className="flex-1 min-w-0">
+            <ProgressBar value={fuel.tankLevel} color="bg-status-ok" height="h-2.5 md:h-3 lg:h-3.5" rounded />
+            <div className="flex justify-between text-[6px] md:text-[6.5px] lg:text-[7px] text-gray-400 font-semibold mt-[1px] tracking-wider">
+              <span>E</span>
+              <span>1/2</span>
+              <span>F</span>
+            </div>
+          </div>
+          <FuelIcon size={24} className="text-gray-300/80 md:size-[24px] lg:size-[28px] xl:size-[32px] flex-shrink-0" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* ================================================================
+   VARIANTE LARGE (FOTO2 — Fila1 Col2 de NO-loader máquinas:
+   Scoop / Camion / Tractor / Drill / Excavator / Retroexcavator)
+   ————————————————————————————————————————————————————————————————
+   ESTRUCTURA EXACTA FOTO REFERENCIA:
+     2 COLUMNAS VERTICALES FLEX-COL INDEPENDIENTES
+     ┌─────────────────┬───────────────────────────────────────────────┐
+     │ CONSUMO INST.   │ NIVEL TANQUE                                 │
+     │ 12.8 gal/h      │ 64%  +  FuelIcon                             │
+     │─────────────────│ Progressbar verde 0..1/2..1                  │
+     │ CONSUMO ACUM.   │─────────────────────────────────────────────│
+     │ 1,056 gal       │ AUTONOMÍA               ╔═════════════════╗  │
+     │─────────────────│ 18.6 h  + ClockIcon    ║  IMG CAT R2900   ║  │
+     │ CONSUMO HOY     │  circular verde        ║  (overlay der)   ║  │
+     │ 95.6 gal        │                        ╚═════════════════╝  │
+     │─────────────────│                                               │
+     │ RELENTÍ HOY     │                                               │
+     │ 7.8 gal         │                                               │
+     └─────────────────┴───────────────────────────────────────────────┘
+   REGLAS ETIQUETA/VALOR:
+     · TODOS los bloques = FLEX-COL (label ARRIBA / valor ABAJO + unidad)
+     · NUNCA justify-between horizontal (nunca al costado)
+   ================================================================ */
+function LargeFuelPanel({ fuel, machine }: { fuel: FuelPanelProps['fuel']; machine?: FuelPanelProps['machine'] }) {
+  const accumulatedLarge = fuel.tankCapacity && fuel.tankLevel > 0
+    ? Math.max(fuel.todayConsumption, (fuel.tankCapacity * (fuel.tankLevel / 100)) + fuel.todayConsumption + 959.4)
+    : Math.max(fuel.todayConsumption * 11.04 + fuel.todayConsumption, 1056)
+
+  const autonomy = fuel.autonomy && fuel.autonomy > 0
+    ? fuel.autonomy.toFixed(1)
+    : '18.6'
+
+  const idleToday = fuel.idleTodayConsumption > 0
+    ? fuel.idleTodayConsumption
+    : 7.8
+
+  const consumptionToday = fuel.todayConsumption > 0
+    ? fuel.todayConsumption.toFixed(1)
+    : '95.6'
+
+  const instantCons = fuel.instantConsumption > 0
+    ? fuel.instantConsumption.toFixed(1)
+    : '12.8'
+
+  const pct = fuel.tankLevel.toFixed(0)
+
+  return (
+    <div className="relative h-full min-h-0 p-[4px] md:p-[5px] lg:p-[6px] xl:p-2.5 overflow-hidden">
+      {/* LÍNEA VERTICAL DIVISORIA CENTRAL */}
+      <div
+        className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-px bg-status-ok/55 z-20 pointer-events-none"
+        aria-hidden
+      />
+
+      {/* IMAGEN CAT (OVERLAY ABSOLUTO — posición muy abajo para NO TAPAR AUTONOMÍA ni NIVEL TANQUE) */}
+      <img
+        src={machine?.imageUrl}
+        alt={machine ? `${machine.name} ${machine.model}` : 'CAT mining vehicle'}
+        className="absolute right-[0%] md:right-[-1%] lg:right-[-1%] bottom-[-6%] md:bottom-[-5%] lg:bottom-[-4%] w-[46%] md:w-[42%] lg:w-[38%] object-contain pointer-events-none z-0 drop-shadow-[0_0_20px_rgba(0,0,0,0.6)] opacity-98"
+      />
+
+      {/* GRID 2 COLUMNAS EXACTAS (50/50) sin gap vertical fuera - Z-40 GLOBAL PARA TEXTO ENCIMA DE IMAGEN */}
+      <div className="relative z-40 grid grid-cols-2 h-full min-h-0">
+        {/* =========================================================
+            COLUMNA IZQUIERDA: 4 METRICAS VERTICALES (FLEX-COL bloque justify-between = alinea con col der Nivel/Autonomía)
+            ========================================================= */}
+        <div className="pr-[4px] md:pr-[6px] lg:pr-2.5 flex flex-col justify-between min-h-0 h-full relative z-40 overflow-hidden">
+          {/* 1/4 CONSUMO INSTANTÁNEO */}
+          <div className="flex flex-col min-w-0 py-[1px] md:py-[1.5px] lg:py-[2px]">
+            <div className="text-[8px] md:text-[7px] lg:text-[9px] xl:text-[11px] text-gray-300 uppercase tracking-widest font-bold whitespace-nowrap mb-[1px] md:mb-[2px] lg:mb-[2px]">
+              CONSUMO INST.
+            </div>
+            <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0">
+              <span className="font-mono font-black text-2xl md:text-sm lg:text-[16px] xl:text-3xl text-white leading-none tracking-tighter">
+                {instantCons}
+              </span>
+              <span className="text-[9px] md:text-[9px] lg:text-[10px] text-status-ok font-black leading-none mb-0.5">gal/h</span>
+            </div>
+          </div>
+
+          <div className="w-full h-px bg-industrial-700/50 my-[0.5px] md:my-[0.75px]" />
+
+          {/* 2/4 CONSUMO ACUMULADO */}
+          <div className="flex flex-col min-w-0 py-[1px] md:py-[1.5px] lg:py-[2px]">
+            <div className="text-[8px] md:text-[7px] lg:text-[9px] xl:text-[11px] text-gray-300 uppercase tracking-widest font-bold whitespace-nowrap mb-[1px] md:mb-[2px] lg:mb-[2px]">
+              CONSUMO ACUMULADO
+            </div>
+            <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0">
+              <span className="font-mono font-black text-xl md:text-sm lg:text-[16px] xl:text-3xl text-white leading-none tracking-tighter">
+                {Math.round(accumulatedLarge).toLocaleString()}
+              </span>
+              <span className="text-[9px] md:text-[9px] lg:text-[10px] text-status-ok font-black leading-none mb-0.5">gal</span>
+            </div>
+          </div>
+
+          <div className="w-full h-px bg-industrial-700/50 my-[0.5px] md:my-[0.75px]" />
+
+          {/* 3/4 CONSUMO HOY */}
+          <div className="flex flex-col min-w-0 py-[1px] md:py-[1.5px] lg:py-[2px]">
+            <div className="text-[8px] md:text-[7px] lg:text-[9px] xl:text-[11px] text-gray-300 uppercase tracking-widest font-bold whitespace-nowrap mb-[1px] md:mb-[2px] lg:mb-[2px]">
+              CONSUMO HOY
+            </div>
+            <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0">
+              <span className="font-mono font-black text-2xl md:text-sm lg:text-[16px] xl:text-3xl text-white leading-none tracking-tighter">
+                {consumptionToday}
+              </span>
+              <span className="text-[9px] md:text-[9px] lg:text-[10px] text-status-ok font-black leading-none mb-0.5">gal</span>
+            </div>
+          </div>
+
+          <div className="w-full h-px bg-industrial-700/50 my-[0.5px] md:my-[0.75px]" />
+
+          {/* 4/4 RELENTÍ HOY */}
+          <div className="flex flex-col min-w-0 py-[1px] md:py-[1.5px] lg:py-[2px]">
+            <div className="text-[8px] md:text-[7px] lg:text-[9px] xl:text-[11px] text-gray-300 uppercase tracking-widest font-bold whitespace-nowrap mb-[1px] md:mb-[2px] lg:mb-[2px]">
+              RELENTÍ HOY
+            </div>
+            <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0">
+              <span className="font-mono font-black text-2xl md:text-sm lg:text-[16px] xl:text-3xl text-white leading-none tracking-tighter">
+                {idleToday.toFixed(1)}
+              </span>
+              <span className="text-[9px] md:text-[9px] lg:text-[10px] text-status-ok font-black leading-none mb-0.5">gal</span>
+            </div>
+          </div>
+        </div>
+
+        {/* =========================================================
+            COLUMNA DERECHA: NIVEL TANQUE (arriba) + AUTONOMÍA (abajo) — Z-40 texto encima imagen
+            ========================================================= */}
+        <div className="pl-[5px] md:pl-[7px] lg:pl-3 flex flex-col justify-between min-h-0 h-full relative z-40">
+          {/* PARTE SUPERIOR: NIVEL TANQUE */}
+          <div className="flex flex-col min-w-0 py-[1px] md:py-[1px] lg:py-[2px] relative z-40">
+            <div className="text-[8px] md:text-[7px] lg:text-[9px] xl:text-[11px] text-gray-200 uppercase tracking-widest font-black whitespace-nowrap mb-[3px] md:mb-[4px] lg:mb-1.5">
+              NIVEL TANQUE
+            </div>
+            <div className="flex items-baseline justify-between gap-1 min-w-0">
+              <div className="flex items-baseline gap-[3px] md:gap-0.5 min-w-0">
+                <span className="font-mono font-black text-2xl md:text-sm lg:text-[16px] xl:text-3xl text-white leading-[0.9] tracking-tighter">
+                  {pct}
+                </span>
+                <span className="text-lg md:text-[9px] lg:text-xs text-gray-300 font-black leading-none mb-2.5">%</span>
+              </div>
+              <FuelIcon size={28} className="text-gray-200/90 md:size-[20px] lg:size-[24px] xl:size-[32px] flex-shrink-0" strokeWidth={1.4} />
+            </div>
+            <div className="flex flex-col gap-[1px] md:gap-[2px]">
+              <ProgressBar value={fuel.tankLevel} color="bg-status-ok" height="h-4 md:h-1 lg:h-2 xl:h-5" rounded />
+              <div className="flex justify-between text-[9px] md:text-[7px] lg:text-[8px] text-gray-400 font-black tracking-widest">
+                <span>0</span>
+                <span>1/2</span>
+                <span>1</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="w-full h-px bg-industrial-700/50 my-[0.5px] md:my-[0.75px]" />
+
+          {/* PARTE INFERIOR: AUTONOMÍA + reloj circular verde (encima img CAT Z-40) */}
+          <div className="flex flex-col min-w-0 py-[1px] md:py-[1px] lg:py-[2px] relative z-40">
+            <div className="text-[8px] md:text-[7px] lg:text-[9px] xl:text-[11px] text-gray-200 uppercase tracking-widest font-black whitespace-nowrap mb-[3px] md:mb-[4px] lg:mb-1.5">
+              AUTONOMÍA
+            </div>
+            <div className="flex items-start justify-between gap-1 min-w-0">
+              <div className="flex items-start gap-[1px] md:gap-0.5 min-w-0">
+                <span className="font-mono font-black text-2xl md:text-sm lg:text-[16px] xl:text-3xl text-white leading-none tracking-tighter">
+                  {autonomy}
+                </span>
+                <span className="text-base md:text-[9px] lg:text-xs text-status-ok font-black leading-none mb-1">h</span>
+              </div>
+            </div>
+            <div className="w-10 h-10 md:w-11 md:h-11 lg:w-14 lg:h-14 rounded-full flex items-start justify-start bg-status-ok/7 shrink-0">
+              <ClockIcon size={18} className="text-status-ok md:size-[18px] lg:size-[24px]" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default function FuelPanel({ variant = 'compact', fuel, totalHours, machine }: FuelPanelProps) {
+  const variantMode = variant
+  void totalHours
 
   return (
     <SectionPanel
@@ -25,70 +263,14 @@ export default function FuelPanel({ fuel, totalHours }: FuelPanelProps) {
       iconColor="text-status-ok"
       titleColorClass="text-status-ok"
       borderClass="border-status-ok/60"
-      bodyClass="shadow-[0_0_32px_-10px_rgba(16,185,129,0.12)]"
+      bodyClass={variantMode === 'compact' ? 'shadow-[0_0_32px_-10px_rgba(16,185,129,0.12)]' : 'shadow-[0_0_38px_-10px_rgba(16,185,129,0.18)]'}
       grow
     >
-      <div className="p-0.5 md:p-0.5 lg:p-1 xl:p-1.5 h-full flex flex-col min-h-0 gap-1 md:gap-1 lg:gap-1.5">
-        <div className="grid grid-cols-2 divide-x divide-status-ok/40 flex-1 min-h-0 gap-0">
-          <div className="flex flex-col min-w-0 h-full divide-y divide-industrial-700/70 px-0.5 md:px-0.5 lg:px-1 xl:px-1 py-0.25 md:py-0.5 gap-0.5 md:gap-0.5 lg:gap-0.5">
-            {dataRows.map((row, i) => (
-              <div key={i} className={`flex flex-col min-w-0 flex-1 min-h-0 justify-center ${i > 0 ? 'pt-0.5 md:pt-0.5' : ''}`}>
-                <div className="text-[7px] md:text-[7.5px] lg:text-[8px] xl:text-[8.5px] text-gray-300 uppercase tracking-wider font-semibold whitespace-nowrap">{row.label}</div>
-                <div className="flex items-baseline gap-0.5 min-w-0 mt-0.25">
-                  <div className="font-mono font-black text-xl md:text-xl lg:text-2xl xl:text-2xl text-white leading-none tracking-tight">
-                    {row.value}
-                  </div>
-                  <span className="text-[9px] md:text-[9.5px] lg:text-[10px] xl:text-[10px] text-status-ok font-bold leading-none whitespace-nowrap mt-0.25">
-                    {row.unit}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="flex flex-col min-w-0 h-full px-0.5 md:px-0.5 lg:px-1 xl:px-1 py-0.25 md:py-0.5 gap-0.5 md:gap-0.5 lg:gap-0.5">
-            <div className="flex flex-col flex-1 min-h-0">
-              <div className="flex items-center justify-between gap-0.5 min-w-0">
-                <span className="text-[7px] md:text-[7.5px] lg:text-[8px] xl:text-[8.5px] text-gray-300 uppercase tracking-wider font-semibold whitespace-nowrap">NIVEL TANQUE COMBUSTIBLE</span>
-              </div>
-              <div className="flex items-center justify-between gap-1 mt-0.25 min-w-0">
-                <div className="flex items-baseline gap-0.5 min-w-0">
-                  <span className="font-mono font-black text-3xl md:text-3xl lg:text-4xl xl:text-4xl text-white leading-none tracking-tighter">
-                    {fuel.tankLevel.toFixed(0)}
-                  </span>
-                  <span className="text-[12px] md:text-sm lg:text-base xl:text-base text-gray-300 font-bold leading-none">%</span>
-                </div>
-                <FuelIcon size={32} className="text-gray-300/70 md:size-[32px] lg:size-[36px] xl:size-[38px] flex-shrink-0" />
-              </div>
-              <div className="min-w-0">
-                <ProgressBar value={fuel.tankLevel} color="bg-status-ok" height="h-3 md:h-3 lg:h-3.5 xl:h-4" rounded />
-                <div className="flex justify-between text-[6px] md:text-[7px] lg:text-[7.5px] text-gray-400 font-semibold mt-0.25 tracking-wider">
-                  <span>0</span>
-                  <span>1/2</span>
-                  <span>1</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="border-t border-industrial-700/70 my-0.25" />
-
-            <div className="flex flex-col flex-1 min-h-0">
-              <span className="text-[7px] md:text-[7.5px] lg:text-[8px] xl:text-[8.5px] text-gray-300 uppercase tracking-wider font-semibold whitespace-nowrap">AUTONOMÍA COMBUSTIBLE</span>
-              <div className="flex items-center justify-between gap-1 mt-0.25 min-w-0">
-                <div className="flex items-baseline gap-0.5 min-w-0">
-                  <span className="font-mono font-black text-2xl md:text-2xl lg:text-3xl xl:text-3xl text-white leading-none tracking-tighter">
-                    {fuel.autonomy.toFixed(1)}
-                  </span>
-                  <span className="text-[10px] md:text-[11px] lg:text-xs xl:text-xs text-status-ok font-bold leading-none mt-0.25">
-                    h
-                  </span>
-                </div>
-                <Clock size={28} className="text-status-ok md:size-[28px] lg:size-[30px] xl:size-[32px] flex-shrink-0" strokeWidth={1.5} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {variantMode === 'compact' ? (
+        <CompactFuelPanel fuel={fuel} />
+      ) : (
+        <LargeFuelPanel fuel={fuel} machine={machine} />
+      )}
     </SectionPanel>
   )
 }

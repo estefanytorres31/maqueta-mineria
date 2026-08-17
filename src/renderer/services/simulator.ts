@@ -54,21 +54,22 @@ export const generateInitialTelemetry = (): TelemetryData => {
       coolantTemp: randomInRange(80, 88),
       oilPressure: randomInRange(3.8, 4.8),
       oilTemp: randomInRange(70, 78),
+      voltage: randomInRange(26.8, 28.2, 1),
       status: 'OK'
     },
     fuel: {
-      instantConsumption: randomInRange(12, 16),
-      avgConsumption: randomInRange(11, 13),
-      tankLevel: randomInRange(65, 72, 0),
+      instantConsumption: randomInRange(8.2, 9.8),
+      avgConsumption: randomInRange(8.5, 9.5),
+      tankLevel: randomInRange(60, 68, 0),
       tankCapacity: 3000,
-      todayConsumption: randomInRange(105, 120),
-      idleTodayConsumption: randomInRange(8, 11),
+      todayConsumption: randomInRange(37.2, 39.8),
+      idleTodayConsumption: randomInRange(3, 5),
       autonomy: randomInRange(18, 24),
-      supplyFlow: randomInRange(14, 16),
+      supplyFlow: randomInRange(9, 11),
       returnFlow: randomInRange(0.2, 0.6),
-      workingConsumption: 82.4,
-      idleConsumption: 9.8,
-      inoperativeConsumption: 19.4,
+      workingConsumption: 30.4,
+      idleConsumption: 4.2,
+      inoperativeConsumption: 4.0,
       consumptionHistory: consumptionTimeLabels.map(t => ({
         time: t,
         value: randomInRange(8, 22)
@@ -104,17 +105,17 @@ export const generateInitialTelemetry = (): TelemetryData => {
       status: 'OK'
     },
     productivity: {
-      cyclesCompleted: randomInRange(90, 110, 0),
-      tonsMoved: randomInRange(1100, 1250, 0),
-      performance: randomInRange(125, 145, 0),
-      avgCycleTime: randomInRange(42, 55, 0),
+      cyclesCompleted: randomInRange(130, 138, 0),
+      tonsMoved: randomInRange(180, 192, 0),
+      performance: randomInRange(7.5, 8.5),
+      avgCycleTime: randomInRange(32, 40, 0),
       consumptionPerTon: randomInRange(0.085, 0.105),
       consumptionPerCycle: randomInRange(1.2, 1.5),
       unproductiveFuel: randomInRange(7, 10),
-      hourlyProductivity: hourlyLabels.map(h => ({
+      hourlyProductivity: hourlyLabels.slice(6, 12).map((h, i) => ({
         hour: h,
-        tons: randomInRange(80, 160, 0),
-        cycles: randomInRange(5, 12, 0)
+        tons: randomInRange(8 + i, 12 + i, 0),
+        cycles: randomInRange(2 + i, 4 + i, 0)
       })),
       dailyProductivity: dailyDates.slice(0, 5).map(d => ({
         day: d,
@@ -212,7 +213,7 @@ export const generateAlerts = (): Alert[] => {
       type: 'ADVERTENCIA',
       sensor: 'Filtro Combustible',
       description: 'Filtro de combustible requiere monitoreo - diferencia de presión',
-      status: 'ACKNOWLEDGED',
+      status: 'PENDIENTE',
       priority: 2,
       value: '0.8 bar',
       threshold: '1.0 bar'
@@ -268,10 +269,10 @@ export class TelemetrySimulator {
     }
 
     const instantFuel = this.mode === 'TRABAJANDO'
-      ? 10 + rpmFactor * 10
+      ? 7 + rpmFactor * 2
       : this.mode === 'RALENTÍ'
-        ? 2 + rpmFactor * 2
-        : 0.5
+        ? 1.2 + rpmFactor * 0.8
+        : 0.3
     
     const newFuel = {
       ...this.state.fuel,

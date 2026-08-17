@@ -1,4 +1,4 @@
-import { Thermometer, Droplets } from 'lucide-react'
+import { Thermometer, Droplets, Gauge, Battery } from 'lucide-react'
 import SectionPanel from '../SectionPanel'
 import TachoGauge from '../gauges/TachoGauge'
 import { EngineData } from '../../types'
@@ -18,45 +18,58 @@ export default function EnginePanel({ engine }: EnginePanelProps) {
       borderClass="border-industrial-600"
       grow
     >
-      <div className="p-0.5 md:p-0.5 lg:p-1 xl:p-1.5 h-full flex flex-col min-h-0 gap-1 md:gap-1 lg:gap-1.5">
-        <div className="flex items-center justify-between gap-1 md:gap-1 lg:gap-2 flex-shrink-0 min-h-0">
-          <div className="flex flex-col justify-center flex-1 min-w-0 px-2">
-            <div className="font-mono font-black text-3xl md:text-3xl lg:text-4xl xl:text-5xl text-white leading-[0.9] tracking-tighter mt-0.5">
+      <div className="p-[2px] md:p-[2px] lg:p-[3px] xl:p-1 h-full flex flex-col min-h-0 gap-[2px] md:gap-[3px] lg:gap-0.5">
+        <div className="flex items-center justify-between gap-1 flex-shrink-0 min-h-0">
+          <div className="flex flex-col justify-center flex-1 min-w-0 pl-[2px] md:px-1 lg:pl-2">
+            <div className="text-[7px] md:text-[8px] lg:text-[9px] xl:text-[10px] text-gray-400 font-semibold tracking-[0.2em] uppercase">RPM MOTOR</div>
+            <div className="font-mono font-black text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-white leading-[0.9] tracking-tighter mt-[2px]">
               {engine.rpm.toLocaleString()}
             </div>
-            <div className="text-[9px] md:text-[9.5px] lg:text-[11px] xl:text-[13px] text-gray-400 font-semibold tracking-[0.2em] uppercase mt-0.5">RPM</div>
+            <div className="text-[8px] md:text-[9px] lg:text-[10px] text-gray-400 font-bold tracking-[0.15em] uppercase mt-[1px]">RPM</div>
           </div>
-          <div className="flex-shrink px-6">
-            <TachoGauge value={engine.rpm} size={96} className="md:hidden lg:hidden" />
-            <TachoGauge value={engine.rpm} size={108} className="hidden md:block lg:block xl:hidden" />
-            <TachoGauge value={engine.rpm} size={120} className="hidden xl:block" />
+          <div className="flex-shrink-0 px-1 md:px-2 lg:px-3 xl:px-4">
+            <TachoGauge value={engine.rpm} size={64} className="md:hidden lg:hidden" />
+            <TachoGauge value={engine.rpm} size={80} className="hidden md:block lg:block xl:hidden" />
+            <TachoGauge value={engine.rpm} size={96} className="hidden xl:block" />
           </div>
         </div>
 
-        <div className="grid grid-cols-3 divide-x divide-industrial-700/70 border-t border-industrial-700/70 flex-1 min-h-0 pt-0.5 md:pt-0.5 lg:pt-1">
-          <div className="flex flex-col items-center justify-center gap-0.25 lg:gap-0.5 px-0.5 lg:px-1 py-0.25 min-w-0 h-full">
-            <Thermometer size={18} className="text-electric-400 md:size-[14px] lg:size-[18px] xl:size-[20px] flex-shrink-0" />
-            <div className="text-[7px] md:text-[9px] lg:text-[11px] xl:text-[13px] text-gray-300 uppercase tracking-wider font-bold text-center whitespace-nowrap">TEMP. REFR.</div>
-            <div className="font-mono font-black text-xl md:text-xl lg:text-2xl xl:text-2xl text-white leading-none tracking-tight">
+        <div className="grid grid-cols-4 gap-0 border-t border-industrial-700/70 flex-1 min-h-0 pt-[1px] md:pt-[2px]">
+          {/* TEMP REFRIGERANTE */}
+          <div className="flex flex-col items-center justify-center gap-[1px] px-[2px] py-[1px] min-w-0 h-full border-r border-industrial-700/50">
+            <Thermometer size={12} className="text-electric-400 md:size-[12px] lg:size-[14px] flex-shrink-0" />
+            <div className="text-[6px] md:text-[6.5px] lg:text-[7.5px] xl:text-[8.5px] text-gray-300 uppercase tracking-wider font-bold text-center whitespace-nowrap">TEMP. REFR.</div>
+            <div className="font-mono font-black text-base md:text-lg lg:text-xl xl:text-2xl text-white leading-none tracking-tight">
               {Math.round(engine.coolantTemp)}
             </div>
-            <div className="text-[9px] md:text-[9.5px] lg:text-[10px] xl:text-[11px] text-electric-400 font-semibold mt-0.25 leading-none">°C</div>
+            <div className="text-[7px] md:text-[8px] lg:text-[9px] text-electric-400 font-semibold leading-none">°C</div>
           </div>
-          <div className="flex flex-col items-center justify-center gap-0.25 lg:gap-0.5 px-0.5 lg:px-1 py-0.25 min-w-0 h-full">
-            <Droplets size={18} className="text-electric-400 md:size-[14px] lg:size-[18px] xl:size-[20px] flex-shrink-0" />
-            <div className="text-[7px] md:text-[9px] lg:text-[11px] xl:text-[13px] text-gray-300 uppercase tracking-wider font-bold text-center whitespace-nowrap">TEMP. ACEITE</div>
-            <div className="font-mono font-black text-xl md:text-xl lg:text-2xl xl:text-2xl text-white leading-none tracking-tight">
+          {/* TEMP ACEITE */}
+          <div className="flex flex-col items-center justify-center gap-[1px] px-[2px] py-[1px] min-w-0 h-full border-r border-industrial-700/50">
+            <Droplets size={12} className="text-electric-400 md:size-[12px] lg:size-[14px] flex-shrink-0" />
+            <div className="text-[6px] md:text-[6.5px] lg:text-[7.5px] xl:text-[8.5px] text-gray-300 uppercase tracking-wider font-bold text-center whitespace-nowrap">TEMP. ACEITE</div>
+            <div className="font-mono font-black text-base md:text-lg lg:text-xl xl:text-2xl text-white leading-none tracking-tight">
               {Math.round(engine.oilTemp)}
             </div>
-            <div className="text-[9px] md:text-[9.5px] lg:text-[10px] xl:text-[11px] text-electric-400 font-semibold mt-0.25 leading-none">°C</div>
+            <div className="text-[7px] md:text-[8px] lg:text-[9px] text-electric-400 font-semibold leading-none">°C</div>
           </div>
-          <div className="flex flex-col items-center justify-center gap-0.25 lg:gap-0.5 px-0.5 lg:px-1 py-0.25 min-w-0 h-full">
-            <Droplets size={18} className="text-electric-400 md:size-[14px] lg:size-[18px] xl:size-[20px] flex-shrink-0" />
-            <div className="text-[7px] md:text-[9px] lg:text-[11px] xl:text-[13px] text-gray-300 uppercase tracking-wider font-bold text-center whitespace-nowrap">PRES. ACEITE</div>
-            <div className="font-mono font-black text-xl md:text-xl lg:text-2xl xl:text-2xl text-white leading-none tracking-tight">
+          {/* PRESION ACEITE */}
+          <div className="flex flex-col items-center justify-center gap-[1px] px-[2px] py-[1px] min-w-0 h-full border-r border-industrial-700/50">
+            <Gauge size={12} className="text-electric-400 md:size-[12px] lg:size-[14px] flex-shrink-0" />
+            <div className="text-[6px] md:text-[6.5px] lg:text-[7.5px] xl:text-[8.5px] text-gray-300 uppercase tracking-wider font-bold text-center whitespace-nowrap">PRES. ACEITE</div>
+            <div className="font-mono font-black text-base md:text-lg lg:text-xl xl:text-2xl text-white leading-none tracking-tight">
               {engine.oilPressure.toFixed(1)}
             </div>
-            <div className="text-[9px] md:text-[9.5px] lg:text-[10px] xl:text-[11px] text-electric-400 font-semibold mt-0.25 leading-none">bar</div>
+            <div className="text-[7px] md:text-[8px] lg:text-[9px] text-electric-400 font-semibold leading-none">bar</div>
+          </div>
+          {/* VOLTAJE */}
+          <div className="flex flex-col items-center justify-center gap-[1px] px-[2px] py-[1px] min-w-0 h-full">
+            <Battery size={12} className="text-electric-400 md:size-[12px] lg:size-[14px] flex-shrink-0" />
+            <div className="text-[6px] md:text-[6.5px] lg:text-[7.5px] xl:text-[8.5px] text-gray-300 uppercase tracking-wider font-bold text-center whitespace-nowrap">VOLTAJE</div>
+            <div className="font-mono font-black text-base md:text-lg lg:text-xl xl:text-2xl text-white leading-none tracking-tight">
+              {engine.voltage.toFixed(1)}
+            </div>
+            <div className="text-[7px] md:text-[8px] lg:text-[9px] text-electric-400 font-semibold leading-none">V</div>
           </div>
         </div>
       </div>
