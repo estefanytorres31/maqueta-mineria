@@ -401,7 +401,6 @@ export default function ProductivityPanel({ productivity, machine }: Productivit
       iconColor="text-status-warning"
       titleColorClass="text-status-warning"
       borderClass="border-status-warning/60"
-      bodyClass="shadow-[0_0_32px_-10px_rgba(245,158,11,0.12)]"
       grow
     >
       <div className="p-[2px] md:p-[2px] lg:p-[3px] xl:p-1 h-full flex flex-col min-h-0 gap-[2px]">

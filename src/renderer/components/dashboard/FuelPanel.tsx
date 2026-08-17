@@ -3,8 +3,6 @@ import SectionPanel from '../SectionPanel'
 import ProgressBar from '../ProgressBar'
 import { FuelData, OperationData, Machine } from '../../types'
 
-const FALLBACK_CAT_IMG = 'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=CAT%20R2900%20loader%20yellow%20construction%20mining%20vehicle%20front%20view%20dark%20dramatic%20background%20high%20detail%20catalog%20photo&image_size=landscape_4_3'
-
 interface FuelPanelProps {
   variant?: 'compact' | 'large'
   fuel: Pick<FuelData, 'instantConsumption' | 'tankLevel' | 'todayConsumption' | 'idleTodayConsumption' | 'avgConsumption' | 'autonomy' | 'tankCapacity'>
@@ -131,7 +129,7 @@ function LargeFuelPanel({ fuel, machine }: { fuel: FuelPanelProps['fuel']; machi
       <img
         src={machine?.imageUrl}
         alt={machine ? `${machine.name} ${machine.model}` : 'CAT mining vehicle'}
-        className="absolute right-[0%] md:right-[-1%] lg:right-[-1%] bottom-[-6%] md:bottom-[-5%] lg:bottom-[-4%] w-[46%] md:w-[42%] lg:w-[38%] object-contain pointer-events-none z-0 drop-shadow-[0_0_20px_rgba(0,0,0,0.6)] opacity-98"
+        className="absolute right-[8%] md:right-[-1%] lg:right-[0%] bottom-[-5%] md:bottom-[-5%] lg:bottom-[-2%] w-[60%] md:w-[42%] lg:w-[32%] object-contain pointer-events-none z-0"
       />
 
       {/* GRID 2 COLUMNAS EXACTAS (50/50) sin gap vertical fuera - Z-40 GLOBAL PARA TEXTO ENCIMA DE IMAGEN */}
@@ -263,7 +261,6 @@ export default function FuelPanel({ variant = 'compact', fuel, totalHours, machi
       iconColor="text-status-ok"
       titleColorClass="text-status-ok"
       borderClass="border-status-ok/60"
-      bodyClass={variantMode === 'compact' ? 'shadow-[0_0_32px_-10px_rgba(16,185,129,0.12)]' : 'shadow-[0_0_38px_-10px_rgba(16,185,129,0.18)]'}
       grow
     >
       {variantMode === 'compact' ? (

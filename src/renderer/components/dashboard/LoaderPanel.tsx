@@ -4,9 +4,6 @@ import ProgressBar from '../ProgressBar'
 import { GiMineTruck as LoaderIcon } from 'react-icons/gi'
 import { ProductivityData, OperationData, FuelData, Machine } from '../../types'
 
-const FALLBACK_IMG_URL =
-  'https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=CAT%20950%20wheel%20loader%20yellow%20construction%20mining%20machine%20front%20view%20dark%20background%20realistic%20high%20detail&image_size=landscape_16_9'
-
 interface LoaderPanelProps {
   productivity: Pick<ProductivityData, 'cyclesCompleted' | 'tonsMoved' | 'avgCycleTime' | 'performance'>
   operation: Pick<OperationData, 'mode'>
@@ -27,7 +24,6 @@ export default function LoaderPanel({ productivity, operation, fuel, machine }: 
       iconColor="text-status-warning"
       titleColorClass="text-status-warning"
       borderClass="border-status-warning/60"
-      bodyClass="shadow-[0_0_32px_-10px_rgba(245,158,11,0.12)]"
       grow
     >
       <div className="p-[2px] md:p-[2px] lg:p-[3px] xl:p-1 h-full flex flex-col min-h-0 gap-[2px] md:gap-[3px] lg:gap-0.5">
@@ -105,21 +101,12 @@ export default function LoaderPanel({ productivity, operation, fuel, machine }: 
               </div>
             </div>
 
-            <div className="flex-1 min-h-0 flex items-center justify-center w-full overflow-hidden relative bg-industrial-900/30 rounded-md mt-[1px]">
+            <div className="flex-1 min-h-0 flex items-center justify-center w-full overflow-hidden relative bg-industrial-900/30 rounded-md">
               <img
                 src={machine.imageUrl}
                 alt={`${machine.name} ${machine.model}`}
-                className="object-contain w-full h-full max-h-full rounded-md"
+                className="absolute right-[8%] md:right-[-1%] lg:right-[6%] bottom-[-5%] md:bottom-[-5%] lg:bottom-[-2%] w-[60%] md:w-[42%] lg:w-[65%] object-contain pointer-events-none z-0"
                 loading="lazy"
-                onError={(e) => {
-                  const img = e.currentTarget as HTMLImageElement
-                  if (img.src !== FALLBACK_IMG_URL) {
-                    img.onerror = null
-                    img.src = FALLBACK_IMG_URL
-                  } else {
-                    img.style.display = 'none'
-                  }
-                }}
               />
             </div>
           </div>

@@ -21,7 +21,6 @@ export default function MovementPanel({ imu }: MovementPanelProps) {
       titleColorClass="text-[#8B5CF6]"
       headerBgClass=""
       borderClass="border-[#8B5CF6]/60"
-      bodyClass="shadow-[0_0_40px_-10px_rgba(139,92,246,0.2)]"
       grow
     >
       <div className="p-[2px] md:p-[2px] lg:p-[3px] xl:p-1 h-full flex flex-col min-h-0 gap-[2px]">
