@@ -1,8 +1,8 @@
 import { Gauge } from 'lucide-react'
 import SectionPanel from '../SectionPanel'
-import MiniGauge from '../gauges/MiniGauge'
-import SvgExcavatorIcon from '../icons/SvgExcavatorIcon'
-import { GiMineTruck as TruckIcon } from 'react-icons/gi'
+import NeedleDial from '../gauges/NeedleDial'
+import SvgExcavatorIcon from '../icons/SvgExcavatorIcon'          // vista lateral → PITCH
+import SvgExcavatorFrontIcon from '../icons/SvgFrontExcavatorIcon'
 import { ImuData } from '../../types'
 
 interface MovementPanelProps {
@@ -10,8 +10,6 @@ interface MovementPanelProps {
 }
 
 export default function MovementPanel({ imu }: MovementPanelProps) {
-  const pitchGaugePct = Math.round(Math.min(100, Math.max(0, ((imu.pitch + 10) / 20) * 100)))
-  const rollGaugePct = Math.round(Math.min(100, Math.max(0, ((imu.roll + 10) / 20) * 100)))
 
   return (
     <SectionPanel
@@ -34,30 +32,20 @@ export default function MovementPanel({ imu }: MovementPanelProps) {
               PITCH
             </div>
             <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0 mt-[2px]">
-              <span className="font-mono font-black text-xl md:text-2xl lg:text-3xl xl:text-4xl text-white leading-none tracking-tighter whitespace-nowrap">
+              <span className="font-mono font-black text-xl md:text-xl lg:text-xl xl:text-3xl text-white leading-none tracking-tighter whitespace-nowrap mb-2">
                 {imu.pitch > 0 ? '+' : ''}{imu.pitch.toFixed(1)}
               </span>
               <span className="text-[10px] md:text-[11px] lg:text-[12px] text-gray-300 font-bold leading-none">°</span>
             </div>
-            <div className="w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 xl:w-20 xl:h-20 min-w-0 mb-[1px]">
-              <MiniGauge
-                value={pitchGaugePct}
-                max={100}
-                unit=""
-                warningThreshold={70}
-                dangerThreshold={90}
+            <div className="w-12 h-12 md:w-18 md:h-18 lg:w-24 lg:h-24 xl:w-32 xl:h-32 min-w-0 mb-[1px]">
+              <NeedleDial
+                value={imu.pitch}
+                range={30}
                 color="#8B5CF6"
                 size={96}
+                centerIcon={<SvgExcavatorIcon className="w-full h-full text-white/90" />}
                 className="!w-full !h-full"
               />
-            </div>
-            <div className="flex justify-between text-[6px] md:text-[6.5px] lg:text-[7px] text-gray-400 font-semibold px-[2px] tracking-wider w-full pb-[1px]">
-              <span>-10°</span>
-              <span>0°</span>
-              <span>+10°</span>
-            </div>
-            <div className="w-7 h-7 md:w-8 md:h-8 lg:w-9 lg:h-9 flex items-center justify-center flex-shrink-0">
-              <SvgExcavatorIcon className="w-full h-full text-gray-300/80" />
             </div>
           </div>
 
@@ -67,30 +55,20 @@ export default function MovementPanel({ imu }: MovementPanelProps) {
               ROLL
             </div>
             <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0 mt-[2px]">
-              <span className="font-mono font-black text-xl md:text-2xl lg:text-3xl xl:text-4xl text-white leading-none tracking-tighter whitespace-nowrap">
+              <span className="font-mono font-black text-xl md:text-xl lg:text-xl xl:text-3xl text-white leading-none tracking-tighter whitespace-nowrap mb-2">
                 {imu.roll > 0 ? '+' : ''}{imu.roll.toFixed(1)}
               </span>
               <span className="text-[10px] md:text-[11px] lg:text-[12px] text-gray-300 font-bold leading-none">°</span>
             </div>
-            <div className="w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 xl:w-20 xl:h-20 min-w-0 mb-[1px]">
-              <MiniGauge
-                value={rollGaugePct}
-                max={100}
-                unit=""
-                warningThreshold={70}
-                dangerThreshold={90}
+            <div className="w-12 h-12 md:w-18 md:h-18 lg:w-24 lg:h-24 xl:w-32 xl:h-32 min-w-0 mb-[1px]">
+              <NeedleDial
+                value={imu.roll}
+                range={30}
                 color="#8B5CF6"
                 size={96}
+                centerIcon={<SvgExcavatorFrontIcon className="w-full h-full text-white/90" />}
                 className="!w-full !h-full"
               />
-            </div>
-            <div className="flex justify-between text-[6px] md:text-[6.5px] lg:text-[7px] text-gray-400 font-semibold px-[2px] tracking-wider w-full pb-[1px]">
-              <span>-10°</span>
-              <span>0°</span>
-              <span>+10°</span>
-            </div>
-            <div className="w-7 h-7 md:w-8 md:h-8 lg:w-9 lg:h-9 flex items-center justify-center flex-shrink-0">
-              <TruckIcon style={{ color: 'rgba(209,213,219,0.8)' }} className="w-full h-full" />
             </div>
           </div>
         </div>

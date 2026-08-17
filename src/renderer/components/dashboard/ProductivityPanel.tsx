@@ -1,6 +1,11 @@
-import { BarChart3, ArrowRight, Clock } from 'lucide-react'
+import { BarChart3, ArrowRight, Clock, ArrowsUpFromLine } from 'lucide-react'
+import { GiMineTruck as TruckIcon, GiBulldozer as BulldozerIcon } from "react-icons/gi";
+import { LiaRulerVerticalSolid as MeterIcon } from "react-icons/lia";
+import { GrCycle as CycleIcon } from "react-icons/gr";
+import { BsClockHistory as ClockHistoryIcon } from "react-icons/bs";
 import SectionPanel from '../SectionPanel'
 import { ProductivityData, Machine, MachineType } from '../../types'
+import { ReactNode } from 'react';
 
 interface ProductivityPanelProps {
   productivity: Pick<ProductivityData, 'tonsMoved' | 'performance' | 'hourlyProductivity' | 'cyclesCompleted' | 'avgCycleTime'>
@@ -135,8 +140,8 @@ interface KpiDef {
   value: string
   unit?: string
   valueColor?: string
-  valueIcon?: string
-  labelIcon?: string
+  valueIcon?: ReactNode
+  labelIcon?: ReactNode
 }
 interface CycleStep {
   label: string
@@ -155,7 +160,8 @@ const pick = <T,>(o: T | null | undefined, fallback: T): T => (o ?? fallback)
 function getGenericConfig(type: MachineType, p: ProductivityPanelProps['productivity']): {
   panelTitle: string
   kpis: KpiDef[]
-  cycle: CycleDef
+  kpisRow2?: KpiDef[] 
+  cycle: CycleDef | null
 } {
   const cycles = p.cyclesCompleted || 0
   const tons = p.tonsMoved || 0
@@ -167,8 +173,8 @@ function getGenericConfig(type: MachineType, p: ProductivityPanelProps['producti
       return {
         panelTitle: 'PRODUCTIVIDAD',
         kpis: [
-          { label: 'CICLOS DE CARGA', value: Math.round(cycles || 48).toLocaleString(), unit: 'ciclos' },
-          { label: 'TONELADAS MOVIDAS', value: Math.round(tons || 164).toLocaleString(), unit: 'ton' },
+          { label: 'CICLOS DE CARGA', value: Math.round(cycles || 48).toLocaleString(), unit: 'ciclos', valueIcon: <CycleIcon size={18} className="text-status-warning shrink-0" /> },
+          { label: 'TONELADAS MOVIDAS', value: Math.round(tons || 164).toLocaleString(), unit: 'ton', valueIcon: <TruckIcon size={18} className="text-status-warning shrink-0" /> },
           { label: 'RENDIMIENTO', value: (perf > 0 ? perf : 21.6).toFixed(1), unit: 'ton/h' },
           { label: 'EFICIENCIA', value: (0.078).toFixed(3), unit: 'gal/ton' },
         ],
@@ -188,10 +194,10 @@ function getGenericConfig(type: MachineType, p: ProductivityPanelProps['producti
       return {
         panelTitle: 'PRODUCTIVIDAD',
         kpis: [
-          { label: 'TONELADAS MOVIDAS', value: Math.max(Math.round(tons), 1248).toLocaleString(), unit: 'ton' },
-          { label: 'TONELADAS / HORA', value: Math.max(Math.round(perf), 165).toLocaleString(), unit: 'ton/h' },
-          { label: 'CICLOS REALIZADOS', value: Math.max(Math.round(cycles), 38).toLocaleString(), unit: 'ciclos' },
-          { label: 'TIEMPO PROMEDIO / CICLO', value: '18:45', unit: 'min' },
+          { label: 'TONELADAS MOVIDAS', value: Math.max(Math.round(tons), 1248).toLocaleString(), unit: 'ton', valueIcon: <TruckIcon size={18} className="text-status-warning shrink-0" /> },
+          { label: 'TONELADAS / HORA', value: Math.max(Math.round(perf), 165).toLocaleString(), unit: 'ton/h', valueIcon: <BulldozerIcon size={18} className="text-status-warning shrink-0" /> },
+          { label: 'CICLOS REALIZADOS', value: Math.max(Math.round(cycles), 38).toLocaleString(), unit: 'ciclos', valueIcon: <CycleIcon size={18} className="text-status-warning shrink-0" /> },
+          { label: 'TIEMPO PROMEDIO / CICLO', value: '18:45', unit: 'min', valueIcon: <ClockHistoryIcon size={18} className="text-status-warning shrink-0" /> },
         ],
         cycle: {
           title: 'CICLO DE CARGA',
@@ -209,8 +215,8 @@ function getGenericConfig(type: MachineType, p: ProductivityPanelProps['producti
       return {
         panelTitle: 'PRODUCTIVIDAD',
         kpis: [
-          { label: 'MODO DE TRABAJO', value: 'EMPUJE /', valueColor: '#F59E0B', unit: 'NIVELACIÓN' },
-          { label: 'TIEMPO EFECTIVO', value: '6.2', unit: 'h' },
+          { label: 'MODO DE TRABAJO', value: 'EMPUJE / NIVELACIÓN', valueColor: '#F59E0B', valueIcon: <ArrowsUpFromLine size={14} className="text-status-warning shrink-0" /> },
+          { label: 'TIEMPO EFECTIVO', value: '6.2', unit: 'h', valueIcon: <ClockHistoryIcon size={18} className="text-status-warning shrink-0" /> },
           { label: 'MATERIAL MOVIDO', value: '1,256', unit: 'm³' },
           { label: 'RENDIMIENTO', value: '203', unit: 'm³/h' },
           { label: 'EFICIENCIA', value: '0.085', unit: 'gal/m³' },
@@ -231,8 +237,8 @@ function getGenericConfig(type: MachineType, p: ProductivityPanelProps['producti
       return {
         panelTitle: 'PRODUCTIVIDAD DE PERFORACIÓN',
         kpis: [
-          { label: 'METROS PERFORADOS', value: '145.6', unit: 'm' },
-          { label: 'TIEMPO PERFORANDO', value: '6.1', unit: 'h' },
+          { label: 'METROS PERFORADOS', value: '145.6', unit: 'm', valueIcon: <MeterIcon size={18} className="text-status-warning shrink-0" /> },
+          { label: 'TIEMPO PERFORANDO', value: '6.1', unit: 'h', valueIcon: <ClockHistoryIcon size={18} className="text-status-warning shrink-0" /> },
           { label: 'AVANCE PROMEDIO', value: '23.9', unit: 'm/h' },
           { label: 'EFICIENCIA', value: '78', unit: '%' },
         ],
@@ -252,24 +258,16 @@ function getGenericConfig(type: MachineType, p: ProductivityPanelProps['producti
       return {
         panelTitle: 'PRODUCTIVIDAD',
         kpis: [
-          { label: 'CICLOS RETROEXCAVADORA', value: Math.max(Math.round(cycles), 56).toLocaleString(), unit: 'ciclos' },
-          { label: 'TONELADAS EXCAVADAS', value: Math.max(Math.round(tons), 192).toLocaleString(), unit: 'ton' },
+          { label: 'MODO DE TRABAJO', value: 'CARGADOR FRONTAL', valueColor: '#F59E0B', valueIcon: <BulldozerIcon size={18} className="text-status-warning shrink-0" /> },
+          { label: 'CICLOS CARGADOR', value: Math.max(Math.round(cycles), 56).toLocaleString(), unit: 'ciclos' },
+          { label: 'CICLOS EXCAVADOR', value: Math.max(Math.round(cycles), 56).toLocaleString(), unit: 'ciclos' },
+        ],
+        kpisRow2: [
+          { label: 'TONELADAS MOVIDAS', value: Math.max(Math.round(tons), 192).toLocaleString(), unit: 'ton' },
           { label: 'RENDIMIENTO', value: (perf > 0 ? perf : 22.1).toFixed(1), unit: 'ton/h' },
           { label: 'EFICIENCIA', value: '0.082', unit: 'gal/ton' },
         ],
-        cycle: {
-          title: 'CICLO RETROEXCAVADORA',
-          steps: [
-            { label: 'CARGA CUCHARA', duration: '00:24', iconGlyph: '🏗️' },
-            { label: 'GIRO', duration: '00:10', iconGlyph: '🔄' },
-            { label: 'DESCARGA', duration: '00:14', iconGlyph: '📥' },
-            { label: 'GIRO RETORNO', duration: '00:18', iconGlyph: '↩️' },
-          ],
-          totalDuration: avgCycle > 0
-            ? `${String(Math.floor(avgCycle / 60)).padStart(2, '0')}:${String(Math.round(avgCycle % 60)).padStart(2, '0')}`
-            : '01:06',
-          totalLabel: 'TIEMPO PROMEDIO / CICLO',
-        },
+        cycle: null,
       }
     case 'excavator':
     default:
@@ -301,33 +299,44 @@ function getGenericConfig(type: MachineType, p: ProductivityPanelProps['producti
 function GenericProductivityContent(props: ProductivityPanelProps) {
   const { machine, productivity } = props
   const cfg = getGenericConfig(machine.type, productivity)
+  const cycle = cfg.cycle || null
   const totalKpis = cfg.kpis.length
-  const kpiGridCols = totalKpis === 5 ? 'grid-cols-5' : 'grid-cols-4'
+  const kpiGridCols = totalKpis === 3 ? 'grid-cols-3' : totalKpis === 5 ? 'grid-cols-5' : 'grid-cols-4'
+  const row2GridCols = cfg.kpisRow2?.length === 3 ? 'grid-cols-3' : 'grid-cols-4'
 
   return (
     <div className="h-full flex flex-col min-h-0 gap-[2px] md:gap-[3px] lg:gap-0.5">
       {/* ============== FILA 1: KPIs ============== */}
-      <div className={`grid ${kpiGridCols} gap-[2px] md:gap-[3px] lg:gap-1 border-b border-industrial-700/50 pb-[2px] md:pb-[3px] min-h-0`}>
+      <div className={`grid ${kpiGridCols} gap-[2px] md:gap-[3px] lg:gap-1 border-b border-industrial-700/50 pb-[2px] md:pb-[3px] flex-1 min-h-0`}>
         {cfg.kpis.map((k, i) => (
           <div
             key={i}
-            className={`flex flex-col min-w-0 px-[2px] md:px-[3px] lg:px-1 py-[1px] md:py-[2px] ${
-              i > 0 ? 'border-l border-industrial-700/40' : ''
-            }`}
+            className={`flex flex-col justify-center min-w-0 overflow-hidden px-[2px] md:px-[3px] lg:px-1 py-[1px] md:py-[2px] ${i > 0 ? 'border-l border-industrial-700/40' : ''}`}
           >
             <div className="text-[5.5px] md:text-[6px] lg:text-[7px] xl:text-[8px] text-gray-300 uppercase tracking-wider font-semibold whitespace-nowrap flex items-center gap-[2px]">
               {k.label}
             </div>
-            <div className="flex items-baseline gap-[2px] min-w-0 mt-[1px] flex-wrap">
+            <div className="flex items-baseline gap-[1px] min-w-0 mt-[1px] flex-wrap">
+              {k.valueIcon && (
+                <div className="text-[8px] md:text-[9px] lg:text-[10px] xl:text-[11px] font-bold leading-none mb-0.5 whitespace-nowrap">
+                  {k.valueIcon}
+                </div>
+              )}
               <span
-                className="font-mono font-black text-sm md:text-base lg:text-xl xl:text-2xl leading-none tracking-tighter whitespace-nowrap"
+                className={`font-mono font-black leading-none tracking-tighter ${
+                  k.value.length > 10
+                    ? 'text-[9px] md:text-[10px] lg:text-[11px] xl:text-sm whitespace-normal break-words'
+                    : 'text-lg md:text-xl lg:text-2xl xl:text-3xl whitespace-nowrap'
+                }`}
                 style={{ color: k.valueColor ? k.valueColor : '#ffffff' }}
               >
                 {k.value}
               </span>
               {k.unit && (
-                <span className="text-[8px] md:text-[9px] lg:text-[10px] xl:text-[11px] font-bold leading-none mb-0.5 whitespace-nowrap"
-                  style={{ color: k.valueColor ?? '#F59E0B' }}>
+                <span
+                  className="text-[8px] md:text-[9px] lg:text-[10px] xl:text-[11px] font-bold leading-none mb-0.5 whitespace-nowrap"
+                  style={{ color: k.valueColor ?? '#F59E0B' }}
+                >
                   {k.unit}
                 </span>
               )}
@@ -337,13 +346,14 @@ function GenericProductivityContent(props: ProductivityPanelProps) {
       </div>
 
       {/* ============== FILA 2: CICLO 4 PASOS + TIEMPO PROM ============== */}
-      <div className="flex min-h-0 flex-1 gap-[2px] md:gap-[3px] lg:gap-1 items-stretch pt-[1px] md:pt-[2px]">
+      {cycle ? (
+        <div className="flex min-h-0 flex-1 gap-[2px] md:gap-[3px] lg:gap-1 items-stretch pt-[1px] md:pt-[2px]">
         <div className="flex-1 min-w-0 flex flex-col gap-[1px] md:gap-[2px]">
           <div className="text-[5.5px] md:text-[6px] lg:text-[6.5px] xl:text-[7.5px] text-gray-300 uppercase tracking-wider font-semibold whitespace-nowrap">
-            {cfg.cycle.title}
+            {cycle.title}
           </div>
           <div className="grid grid-flow-col auto-cols-fr items-center gap-[1px] md:gap-[2px] flex-1 min-h-0">
-            {cfg.cycle.steps.map((step, i) => (
+            {cycle.steps.map((step, i) => (
               <div key={i} className="contents">
                 <div className="flex flex-col items-center justify-center min-w-0 gap-[1px] px-[1px] md:px-[2px] py-[1px] md:py-[2px] rounded-md bg-industrial-800/40 border border-industrial-700/40 min-h-0 h-full">
                   <div className="text-xs md:text-sm leading-none" aria-hidden>{step.iconGlyph}</div>
@@ -354,7 +364,7 @@ function GenericProductivityContent(props: ProductivityPanelProps) {
                     {step.duration}
                   </div>
                 </div>
-                {i < cfg.cycle.steps.length - 1 && (
+                {i < cycle.steps.length - 1 && (
                   <div className="flex items-center justify-center min-w-0 h-full">
                     <ArrowRight size={10} className="text-industrial-500 md:w-3 md:h-3 lg:w-3.5 lg:h-3.5" strokeWidth={2.2} />
                   </div>
@@ -368,16 +378,47 @@ function GenericProductivityContent(props: ProductivityPanelProps) {
         <div className="w-[72px] md:w-[84px] lg:w-[96px] xl:w-[110px] shrink-0 flex flex-col items-center justify-center gap-[1px] px-[2px] md:px-[3px] lg:px-1 py-[1px] md:py-[2px] rounded-md border border-status-warning/30 bg-industrial-850/60 min-h-0">
           <Clock size={12} className="text-status-warning md:w-3 md:h-3 lg:w-3.5 lg:h-3.5 shrink-0" />
           <div className="text-[5px] md:text-[5.5px] lg:text-[6px] xl:text-[7px] text-gray-300 uppercase tracking-wider font-semibold whitespace-nowrap text-center leading-tight">
-            {cfg.cycle.totalLabel}
+            {cycle.totalLabel}
           </div>
           <div className="font-mono font-black text-sm md:text-base lg:text-xl xl:text-2xl leading-none tracking-tighter text-status-warning whitespace-nowrap">
-            {cfg.cycle.totalDuration}
+            {cycle.totalDuration}
           </div>
           <div className="text-[6px] md:text-[7px] lg:text-[8px] text-gray-400 font-bold leading-none whitespace-nowrap">min</div>
         </div>
       </div>
+      ) : cfg.kpisRow2 ? (
+        <div className={`grid ${row2GridCols} gap-[2px] md:gap-[3px] lg:gap-1 border-b border-industrial-700/50 pb-[2px] md:pb-[3px] flex-1 min-h-0`}>
+          {cfg.kpisRow2.map((k, i) => (
+            <div
+              key={i}
+              className={`flex flex-col justify-center min-w-0 overflow-hidden px-[2px] md:px-[3px] lg:px-1 py-[1px] md:py-[2px] ${i > 0 ? 'border-l border-industrial-700/40' : ''}`}
+            >
+              <div className="text-[5.5px] md:text-[6px] lg:text-[7px] xl:text-[8px] text-gray-300 uppercase tracking-wider font-semibold whitespace-nowrap flex items-center gap-[2px]">
+                {k.label}
+              </div>
+              <div className="flex items-baseline gap-[2px] min-w-0 mt-[2px] flex-wrap">
+                <span
+                  className="font-mono font-black text-lg md:text-xl lg:text-2xl xl:text-3xl leading-none tracking-tighter whitespace-nowrap"
+                  style={{ color: k.valueColor ?? '#ffffff' }}
+                >
+                  {k.value}
+                </span>
+                {k.unit && (
+                  <span
+                    className="text-[9px] md:text-[10px] lg:text-[11px] xl:text-xs font-bold leading-none mb-0.5 whitespace-nowrap"
+                    style={{ color: k.valueColor ?? '#F59E0B' }}
+                  >
+                    {k.unit}
+                  </span>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : null
+      }
     </div>
-  )
+  ) 
 }
 
 /* ================================================================

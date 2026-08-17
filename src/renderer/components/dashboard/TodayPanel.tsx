@@ -19,7 +19,7 @@ function TodayHoursRow({ operation }: { operation: TodayPanelProps['operation'] 
         <Clock size={12} className="text-gray-400 md:size-[12px] lg:size-[13px] xl:size-[16px] flex-shrink-0" />
         <div className="text-[6px] md:text-[6.5px] lg:text-[7px] xl:text-[8px] text-gray-400 uppercase tracking-wider font-bold text-center leading-tight whitespace-nowrap">HORAS MOTOR</div>
         <div className="flex flex-col items-center min-w-0">
-          <div className="font-mono font-black text-xl md:text-2xl lg:text-3xl text-white leading-none tracking-tighter whitespace-nowrap">
+          <div className="font-mono font-black text-xl md:text-xl lg:text-2xl text-white leading-none tracking-tighter whitespace-nowrap">
             {operation.engineHours.toFixed(1)}
           </div>
           <span className="text-[7px] md:text-[7.5px] lg:text-[8px] text-gray-400 font-bold leading-none mt-[1px]">h</span>
@@ -29,7 +29,7 @@ function TodayHoursRow({ operation }: { operation: TodayPanelProps['operation'] 
         <Clock size={12} className="text-gray-400 md:size-[12px] lg:size-[13px] xl:size-[16px] flex-shrink-0" />
         <div className="text-[6px] md:text-[6.5px] lg:text-[7px] xl:text-[8px] text-gray-400 uppercase tracking-wider font-bold text-center leading-tight whitespace-nowrap">HORAS EFECTIVAS</div>
         <div className="flex flex-col items-center min-w-0">
-          <div className="font-mono font-black text-xl md:text-2xl lg:text-3xl text-white leading-none tracking-tighter whitespace-nowrap">
+          <div className="font-mono font-black text-xl md:text-xl lg:text-2xl text-white leading-none tracking-tighter whitespace-nowrap">
             {operation.effectiveHours.toFixed(1)}
           </div>
           <span className="text-[7px] md:text-[7.5px] lg:text-[8px] text-gray-400 font-bold leading-none mt-[1px]">h</span>
@@ -39,7 +39,7 @@ function TodayHoursRow({ operation }: { operation: TodayPanelProps['operation'] 
         <Hourglass size={12} className="text-status-warning md:size-[12px] lg:size-[13px] xl:size-[16px] flex-shrink-0" />
         <div className="text-[6px] md:text-[6.5px] lg:text-[7px] xl:text-[8px] text-gray-400 uppercase tracking-wider font-bold text-center leading-tight whitespace-nowrap">RALENTÍ</div>
         <div className="flex flex-col items-center min-w-0">
-          <div className="font-mono font-black text-xl md:text-2xl lg:text-3xl text-status-warning leading-none tracking-tighter whitespace-nowrap">
+          <div className="font-mono font-black text-xl md:text-xl lg:text-2xl text-status-warning leading-none tracking-tighter whitespace-nowrap">
             {operation.idleHours.toFixed(1)}
           </div>
           <span className="text-[7px] md:text-[7.5px] lg:text-[8px] text-status-warning font-bold leading-none mt-[1px]">h</span>
@@ -61,7 +61,7 @@ function LoaderProductivityRow({ fuel, productivity }: { fuel: TodayPanelProps['
         <FuelIcon size={12} style={{ color: '#14B8A6' }} className="md:size-[12px] lg:size-[13px] xl:size-[16px] flex-shrink-0" />
         <div className="text-[6px] md:text-[6.5px] lg:text-[7px] xl:text-[8px] text-gray-400 uppercase tracking-wider font-bold text-center leading-tight whitespace-nowrap">CONSUMO COMB.</div>
         <div className="flex flex-col items-center min-w-0">
-          <div className="font-mono font-black text-xl md:text-2xl lg:text-3xl text-white leading-none tracking-tighter whitespace-nowrap">
+          <div className="font-mono font-black text-xl md:text-xl lg:text-2xl text-white leading-none tracking-tighter whitespace-nowrap">
             {fuel.todayConsumption.toFixed(1)}
           </div>
           <span className="text-[7px] md:text-[7.5px] lg:text-[8px] font-bold leading-none mt-[1px]" style={{ color: '#14B8A6' }}>gal</span>
@@ -71,7 +71,7 @@ function LoaderProductivityRow({ fuel, productivity }: { fuel: TodayPanelProps['
         <BarChart3 size={12} style={{ color: '#14B8A6' }} className="md:size-[12px] lg:size-[13px] xl:size-[16px] flex-shrink-0" />
         <div className="text-[6px] md:text-[6.5px] lg:text-[7px] xl:text-[8px] text-gray-400 uppercase tracking-wider font-bold text-center leading-tight whitespace-nowrap">RENDIMIENTO</div>
         <div className="flex flex-col items-center min-w-0">
-          <div className="font-mono font-black text-xl md:text-2xl lg:text-3xl text-white leading-none tracking-tighter whitespace-nowrap">
+          <div className="font-mono font-black text-xl md:text-xl lg:text-2xl text-white leading-none tracking-tighter whitespace-nowrap">
             {fixedPerformance.toFixed(1)}
           </div>
           <span className="text-[7px] md:text-[7.5px] lg:text-[8px] font-bold leading-none mt-[1px]" style={{ color: '#14B8A6' }}>ton/h</span>
@@ -81,7 +81,7 @@ function LoaderProductivityRow({ fuel, productivity }: { fuel: TodayPanelProps['
         <Repeat size={12} style={{ color: '#14B8A6' }} className="md:size-[12px] lg:size-[13px] xl:size-[16px] flex-shrink-0" />
         <div className="text-[6px] md:text-[6.5px] lg:text-[7px] xl:text-[8px] text-gray-400 uppercase tracking-wider font-bold text-center leading-tight whitespace-nowrap">CICLOS</div>
         <div className="flex flex-col items-center min-w-0">
-          <div className="font-mono font-black text-xl md:text-2xl lg:text-3xl text-white leading-none tracking-tighter whitespace-nowrap">
+          <div className="font-mono font-black text-xl md:text-xl lg:text-2xl text-white leading-none tracking-tighter whitespace-nowrap">
             {productivity.cyclesCompleted}
           </div>
           <span className="text-[7px] md:text-[7.5px] lg:text-[8px] font-bold leading-none mt-[1px]" style={{ color: '#14B8A6' }}>ciclos</span>
@@ -95,8 +95,8 @@ function LoaderProductivityRow({ fuel, productivity }: { fuel: TodayPanelProps['
    DONUT Utilización 75% — SVG (verde status-ok / azul electric-500)
    ================================================================ */
 function UtilizationDonut({ pct }: { pct: number }) {
-  const size = 64
-  const stroke = 10
+  const size = 56
+  const stroke = 6
   const r = (size - stroke) / 2
   const c = 2 * Math.PI * r
   const safePct = Math.max(0, Math.min(1, pct))
@@ -122,7 +122,7 @@ function UtilizationDonut({ pct }: { pct: number }) {
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <div className="font-mono font-black text-xl md:text-2xl text-white leading-none tracking-tighter">
+        <div className="font-mono font-black text-xl md:text-xl lg:text-2xl text-white leading-none tracking-tighter">
           {Math.round(safePct * 100)}
         </div>
         <div className="text-[7px] text-gray-300 font-black leading-none mt-[2px]">%</div>
@@ -155,7 +155,7 @@ function OtherProductivityRow({ operation }: { operation: TodayPanelProps['opera
         <Timer size={12} className="text-status-error md:size-[12px] lg:size-[13px] xl:size-[16px] flex-shrink-0" strokeWidth={2} />
         <div className="text-[6px] md:text-[6.5px] lg:text-[7px] xl:text-[8px] text-gray-400 uppercase tracking-wider font-bold text-center leading-tight whitespace-nowrap">INOPERATIVO</div>
         <div className="flex flex-col items-center min-w-0">
-          <div className="font-mono font-black text-xl md:text-2xl lg:text-3xl text-white leading-none tracking-tighter whitespace-nowrap">
+          <div className="font-mono font-black text-xl md:text-xl lg:text-2xl text-white leading-none tracking-tighter whitespace-nowrap">
             {inoperativeH.toFixed(1)}
           </div>
           <span className="text-[7px] md:text-[7.5px] lg:text-[8px] text-status-error font-black leading-none mt-[1px]">h</span>
@@ -174,7 +174,7 @@ function OtherProductivityRow({ operation }: { operation: TodayPanelProps['opera
         <Activity size={12} style={{ color: '#14B8A6' }} className="md:size-[12px] lg:size-[13px] xl:size-[16px] flex-shrink-0" />
         <div className="text-[6px] md:text-[6.5px] lg:text-[7px] xl:text-[8px] text-gray-400 uppercase tracking-wider font-bold text-center leading-tight whitespace-nowrap">HORÓMETRO TOTAL</div>
         <div className="flex flex-col items-center min-w-0">
-          <div className="font-mono font-black text-xl md:text-2xl lg:text-3xl text-white leading-none tracking-tighter whitespace-nowrap">
+          <div className="font-mono font-black text-xl md:text-xl lg:text-2xl text-white leading-none tracking-tighter whitespace-nowrap">
             {Math.round(totalH).toLocaleString()}
           </div>
           <span className="text-[7px] md:text-[7.5px] lg:text-[8px] font-black leading-none mt-[1px]" style={{ color: '#14B8A6' }}>h</span>
