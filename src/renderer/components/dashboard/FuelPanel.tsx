@@ -203,24 +203,33 @@ function LargeFuelPanel({ fuel, machine }: { fuel: FuelPanelProps['fuel']; machi
         {/* =========================================================
             COLUMNA DERECHA: NIVEL TANQUE (arriba) + AUTONOMÍA (abajo) — Z-40 texto encima imagen
             ========================================================= */}
-        <div className="pl-[5px] md:pl-[7px] lg:pl-3 flex flex-col justify-between min-h-0 h-full relative z-40">
+        <div className={`${isExcavator ? 'pl-[10px] md:pl-[10px] lg:pl-5' : 'pl-[5px] md:pl-[7px] lg:pl-3'} flex flex-col justify-between min-h-0 h-full relative z-40`}>
           {/* PARTE SUPERIOR: NIVEL TANQUE */}
-          <div className="flex flex-col min-w-0 py-[1px] md:py-[1px] lg:py-[2px] relative z-40">
-            <div className="text-[8px] md:text-[7px] lg:text-[9px] xl:text-[11px] text-gray-200 uppercase tracking-widest font-black whitespace-nowrap mb-[3px] md:mb-[4px] lg:mb-1.5">
+          <div className={`flex flex-col min-w-0 ${isExcavator ? 'py-[2px] md:py-[2px] lg:py-[4px] xl:py-1' : 'py-[1px] md:py-[1px] lg:py-[2px]'} relative z-40`}>
+            <div className={`text-[8px] md:text-[7px] lg:text-[9px] xl:text-[11px] text-gray-200 uppercase tracking-widest font-black whitespace-nowrap`}>
               NIVEL TANQUE
             </div>
-            <div className="flex items-baseline justify-between gap-1 min-w-0">
-              <div className="flex items-baseline gap-[3px] md:gap-0.5 min-w-0">
-                <span className="font-mono font-black text-2xl md:text-sm lg:text-[16px] xl:text-3xl text-white leading-[0.9] tracking-tighter">
+            <div className={`flex items-baseline justify-between ${isExcavator ? 'gap-1.5' : 'gap-1'} min-w-0`}>
+              <div className={`flex items-baseline ${isExcavator ? 'gap-[4px] md:gap-1' : 'gap-[3px] md:gap-0.5'} min-w-0`}>
+                <span className={`font-mono font-black ${isExcavator ? 'text-3xl md:text-lg lg:text-[24px] xl:text-3xl' : 'text-2xl md:text-sm lg:text-[16px] xl:text-3xl'} text-white leading-[0.9] tracking-tighter`}>
                   {pct}
                 </span>
-                <span className="text-lg md:text-[9px] lg:text-xs text-gray-300 font-black leading-none mb-2.5">%</span>
+                <span className={`${isExcavator ? 'text-xl md:text-[11px] lg:text-sm xl:text-base mb-2.5' : 'text-lg md:text-[9px] lg:text-xs mb-2.5'} text-gray-300 font-black leading-none`}>%</span>
               </div>
-              <FuelIcon size={28} className="text-gray-200/90 md:size-[20px] lg:size-[24px] xl:size-[32px] flex-shrink-0" strokeWidth={1.4} />
+              <FuelIcon
+                size={isExcavator ? 32 : 28}
+                className={`text-gray-200/90 ${isExcavator ? 'md:size-[26px] lg:size-[30px] xl:size-[38px]' : 'md:size-[20px] lg:size-[24px] xl:size-[32px]'} flex-shrink-0`}
+                strokeWidth={isExcavator ? 1.5 : 1.4}
+              />
             </div>
-            <div className="flex flex-col gap-[1px] md:gap-[2px]">
-              <ProgressBar value={fuel.tankLevel} color="bg-status-ok" height="h-4 md:h-1 lg:h-2 xl:h-5" rounded />
-              <div className="flex justify-between text-[9px] md:text-[7px] lg:text-[8px] text-gray-400 font-black tracking-widest">
+            <div className={`flex flex-col ${isExcavator ? 'gap-[2px] md:gap-[3px] lg:gap-1' : 'gap-[1px] md:gap-[2px]'}`}>
+              <ProgressBar
+                value={fuel.tankLevel}
+                color="bg-status-ok"
+                height={isExcavator ? 'h-5 md:h-2 lg:h-2.5 xl:h-5' : 'h-4 md:h-1 lg:h-2 xl:h-5'}
+                rounded
+              />
+              <div className={`flex justify-between ${isExcavator ? 'text-[10px] md:text-[8px] lg:text-[8.5px] xl:text-[10px]' : 'text-[9px] md:text-[7px] lg:text-[8px]'} text-gray-400 font-black tracking-widest`}>
                 <span>0</span>
                 <span>1/2</span>
                 <span>1</span>
@@ -228,23 +237,26 @@ function LargeFuelPanel({ fuel, machine }: { fuel: FuelPanelProps['fuel']; machi
             </div>
           </div>
 
-          <div className="w-full h-px bg-industrial-700/50 my-[0.5px] md:my-[0.75px]" />
+          <div className={`w-full h-px bg-industrial-700/50 ${isExcavator ? 'my-[1px] md:my-[1px] lg:my-[1.5px]' : 'my-[0.5px] md:my-[0.75px] lg:my-[1px]'}`} />
 
           {/* PARTE INFERIOR: AUTONOMÍA + reloj circular verde (encima img CAT Z-40) */}
-          <div className="flex flex-col min-w-0 py-[1px] md:py-[1px] lg:py-[2px] relative z-40">
-            <div className="text-[8px] md:text-[7px] lg:text-[9px] xl:text-[11px] text-gray-200 uppercase tracking-widest font-black whitespace-nowrap mb-[3px] md:mb-[4px] lg:mb-1.5">
+          <div className={`flex flex-col min-w-0 ${isExcavator ? 'py-[2px] md:py-[2px] lg:py-[4px] xl:py-1' : 'py-[1px] md:py-[1px] lg:py-[2px]'} relative z-40`}>
+            <div className={`text-[8px] md:text-[7px] lg:text-[9px] xl:text-[11px] text-gray-200 uppercase tracking-widest font-black whitespace-nowrap`}>
               AUTONOMÍA
             </div>
-            <div className="flex items-start justify-between gap-1 min-w-0">
-              <div className="flex items-start gap-[1px] md:gap-0.5 min-w-0">
-                <span className="font-mono font-black text-2xl md:text-sm lg:text-[16px] xl:text-3xl text-white leading-none tracking-tighter">
+            <div className={`flex items-start justify-between ${isExcavator ? 'gap-2' : 'gap-1'} min-w-0`}>
+              <div className={`flex items-start ${isExcavator ? 'gap-[5px] md:gap-1' : 'gap-[1px] md:gap-0.5'} min-w-0`}>
+                <span className={`font-mono font-black ${isExcavator ? 'text-3xl md:text-lg lg:text-[22px] xl:text-4xl' : 'text-2xl md:text-sm lg:text-[16px] xl:text-3xl'} text-white leading-none tracking-tighter`}>
                   {autonomy}
                 </span>
-                <span className="text-base md:text-[9px] lg:text-xs text-status-ok font-black leading-none mb-1">h</span>
+                <span className={`${isExcavator ? 'text-xl md:text-[11px] lg:text-sm xl:text-base mb-1' : 'text-base md:text-[9px] lg:text-xs mb-1'} text-status-ok font-black leading-none`}>h</span>
               </div>
             </div>
-            <div className="w-10 h-10 md:w-11 md:h-11 lg:w-14 lg:h-14 rounded-full flex items-start justify-start bg-status-ok/7 shrink-0">
-              <ClockIcon size={18} className="text-status-ok md:size-[18px] lg:size-[24px]" />
+            <div className={`${isExcavator ? 'w-12 h-12 md:w-12 md:h-12 lg:w-15 lg:h-15 xl:w-18 xl:h-18' : 'w-10 h-10 md:w-11 md:h-11 lg:w-14 lg:h-14'} rounded-full ${isExcavator ? 'mt-[2px] lg:mt-0.25' : ''} flex items-start justify-start bg-status-ok/7 shrink-0`}>
+              <ClockIcon
+                size={isExcavator ? 24 : 18}
+                className={`text-status-ok ${isExcavator ? 'md:size-[22px] lg:size-[22px] xl:size-[32px]' : 'md:size-[18px] lg:size-[24px]'}`}
+              />
             </div>
           </div>
         </div>

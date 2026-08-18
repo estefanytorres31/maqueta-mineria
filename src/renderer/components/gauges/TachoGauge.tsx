@@ -9,9 +9,9 @@ interface TachoGaugeProps {
 
 export default function TachoGauge({
   value,
-  maxRpm = 3000,
-  warningRpm = 2400,
-  dangerRpm = 2700,
+  maxRpm = 4000,
+  warningRpm = 3200,
+  dangerRpm = 3600,
   size = 170,
   className = ''
 }: TachoGaugeProps) {
@@ -49,9 +49,10 @@ export default function TachoGauge({
 
   const labels = [
     { val: 0, deg: startDeg },
-    { val: 1, deg: startDeg + sweepDeg / 3 },
-    { val: 2, deg: startDeg + (sweepDeg / 3) * 2 },
-    { val: 3, deg: endDeg }
+    { val: 1, deg: startDeg + sweepDeg / 4 },
+    { val: 2, deg: startDeg + (sweepDeg / 4) * 2 },
+    { val: 3, deg: startDeg + (sweepDeg / 4) * 3 },
+    { val: 4, deg: endDeg }
   ]
   const warnPct  = warningRpm / maxRpm
   const dangerPct = dangerRpm / maxRpm
@@ -76,10 +77,10 @@ export default function TachoGauge({
           stroke="#EF4444" strokeWidth={size * 0.05} fill="none" strokeLinecap="round"
         />
 
-        {Array.from({ length: 13 }).map((_, i) => {
-          const deg = startDeg + (sweepDeg * i) / 12
+        {Array.from({ length: 21 }).map((_, i) => {
+          const deg = startDeg + (sweepDeg * i) / 20
           const pA = p2r(deg, rTickOuter)
-          const bigStep = i % 3 === 0
+          const bigStep = i % 5 === 0
           const pB = p2r(deg, bigStep ? rTickInnerBig : rTickInnerSmall)
           return (
             <line key={i} x1={pA.x} y1={pA.y} x2={pB.x} y2={pB.y}

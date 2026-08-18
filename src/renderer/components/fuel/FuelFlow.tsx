@@ -23,13 +23,13 @@ export default function FuelFlow({ supply, supplyImg, returnFlow, returnImg }: F
               {c.title} {c.hint && <span className="text-gray-400">{c.hint}</span>}
             </div>
             <div className="mt-1 flex items-baseline gap-1">
-              <span className="font-mono text-lg font-bold leading-none xl:text-2xl" style={{ color: c.color }}>
+              <span className="font-mono text-lg font-bold leading-none md:text-[10px] lg:text-[13px] xl:text-xl" style={{ color: c.color }}>
                 {c.value.toFixed(1)}
               </span>
               <span className="text-[10px] text-gray-400">gal/h</span>
             </div>
-            <div className="my-1.5 min-h-0 flex-1 overflow-hidden rounded-md bg-industrial-900">
-              {c.img && <img src={c.img} alt={c.title} className="h-full w-full object-contain" />}
+            <div className="my-1 min-h-0 flex-1 overflow-hidden rounded-md bg-industrial-900">
+              {c.img && <img src={c.img} alt={c.title} className="h-full w-full object-contain scale-150" />}
             </div>
             <div className="h-1.5 overflow-hidden rounded-full bg-industrial-700">
               <div className={`h-full ${c.bar}`} style={{ width: `${c.pct}%` }} />

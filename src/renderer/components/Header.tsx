@@ -1,12 +1,5 @@
 import { 
-  Home, 
-  Fuel, 
-  Activity, 
-  BarChart3, 
-  Cog, 
   MapPin, 
-  Bell, 
-  Settings,
   SignalHigh,
   Cloud,
   Calendar,
@@ -19,17 +12,16 @@ import { useDateTime } from '../hooks/useDateTime'
 
 
 export default function Header() {
-  const { selectedMachine, setPage, currentPage } = useNavigationStore()
+  const { selectedMachine, setPage } = useNavigationStore()
   const { telemetry } = useTelemetryStore()
   const { date, time } = useDateTime()
-  const alertsCount = useTelemetryStore(s => s.getUnresolvedAlertsCount())
 
   if (!selectedMachine) return null
 
   return (
-    <header className="bg-industrial-850 border-b border-industrial-700 px-2 md:px-3 lg:px-4 py-1 md:py-1.5 lg:py-2 flex items-center gap-2 md:gap-2 lg:gap-3 xl:gap-4 flex-shrink-0">
+    <header className="bg-industrial-850 border-b border-industrial-700 px-2 md:px-3 lg:px-4 py-1 md:py-1 lg:py-1 flex items-center gap-2 md:gap-2 lg:gap-3 xl:gap-4 flex-shrink-0">
       <div 
-        className="flex flex-col rounded px-1 py-1 cursor-pointer hover:opacity-80 transition-opacity"
+        className="flex flex-col rounded px-1 py-0.5 cursor-pointer hover:opacity-80 transition-opacity"
         onClick={() => setPage('selector')}
       >
         <div className="font-black text-lg md:text-xl lg:text-2xl xl:text-3xl tracking-tight leading-none">
@@ -43,10 +35,10 @@ export default function Header() {
       <div className="h-7 md:h-8 w-px bg-industrial-700 mx-0.5 md:mx-1 lg:mx-2" />
 
       <div className="flex items-center gap-2 md:gap-3">
-        <div className="text-amber-500 font-black text-base md:text-lg lg:text-xl leading-tight tracking-wide">{selectedMachine.model}</div>
+        <div className="text-amber-500 font-black text-base md:text-lg lg:text-[26px] leading-tight tracking-wide">{selectedMachine.model}</div>
         <div className="flex flex-col leading-tight">
           <span className="text-gray-200 text-[10px] md:text-xs lg:text-xs font-medium">{selectedMachine.category}</span>
-          <span className="text-gray-500 font-mono text-[9px] md:text-[10px]">{selectedMachine.code}</span>
+          <span className="text-gray-500 font-mono text-[10px] md:text-[10px] lg:text-[11.5px] xl:text-[12px]">{selectedMachine.code}</span>
         </div>
       </div>
 

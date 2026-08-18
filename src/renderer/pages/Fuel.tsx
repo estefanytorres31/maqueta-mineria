@@ -10,7 +10,6 @@ import FuelFlow from '../components/fuel/FuelFlow'
 import ConsumptionDistribution from '../components/fuel/ConsumptionDistribution'
 import DailyHistory from '../components/fuel/DailyHistory'
 import FuelStatusFooter from '../components/fuel/FuelStatusFooter'
-import Flujometro from '../../../public/combustible/flujometro.png'
 
 
 export default function Fuel() {
@@ -74,7 +73,7 @@ export default function Fuel() {
           onRangeChange={r => updateDisplay({ timeRange: r })}
         />
         <ConsumptionModeChart data={modes} total={total} />
-        <FuelFlow supply={fuel.supplyFlow} supplyImg={Flujometro} returnFlow={fuel.returnFlow} returnImg={Flujometro} />
+        <FuelFlow supply={fuel.supplyFlow} supplyImg="/combustible/flujometro.png" returnFlow={fuel.returnFlow} returnImg="/combustible/flujometro.png" />
         <ConsumptionDistribution data={modes} />
         <DailyHistory data={fuel.dailyHistory} />
       </div>
