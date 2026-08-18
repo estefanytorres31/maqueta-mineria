@@ -240,16 +240,16 @@ function LargeFuelPanel({ fuel, machine }: { fuel: FuelPanelProps['fuel']; machi
           <div className={`w-full h-px bg-industrial-700/50 ${isExcavator ? 'my-[1px] md:my-[1px] lg:my-[1.5px]' : 'my-[0.5px] md:my-[0.75px] lg:my-[1px]'}`} />
 
           {/* PARTE INFERIOR: AUTONOMÍA + reloj circular verde (encima img CAT Z-40) */}
-          <div className={`flex flex-col min-w-0 ${isExcavator ? 'py-[2px] md:py-[2px] lg:py-[4px] xl:py-1' : 'py-[1px] md:py-[1px] lg:py-[2px]'} relative z-40`}>
-            <div className={`text-[8px] md:text-[7px] lg:text-[9px] xl:text-[11px] text-gray-200 uppercase tracking-widest font-black whitespace-nowrap`}>
+          <div className={`flex flex-col min-w-0 ${isExcavator ? 'py-[2px] md:py-[4px] lg:py-[6px] xl:py-2' : 'py-[1px] md:py-[1px] lg:py-[2px]'} relative z-40`}>
+            <div className={`text-[8px] md:text-[7px] lg:text-[9px] xl:text-[11px] text-gray-200 uppercase tracking-widest font-black whitespace-nowrap mb-2`}>
               AUTONOMÍA
             </div>
             <div className={`flex items-start justify-between ${isExcavator ? 'gap-2' : 'gap-1'} min-w-0`}>
               <div className={`flex items-start ${isExcavator ? 'gap-[5px] md:gap-1' : 'gap-[1px] md:gap-0.5'} min-w-0`}>
-                <span className={`font-mono font-black ${isExcavator ? 'text-3xl md:text-lg lg:text-[22px] xl:text-4xl' : 'text-2xl md:text-sm lg:text-[16px] xl:text-3xl'} text-white leading-none tracking-tighter`}>
+                <span className={`font-mono font-black ${isExcavator ? 'text-3xl md:text-lg lg:text-[24px] xl:text-3xl' : 'text-2xl md:text-sm lg:text-[16px] xl:text-3xl'} text-white leading-none tracking-tighter`}>
                   {autonomy}
                 </span>
-                <span className={`${isExcavator ? 'text-xl md:text-[11px] lg:text-sm xl:text-base mb-1' : 'text-base md:text-[9px] lg:text-xs mb-1'} text-status-ok font-black leading-none`}>h</span>
+                <span className={`${isExcavator ? 'text-xl md:text-[11px] lg:text-sm xl:text-base mb-2' : 'text-base md:text-[9px] lg:text-xs mb-1'} text-status-ok font-black leading-none`}>h</span>
               </div>
             </div>
             <div className={`${isExcavator ? 'w-12 h-12 md:w-12 md:h-12 lg:w-15 lg:h-15 xl:w-18 xl:h-18' : 'w-10 h-10 md:w-11 md:h-11 lg:w-14 lg:h-14'} rounded-full ${isExcavator ? 'mt-[2px] lg:mt-0.25' : ''} flex items-start justify-start bg-status-ok/7 shrink-0`}>

@@ -331,7 +331,7 @@ function ExcavatorProductivityContent({ productivity }: Pick<ProductivityPanelPr
             EFICIENCIA
           </div>
           <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0">
-            <span className="font-mono font-black text-[36px] md:text-[32px] lg:text-[42px] xl:text-[50px] text-status-warning leading-[0.9] tracking-tighter">
+            <span className="font-mono font-black text-[36px] md:text-[32px] lg:text-[36px] xl:text-[48px] text-status-warning leading-[0.9] tracking-tighter">
               {eficiencia}
             </span>
             <span className="text-[14px] md:text-[16px] lg:text-[20px] xl:text-[26px] text-status-warning font-black leading-none mb-1">
@@ -346,7 +346,7 @@ function ExcavatorProductivityContent({ productivity }: Pick<ProductivityPanelPr
             RENDIMIENTO
           </div>
           <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0">
-            <span className="font-mono font-black text-[36px] md:text-[32px] lg:text-[42px] xl:text-[50px] text-status-warning leading-[0.9] tracking-tighter">
+            <span className="font-mono font-black text-[36px] md:text-[32px] lg:text-[36px] xl:text-[48px] text-status-warning leading-[0.9] tracking-tighter">
               {rendimiento}
             </span>
             <span className="text-[14px] md:text-[16px] lg:text-[20px] xl:text-[26px] text-status-warning font-black leading-none mb-1">
