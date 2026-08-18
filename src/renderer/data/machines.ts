@@ -2,16 +2,6 @@ import { Machine, MachineType } from '../types'
 
 export const MACHINES: Machine[] = [
   {
-    id: 'cat-378l',
-    type: 'retroexcavator',
-    name: 'RETROEXCAVADORA',
-    model: '378L',
-    code: 'EQ-002',
-    category: 'RETROEXCAVADORA CON CARGADOR FRONTAL',
-    imageUrl: '/maquinaria/retroexcavadora.png',
-    iconUrl: '/maquinaria/iconos/retroexcavadora.png'
-  },
-  {
     id: 'cat-375l',
     type: 'excavator',
     name: 'EXCAVADORA',
@@ -60,6 +50,16 @@ export const MACHINES: Machine[] = [
     category: 'PERFORADORA ROTATIVA',
     imageUrl: '/maquinaria/perforadora.png',
     iconUrl: '/maquinaria/iconos/perforadora.png'
+  },
+  {
+    id: 'cat-378l',
+    type: 'retroexcavator',
+    name: 'RETROEXCAVADORA',
+    model: '378L',
+    code: 'EQ-002',
+    category: 'RETROEXCAVADORA CON CARGADOR FRONTAL',
+    imageUrl: '/maquinaria/retroexcavadora.png',
+    iconUrl: '/maquinaria/iconos/retroexcavadora.png'
   },
   {
     id: 'cat-777g',

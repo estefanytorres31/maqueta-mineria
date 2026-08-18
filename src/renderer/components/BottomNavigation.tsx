@@ -23,7 +23,6 @@ export default function BottomNavigation({ className = '' }: BottomNavigationPro
     { id: 'fuel', icon: Fuel, label: 'COMBUSTIBLE' },
     { id: 'operation', icon: PieChart, label: 'OPERACIÓN' },
     { id: 'productivity', icon: BarChart3, label: 'PRODUCTIVIDAD' },
-    { id: 'settings', icon: Settings, label: 'MÁQUINA' },
     { id: 'alerts', icon: Bell, label: 'ALERTAS', badge: alertsCount }
   ]
 
@@ -33,7 +32,7 @@ export default function BottomNavigation({ className = '' }: BottomNavigationPro
       role="navigation"
       aria-label="Navegación principal"
     >
-      <div className="grid grid-cols-6 w-full">
+      <div className="grid grid-cols-5 w-full">
         {navItems.map((item, idx) => {
           const Icon = item.icon
           const isActive = currentPage === item.id

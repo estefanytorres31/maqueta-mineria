@@ -270,6 +270,14 @@ function getGenericConfig(type: MachineType, p: ProductivityPanelProps['producti
         cycle: null,
       }
     case 'excavator':
+      return {
+        panelTitle: 'PRODUCTIVIDAD',
+        kpis: [
+          { label: 'EFICIENCIA', value: '0.094', unit: 'gal/ton' },
+          { label: 'RENDIMIENTO', value: Math.max(Math.round(perf), 138).toLocaleString(), unit: 'ton/h' },
+        ],
+        cycle: null,
+      }
     default:
       return {
         panelTitle: 'PRODUCTIVIDAD',
@@ -294,6 +302,61 @@ function getGenericConfig(type: MachineType, p: ProductivityPanelProps['producti
         },
       }
   }
+}
+
+/* ================================================================
+   VARIANTE 2: EXCAVADORA (diseño foto referencia)
+   ————————————————————————————————————————————————————————————————
+   2 columnas iguales con línea divisoria vertical central:
+     EFICIENCIA  |  RENDIMIENTO
+     0.094 gal/ton | 138 ton/h
+   ================================================================ */
+function ExcavatorProductivityContent({ productivity }: Pick<ProductivityPanelProps, 'productivity'>) {
+  const perf = productivity.performance || 0
+  const eficiencia = '0.094'
+  const rendimiento = Math.max(Math.round(perf), 138).toLocaleString()
+
+  return (
+    <div className="relative h-full flex items-stretch justify-center min-h-0 w-full">
+      {/* LÍNEA VERTICAL DIVISORIA CENTRAL */}
+      <div
+        className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-px bg-status-warning/50 z-20 pointer-events-none"
+        aria-hidden
+      />
+
+      <div className="grid grid-cols-2 w-full h-full min-h-0">
+        {/* COLUMNA IZQUIERDA: EFICIENCIA */}
+        <div className="flex flex-col items-center justify-center min-w-0 px-[2px] md:px-[4px] lg:px-2 h-full relative">
+          <div className="text-[10px] md:text-[11px] lg:text-[13px] xl:text-[16px] text-gray-200 uppercase tracking-widest font-black whitespace-nowrap mb-[4px] md:mb-[6px] lg:mb-2">
+            EFICIENCIA
+          </div>
+          <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0">
+            <span className="font-mono font-black text-[36px] md:text-[40px] lg:text-[48px] xl:text-[56px] text-status-warning leading-[0.9] tracking-tighter">
+              {eficiencia}
+            </span>
+            <span className="text-[14px] md:text-[16px] lg:text-[20px] xl:text-[26px] text-status-warning font-black leading-none mb-1">
+              gal/ton
+            </span>
+          </div>
+        </div>
+
+        {/* COLUMNA DERECHA: RENDIMIENTO */}
+        <div className="flex flex-col items-center justify-center min-w-0 px-[2px] md:px-[4px] lg:px-2 h-full relative">
+          <div className="text-[10px] md:text-[11px] lg:text-[13px] xl:text-[16px] text-gray-200 uppercase tracking-widest font-black whitespace-nowrap mb-[4px] md:mb-[6px] lg:mb-2">
+            RENDIMIENTO
+          </div>
+          <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0">
+            <span className="font-mono font-black text-[36px] md:text-[40px] lg:text-[48px] xl:text-[56px] text-status-warning leading-[0.9] tracking-tighter">
+              {rendimiento}
+            </span>
+            <span className="text-[14px] md:text-[16px] lg:text-[20px] xl:text-[26px] text-status-warning font-black leading-none mb-1">
+              ton/h
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 function GenericProductivityContent(props: ProductivityPanelProps) {
@@ -447,6 +510,8 @@ export default function ProductivityPanel({ productivity, machine }: Productivit
       <div className="p-[2px] md:p-[2px] lg:p-[3px] xl:p-1 h-full flex flex-col min-h-0 gap-[2px]">
         {machine.type === 'loader'
           ? <LoaderProductivityContent productivity={productivity} />
+          : machine.type === 'excavator'
+          ? <ExcavatorProductivityContent productivity={productivity} />
           : <GenericProductivityContent productivity={productivity} machine={machine} />
         }
       </div>

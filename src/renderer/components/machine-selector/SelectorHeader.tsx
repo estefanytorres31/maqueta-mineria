@@ -7,11 +7,13 @@ export default function SelectorHeader() {
   return (
     <header className="flex items-center justify-between px-3 md:px-6 xl:px-10 py-2 md:py-3 xl:py-4 border-b border-industrial-800 bg-industrial-900/50 backdrop-blur flex-shrink-0">
       <div className="flex items-center gap-3 md:gap-4 xl:gap-6">
-        <div className="flex items-center gap-1.5">
-          <div className="text-electric-400 font-black text-xl md:text-2xl xl:text-4xl tracking-tight leading-none">
-            EDGE
-            <span className="text-white block text-sm md:text-lg xl:text-2xl mt-0.5 tracking-[0.2em]">SMART</span>
-          </div>
+        <div className="flex flex-col rounded px-0.5 py-0.5">
+          <div className="font-black text-lg md:text-xl lg:text-2xl xl:text-3xl tracking-tight leading-none">
+            <span className="text-white">EDGE</span>
+          </div>    
+          <div className="font-black text-xs md:text-xs lg:text-sm xl:text-lg tracking-tight leading-none text-end">
+            <span className="text-blue-700">SMART</span>
+          </div> 
         </div>
         <div className="hidden md:block h-8 xl:h-12 w-px bg-industrial-700" />
         <div className="hidden md:block">
@@ -21,7 +23,7 @@ export default function SelectorHeader() {
       </div>
 
       <div className="hidden md:flex items-center justify-center flex-1 min-w-0">
-        <div className="text-white font-black text-sm md:text-base xl:text-3xl tracking-widest uppercase leading-none">
+        <div className="text-white font-black text-sm md:text-base xl:text-2xl tracking-widest uppercase leading-none">
           Peru Controls System S.A.C.
         </div>
       </div>

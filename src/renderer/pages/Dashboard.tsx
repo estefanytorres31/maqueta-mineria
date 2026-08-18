@@ -56,7 +56,7 @@ export default function Dashboard() {
       {/* Grid 2×3: misma estructura, items/gap en los 7 layouts — SOLO se estira la COLUMNA CENTRAL (1.3fr) respecto a laterales (1fr c/u) — JSX interno de 3 slots sigue siendo variable */}
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.75fr)_minmax(0,1fr)] xl:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)_minmax(0,1fr)] gap-[3px] md:gap-[4px] lg:gap-[5px] flex-1 min-h-0 lg:items-stretch lg:auto-rows-fr">
         {/* ============== FILA 1 COL 1: MOTOR (INVARIABLE 7/7) ============== */}
-        <EnginePanel engine={engine} />
+        {selectedMachine && <EnginePanel engine={engine} machine={selectedMachine} />}
 
         {/* ============== FILA 1 COL 2: SWAP LoaderPanel (FOTO1) ↔ FuelPanel Large (FOTO3 F2) ============== */}
         {isLoaderLayout

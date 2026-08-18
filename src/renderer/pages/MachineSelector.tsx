@@ -36,7 +36,7 @@ export default function MachineSelector() {
 
       <main className="flex-1 min-h-0 w-full flex flex-col items-stretch overflow-hidden px-3 sm:px-4 md:px-6 xl:px-12 2xl:px-24 py-2 sm:py-3 md:py-5 xl:py-6 2xl:py-8 gap-1.5 sm:gap-2 md:gap-3 xl:gap-5 2xl:gap-7">
         <div className="text-center flex-shrink-0">
-          <h1 className="text-base sm:text-xl md:text-2xl xl:text-3xl 2xl:text-4xl font-bold text-white mb-0.5 sm:mb-1 md:mb-1.5 xl:mb-2 2xl:mb-3 leading-tight">
+          <h1 className="text-base sm:text-xl md:text-xl xl:text-2xl 2xl:text-3xl font-bold text-white mb-0.5 sm:mb-1 md:mb-1.5 xl:mb-2 2xl:mb-3 leading-tight">
             BIENVENIDO A <span className="text-electric-400">EDGE SMART</span>
           </h1>
           <p className="text-gray-400 text-[11px] sm:text-xs md:text-sm xl:text-base leading-tight">

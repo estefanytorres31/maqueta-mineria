@@ -1,14 +1,17 @@
 import { Thermometer, Droplets, Gauge, Battery } from 'lucide-react'
 import SectionPanel from '../SectionPanel'
 import TachoGauge from '../gauges/TachoGauge'
-import { EngineData } from '../../types'
+import { EngineData, Machine } from '../../types'
 import { PiEngineFill as Motor } from "react-icons/pi";
 
 interface EnginePanelProps {
   engine: EngineData
+  machine?: Pick<Machine, 'type'>
 }
 
-export default function EnginePanel({ engine }: EnginePanelProps) {
+export default function EnginePanel({ engine, machine }: EnginePanelProps) {
+  const isExcavator = machine?.type === 'excavator'
+  const gridCols = isExcavator ? 'grid-cols-3' : 'grid-cols-4'
   return (
     <SectionPanel
       title="MOTOR"
@@ -34,7 +37,7 @@ export default function EnginePanel({ engine }: EnginePanelProps) {
           </div>
         </div>
 
-        <div className="grid grid-cols-4 gap-0 border-t border-industrial-700/70 flex-1 min-h-0 pt-[1px] md:pt-[2px]">
+        <div className={`grid ${gridCols} gap-0 border-t border-industrial-700/70 flex-1 min-h-0 pt-[1px] md:pt-[2px]`}>
           {/* TEMP REFRIGERANTE */}
           <div className="flex flex-col items-center justify-center gap-[1px] px-[2px] py-[1px] min-w-0 h-full border-r border-industrial-700/50">
             <Thermometer size={12} className="text-electric-400 md:size-[12px] lg:size-[14px] flex-shrink-0" />
@@ -54,7 +57,7 @@ export default function EnginePanel({ engine }: EnginePanelProps) {
             <div className="text-[7px] md:text-[8px] lg:text-[9px] text-electric-400 font-semibold leading-none">°C</div>
           </div>
           {/* PRESION ACEITE */}
-          <div className="flex flex-col items-center justify-center gap-[1px] px-[2px] py-[1px] min-w-0 h-full border-r border-industrial-700/50">
+          <div className={`flex flex-col items-center justify-center gap-[1px] px-[2px] py-[1px] min-w-0 h-full ${isExcavator ? '' : 'border-r border-industrial-700/50'}`}>
             <Gauge size={12} className="text-electric-400 md:size-[12px] lg:size-[14px] flex-shrink-0" />
             <div className="text-[6px] md:text-[6.5px] lg:text-[7.5px] xl:text-[8.5px] text-gray-300 uppercase tracking-wider font-bold text-center whitespace-nowrap">PRES. ACEITE</div>
             <div className="font-mono font-black text-base md:text-lg lg:text-xl xl:text-2xl text-white leading-none tracking-tight">
@@ -62,15 +65,17 @@ export default function EnginePanel({ engine }: EnginePanelProps) {
             </div>
             <div className="text-[7px] md:text-[8px] lg:text-[9px] text-electric-400 font-semibold leading-none">bar</div>
           </div>
-          {/* VOLTAJE */}
-          <div className="flex flex-col items-center justify-center gap-[1px] px-[2px] py-[1px] min-w-0 h-full">
-            <Battery size={12} className="text-electric-400 md:size-[12px] lg:size-[14px] flex-shrink-0" />
-            <div className="text-[6px] md:text-[6.5px] lg:text-[7.5px] xl:text-[8.5px] text-gray-300 uppercase tracking-wider font-bold text-center whitespace-nowrap">VOLTAJE</div>
-            <div className="font-mono font-black text-base md:text-lg lg:text-xl xl:text-2xl text-white leading-none tracking-tight">
-              {engine.voltage.toFixed(1)}
+          {/* VOLTAJE — SOLO SI NO ES EXCAVADORA */}
+          {!isExcavator && (
+            <div className="flex flex-col items-center justify-center gap-[1px] px-[2px] py-[1px] min-w-0 h-full">
+              <Battery size={12} className="text-electric-400 md:size-[12px] lg:size-[14px] flex-shrink-0" />
+              <div className="text-[6px] md:text-[6.5px] lg:text-[7.5px] xl:text-[8.5px] text-gray-300 uppercase tracking-wider font-bold text-center whitespace-nowrap">VOLTAJE</div>
+              <div className="font-mono font-black text-base md:text-lg lg:text-xl xl:text-2xl text-white leading-none tracking-tight">
+                {engine.voltage.toFixed(1)}
+              </div>
+              <div className="text-[7px] md:text-[8px] lg:text-[9px] text-electric-400 font-semibold leading-none">V</div>
             </div>
-            <div className="text-[7px] md:text-[8px] lg:text-[9px] text-electric-400 font-semibold leading-none">V</div>
-          </div>
+          )}
         </div>
       </div>
     </SectionPanel>

@@ -7,7 +7,7 @@ interface FuelPanelProps {
   variant?: 'compact' | 'large'
   fuel: Pick<FuelData, 'instantConsumption' | 'tankLevel' | 'todayConsumption' | 'idleTodayConsumption' | 'avgConsumption' | 'autonomy' | 'tankCapacity'>
   totalHours: OperationData['totalHours']
-  machine?: Pick<Machine, 'imageUrl' | 'name' | 'model'>
+  machine?: Pick<Machine, 'imageUrl' | 'name' | 'model' | 'type'>
 }
 
 /* ================================================================
@@ -95,6 +95,7 @@ function CompactFuelPanel({ fuel }: { fuel: FuelPanelProps['fuel'] }) {
      · NUNCA justify-between horizontal (nunca al costado)
    ================================================================ */
 function LargeFuelPanel({ fuel, machine }: { fuel: FuelPanelProps['fuel']; machine?: FuelPanelProps['machine'] }) {
+  const isExcavator = machine?.type === 'excavator'
   const accumulatedLarge = fuel.tankCapacity && fuel.tankLevel > 0
     ? Math.max(fuel.todayConsumption, (fuel.tankCapacity * (fuel.tankLevel / 100)) + fuel.todayConsumption + 959.4)
     : Math.max(fuel.todayConsumption * 11.04 + fuel.todayConsumption, 1056)
@@ -125,12 +126,14 @@ function LargeFuelPanel({ fuel, machine }: { fuel: FuelPanelProps['fuel']; machi
         aria-hidden
       />
 
-      {/* IMAGEN CAT (OVERLAY ABSOLUTO — posición muy abajo para NO TAPAR AUTONOMÍA ni NIVEL TANQUE) */}
-      <img
-        src={machine?.imageUrl}
-        alt={machine ? `${machine.name} ${machine.model}` : 'CAT mining vehicle'}
-        className="absolute right-[8%] md:right-[-1%] lg:right-[0%] bottom-[-5%] md:bottom-[-5%] lg:bottom-[-2%] w-[60%] md:w-[42%] lg:w-[32%] object-contain pointer-events-none z-0"
-      />
+      {/* IMAGEN CAT (OVERLAY ABSOLUTO — NO se muestra en EXCAVADORA) */}
+      {!isExcavator && machine?.imageUrl && (
+        <img
+          src={machine.imageUrl}
+          alt={machine ? `${machine.name} ${machine.model}` : 'CAT mining vehicle'}
+          className="absolute right-[8%] md:right-[-1%] lg:right-[0%] bottom-[-5%] md:bottom-[-5%] lg:bottom-[-2%] w-[60%] md:w-[42%] lg:w-[32%] object-contain pointer-events-none z-0"
+        />
+      )}
 
       {/* GRID 2 COLUMNAS EXACTAS (50/50) sin gap vertical fuera - Z-40 GLOBAL PARA TEXTO ENCIMA DE IMAGEN */}
       <div className="relative z-40 grid grid-cols-2 h-full min-h-0">
