@@ -19,6 +19,16 @@ export default function MachineSelector() {
   const setMachine = useNavigationStore(s => s.setMachine)
 
   useEffect(() => {
+    // Precargar todas las imágenes e íconos en memoria en segundo plano
+    MACHINES.forEach(machine => {
+      const img = new Image()
+      img.src = machine.imageUrl
+      const icon = new Image()
+      icon.src = machine.iconUrl
+    })
+  }, [])
+
+  useEffect(() => {
     if (globalSelectedMachine && globalSelectedMachine.id !== selected?.id) {
       setSelected(globalSelectedMachine)
     }

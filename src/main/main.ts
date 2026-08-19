@@ -14,30 +14,32 @@ const projectRoot = path.resolve(__dirname, '..')
 const distDir = path.join(projectRoot, 'dist')
 const publicDir = path.join(projectRoot, 'public')
 
-const sandboxRoot = path.resolve(
-  process.env.EDGE_SANDBOX_ROOT || path.join(projectRoot, '.sandbox')
-)
-const userDataDir = path.join(sandboxRoot, 'electron-userdata')
-const appDataDir = path.join(sandboxRoot, 'AppData')
-const localAppDataDir = path.join(sandboxRoot, 'LocalAppData')
-
-for (const p of [sandboxRoot, userDataDir, appDataDir, localAppDataDir]) {
-  if (!fs.existsSync(p)) fs.mkdirSync(p, { recursive: true })
-}
-
-try { app.setName('Sistema de maquinaria minera') } catch {}
-try { app.setPath('userData', userDataDir) } catch {}
-try { app.setPath('appData', appDataDir) } catch {}
-try { app.setPath('localAppData', localAppDataDir) } catch {}
-
-process.env.LOCALAPPDATA = localAppDataDir
-process.env.APPDATA = appDataDir
-
-let mainWindow: BrowserWindow | null = null
-
 const isDev = process.env.NODE_ENV === 'development' || !app.isPackaged
 const DEV_PORT = process.env.VITE_DEV_PORT ? Number(process.env.VITE_DEV_PORT) : 6969
 const DEV_URL = `http://localhost:${DEV_PORT}`
+
+let mainWindow: BrowserWindow | null = null
+
+if (isDev) {
+  const sandboxRoot = path.resolve(
+    process.env.EDGE_SANDBOX_ROOT || path.join(projectRoot, '.sandbox')
+  )
+  const userDataDir = path.join(sandboxRoot, 'electron-userdata')
+  const appDataDir = path.join(sandboxRoot, 'AppData')
+  const localAppDataDir = path.join(sandboxRoot, 'LocalAppData')
+
+  for (const p of [sandboxRoot, userDataDir, appDataDir, localAppDataDir]) {
+    if (!fs.existsSync(p)) fs.mkdirSync(p, { recursive: true })
+  }
+
+  try { app.setName('Sistema de maquinaria minera') } catch {}
+  try { app.setPath('userData', userDataDir) } catch {}
+  try { app.setPath('appData', appDataDir) } catch {}
+  try { app.setPath('localAppData', localAppDataDir) } catch {}
+
+  process.env.LOCALAPPDATA = localAppDataDir
+  process.env.APPDATA = appDataDir
+}
 
 function resolvePreload(): string {
   const candidates = [
@@ -105,11 +107,14 @@ function createWindow() {
 
   if (isDev) {
     // DevTools EN VENTANA SEPARADA, NUNCA dentro del panel de la app
-    // (equivalente a los 3 puntos → "Undock into separate window" de Chrome)
-    mainWindow.webContents.openDevTools({
-      mode: 'detach',
-      activate: false
+    // Se abre cuando la ventana esté lista para no demorar la aparición inicial
+    mainWindow.once('ready-to-show', () => {
+      mainWindow?.webContents.openDevTools({
+        mode: 'detach',
+        activate: false
+      })
     })
+    
     mainWindow.loadURL(DEV_URL + '/login').catch(() => mainWindow!.loadURL(DEV_URL))
   } else {
     const indexHtml = path.join(distDir, 'index.html')

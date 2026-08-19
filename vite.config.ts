@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 import path from 'path'
 
 export default defineConfig({
+  base: './',
   plugins: [react()],
   resolve: {
     alias: {
@@ -15,6 +16,9 @@ export default defineConfig({
     port: 6969,
     host: true,
     strictPort: false
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom', 'zustand', 'lucide-react', 'recharts']
   },
   preview: {
     port: 6970
