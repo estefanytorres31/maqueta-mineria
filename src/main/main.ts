@@ -55,8 +55,8 @@ function resolvePreload(): string {
 function resolveIcon(): string | undefined {
   const isWin = process.platform === 'win32'
   const candidates = isWin
-    ? [path.join(publicDir, 'logopcs.ico'), path.join(publicDir, 'logopcs.png')]
-    : [path.join(publicDir, 'logopcs.png'), path.join(publicDir, 'logopcs.ico')]
+    ? [path.join(publicDir, 'logo.png'), path.join(publicDir, 'logopcs.ico'), path.join(publicDir, 'logopcs.png')]
+    : [path.join(publicDir, 'logo.png'), path.join(publicDir, 'logopcs.png'), path.join(publicDir, 'logopcs.ico')]
   for (const p of candidates) if (fs.existsSync(p)) return p
   return undefined
 }
