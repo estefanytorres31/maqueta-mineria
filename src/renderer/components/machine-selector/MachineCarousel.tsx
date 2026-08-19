@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import { Machine } from '../../types'
 import MachineCard from './MachineCard'
 
@@ -6,9 +6,10 @@ interface MachineCarouselProps {
   machines: Machine[]
   selected: Machine | null
   onSelect: (m: Machine) => void
+  initialId?: string
 }
 
-export default function MachineCarousel({ machines, selected, onSelect }: MachineCarouselProps) {
+export default function MachineCarousel({ machines, selected, onSelect, initialId }: MachineCarouselProps) {
   const carouselRef = useRef<HTMLDivElement | null>(null)
   const dragState = useRef({
     isDown: false,
@@ -18,6 +19,20 @@ export default function MachineCarousel({ machines, selected, onSelect }: Machin
     movedDistance: 0
   })
   const suppressNextClickRef = useRef(false)
+  const scrolledInitialRef = useRef(false)
+
+  useEffect(() => {
+    if (scrolledInitialRef.current) return
+    const el = carouselRef.current
+    if (!el || !initialId) { scrolledInitialRef.current = true; return }
+    const idx = machines.findIndex(m => m.id === initialId)
+    if (idx < 0) { scrolledInitialRef.current = true; return }
+    const child = el.children[idx] as HTMLElement | undefined
+    if (child) {
+      el.scrollTo({ left: child.offsetLeft - Math.max(0, (el.clientWidth - child.clientWidth) / 2), behavior: 'auto' })
+    }
+    scrolledInitialRef.current = true
+  }, [initialId, machines])
 
   const handlePointerDown = (e: React.PointerEvent) => {
     if (!carouselRef.current) return
@@ -59,7 +74,7 @@ export default function MachineCarousel({ machines, selected, onSelect }: Machin
   }
 
   return (
-    <div className="xl:hidden w-full h-full min-h-0">
+    <div className="w-full h-full min-h-0">
       <div
         ref={carouselRef}
         className="w-full h-full flex overflow-x-auto snap-x snap-mandatory gap-2 sm:gap-2.5 md:gap-3 xl:gap-4 px-2 sm:px-3 md:px-4 xl:px-6 py-1 sm:py-1.5 md:py-2 xl:py-3 no-scrollbar touch-pan-y select-none cursor-grab active:cursor-grabbing"
@@ -73,13 +88,14 @@ export default function MachineCarousel({ machines, selected, onSelect }: Machin
         }}
         onClickCapture={handleClickCapture}
       >
-        {machines.map(machine => (
+        {machines.map((machine, idx) => (
           <MachineCard
             key={machine.id}
             machine={machine}
             isSelected={selected?.id === machine.id}
             onClick={() => onSelect(machine)}
             variant="carousel"
+            priority={machine.id === initialId || (idx === 0 && !initialId)}
           />
         ))}
       </div>

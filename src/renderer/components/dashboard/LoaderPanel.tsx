@@ -105,8 +105,12 @@ export default function LoaderPanel({ productivity, operation, fuel, machine }: 
               <img
                 src={machine.imageUrl}
                 alt={`${machine.name} ${machine.model}`}
+                width={1200}
+                height={800}
+                decoding="async"
+                fetchPriority="high"
                 className="absolute right-[8%] md:right-[-1%] lg:right-[6%] bottom-[-5%] md:bottom-[-5%] lg:bottom-[-2%] w-[60%] md:w-[42%] lg:w-[65%] object-contain pointer-events-none z-0"
-                loading="lazy"
+                loading="eager"
               />
             </div>
           </div>

@@ -50,6 +50,11 @@ export default function CenterMachinePanel({
             <img
               src={selectedMachine.imageUrl}
               alt={selectedMachine.name}
+              width={1200}
+              height={800}
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
               className="relative max-h-[82%] lg:max-h-[80%] md:max-h-[78%] max-w-[90%] lg:max-w-[88%] md:max-w-[86%] object-contain select-none pointer-events-none"
               style={{
                 filter: 'drop-shadow(0 30px 40px rgba(0,0,0,0.7)) drop-shadow(0 0 30px rgba(20, 184, 255, 0.18))'

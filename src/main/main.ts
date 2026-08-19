@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, Menu, shell, screen } from 'electron'
+import { app, BrowserWindow, ipcMain, Menu, shell, screen, globalShortcut } from 'electron'
 import path from 'path'
 import fs from 'fs'
 
@@ -82,7 +82,8 @@ function createWindow() {
       preload: resolvePreload(),
       contextIsolation: true,
       nodeIntegration: false,
-      devTools: isDev,
+      // DevTools SIEMPRE disponibles (F12 / Ctrl+Shift+I) pero NUNCA abre solo
+      devTools: false,
       sandbox: true,
       webSecurity: true,
       allowRunningInsecureContent: false
@@ -101,23 +102,63 @@ function createWindow() {
     })
   } catch {}
   mainWindow.maximize()
-  mainWindow.once('ready-to-show', () => mainWindow!.show())
 
-  if (isDev) {
-    // DevTools EN VENTANA SEPARADA, NUNCA dentro del panel de la app
-    // (equivalente a los 3 puntos → "Undock into separate window" de Chrome)
-    mainWindow.webContents.openDevTools({
-      mode: 'detach',
-      activate: false
-    })
-    mainWindow.loadURL(DEV_URL + '/login').catch(() => mainWindow!.loadURL(DEV_URL))
-  } else {
-    const indexHtml = path.join(distDir, 'index.html')
-    if (fs.existsSync(indexHtml)) {
-      mainWindow.loadFile(indexHtml)
+  // Atajo global para abrir/cerrar DevTools SOLAMENTE si el usuario lo pide
+  const toggleDevTools = () => {
+    if (!mainWindow) return
+    const wc = mainWindow.webContents
+    if (wc.isDevToolsOpened()) wc.closeDevTools()
+    else wc.openDevTools({ mode: 'detach', activate: false })
+  }
+  try {
+    globalShortcut.register('F12', toggleDevTools)
+  } catch {}
+  try {
+    globalShortcut.register('CommandOrControl+Shift+I', toggleDevTools)
+  } catch {}
+
+  // Muestra la ventana ni bien el renderer pinte la primera frame (más rápido que 'ready-to-show')
+  mainWindow.once('ready-to-show', () => {
+    if (!mainWindow || mainWindow.isDestroyed()) return
+    mainWindow.show()
+  })
+
+  // CARGA LA PÁGINA INMEDIATAMENTE (NO espera DevTools ni nada)
+  // Guardas anti-race: si la ventana se cierra mientras esperamos el Promise, no volvemos a acceder.
+  const safeLoad = async (win: BrowserWindow) => {
+    if (win.isDestroyed()) return
+    if (isDev) {
+      try {
+        await win.loadURL(DEV_URL)
+      } catch {
+        if (!win.isDestroyed()) {
+          try { await win.loadURL(DEV_URL) } catch {}
+        }
+      }
     } else {
-      mainWindow.loadURL(DEV_URL)
+      const indexHtml = path.join(distDir, 'index.html')
+      if (fs.existsSync(indexHtml)) {
+        try { await win.loadFile(indexHtml) } catch {}
+      } else {
+        try { await win.loadURL(DEV_URL) } catch {}
+      }
     }
+  }
+  safeLoad(mainWindow)
+
+  // Sólo si VARIABLE DE ENTORNO EDGE_OPEN_DEVTOOLS=1, abre DevTools automáticamente
+  // (después de que la página cargue, para no bloquear el ready-to-show)
+  if (process.env.EDGE_OPEN_DEVTOOLS === '1' && isDev) {
+    mainWindow.webContents.once('did-finish-load', () => {
+      setTimeout(() => {
+        if (!mainWindow || mainWindow.isDestroyed()) return
+        const wc = mainWindow.webContents
+        if (!wc || wc.isDestroyed()) return
+        if (!wc.isDevToolsOpened()) {
+          try { wc.openDevTools({ mode: 'detach', activate: false }) } catch {}
+        }
+      }, 400)
+    })
   }
 
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
@@ -129,7 +170,6 @@ function createWindow() {
     mainWindow = null
   })
 
-  // (DEPRECATED aquí) el openDevTools() se movió ARRIBA, SOLO si isDev, modo detach
 }
 
 ipcMain.handle('window:minimize', () => mainWindow?.minimize())

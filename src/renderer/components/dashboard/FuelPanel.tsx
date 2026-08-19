@@ -131,6 +131,11 @@ function LargeFuelPanel({ fuel, machine }: { fuel: FuelPanelProps['fuel']; machi
         <img
           src={machine.imageUrl}
           alt={machine ? `${machine.name} ${machine.model}` : 'CAT mining vehicle'}
+          width={1200}
+          height={800}
+          decoding="async"
+          fetchPriority="high"
+          loading="eager"
           className="absolute right-[8%] md:right-[-1%] lg:right-[0%] bottom-[-5%] md:bottom-[-5%] lg:bottom-[-2%] w-[60%] md:w-[42%] lg:w-[32%] object-contain pointer-events-none z-0"
         />
       )}

@@ -5,9 +5,10 @@ interface MachineCardProps {
   isSelected: boolean
   onClick: () => void
   variant?: 'grid' | 'carousel'
+  priority?: boolean
 }
 
-export default function MachineCard({ machine, isSelected, onClick, variant = 'grid' }: MachineCardProps) {
+export default function MachineCard({ machine, isSelected, onClick, variant = 'grid', priority = false }: MachineCardProps) {
   const isGrid = variant === 'grid'
 
   return (
@@ -33,7 +34,12 @@ export default function MachineCard({ machine, isSelected, onClick, variant = 'g
           <img
             src={machine.imageUrl}
             alt={machine.name}
-            loading="lazy"
+            width={900}
+            height={600}
+            sizes={isGrid ? '(min-width: 1440px) 13vw, (min-width: 1200px) 12vw, 40vw' : '(min-width: 990px) 25vw, (min-width: 768px) 30vw, 44vw'}
+            loading={priority ? 'eager' : 'lazy'}
+            decoding={priority ? 'sync' : 'async'}
+            fetchPriority={priority ? 'high' : 'auto'}
             className="max-w-full max-h-full w-auto h-auto xl:w-[90%] xl:h-[90%] xl:object-contain 2xl:scale-y-125 scale-x-110 2xl:object-contain object-contain select-none pointer-events-none drop-shadow-[0_3px_12px_rgba(0,0,0,0.68)]"
           />
         </div>
@@ -47,7 +53,11 @@ export default function MachineCard({ machine, isSelected, onClick, variant = 'g
         <img
           src={machine.iconUrl}
           alt={`${machine.name} icon`}
-          loading="lazy"
+          width={256}
+          height={256}
+          loading={priority ? 'eager' : 'lazy'}
+          decoding={priority ? 'sync' : 'async'}
+          fetchPriority={priority ? 'high' : 'auto'}
           className={`${isGrid ? 'h-5 sm:h-6 md:h-8 lg:h-9 xl:h-6 2xl:h-10' : 'h-5 sm:h-6 md:h-8 lg:h-9 xl:h-6 2xl:h-7'} w-auto max-h-full max-w-[90%] object-contain select-none pointer-events-none`}
           style={{
             filter: isSelected
