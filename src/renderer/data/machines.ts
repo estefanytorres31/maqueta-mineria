@@ -8,8 +8,8 @@ export const MACHINES: Machine[] = [
     model: '375L',
     code: 'EQ-002',
     category: 'EXCAVADORA HIDRÁULICA',
-    imageUrl: '/maquinaria/excavadora.png',
-    iconUrl: '/maquinaria/iconos/excavadora.png'
+    imageUrl: './maquinaria/excavadora.webp',
+    iconUrl: './maquinaria/iconos/excavadora.webp'
   },
   {
     id: 'cat-980k',
@@ -18,8 +18,8 @@ export const MACHINES: Machine[] = [
     model: '980K',
     code: 'EQ-005',
     category: 'CARGADOR DE RUEDAS',
-    imageUrl: '/maquinaria/cargador frontal.png',
-    iconUrl: '/maquinaria/iconos/cargador frontal.png'
+    imageUrl: './maquinaria/cargador frontal.webp',
+    iconUrl: './maquinaria/iconos/cargador frontal.webp'
   },
   {
     id: 'cat-r1700',
@@ -28,8 +28,8 @@ export const MACHINES: Machine[] = [
     model: 'R1700',
     code: 'EQ-008',
     category: 'CARGA-DESCARGA SUBTERRÁNEO',
-    imageUrl: '/maquinaria/scoop.png',
-    iconUrl: '/maquinaria/iconos/scoop.png'
+    imageUrl: './maquinaria/scoop.webp',
+    iconUrl: './maquinaria/iconos/scoop.webp'
   },
   {
     id: 'cat-d11t',
@@ -38,8 +38,8 @@ export const MACHINES: Machine[] = [
     model: 'D11T',
     code: 'EQ-012',
     category: 'TRACTOR DE CADENAS',
-    imageUrl: '/maquinaria/tractor oruga.png',
-    iconUrl: '/maquinaria/iconos/tractor oruga.png'
+    imageUrl: './maquinaria/tractor oruga.webp',
+    iconUrl: './maquinaria/iconos/tractor oruga.webp'
   },
   {
     id: 'cat-md6200',
@@ -48,8 +48,8 @@ export const MACHINES: Machine[] = [
     model: 'MD6200',
     code: 'EQ-015',
     category: 'PERFORADORA ROTATIVA',
-    imageUrl: '/maquinaria/perforadora.png',
-    iconUrl: '/maquinaria/iconos/perforadora.png'
+    imageUrl: './maquinaria/perforadora.webp',
+    iconUrl: './maquinaria/iconos/perforadora.webp'
   },
   {
     id: 'cat-378l',
@@ -58,8 +58,8 @@ export const MACHINES: Machine[] = [
     model: '378L',
     code: 'EQ-002',
     category: 'RETROEXCAVADORA CON CARGADOR FRONTAL',
-    imageUrl: '/maquinaria/retroexcavadora.png',
-    iconUrl: '/maquinaria/iconos/retroexcavadora.png'
+    imageUrl: './maquinaria/retroexcavadora.webp',
+    iconUrl: './maquinaria/iconos/retroexcavadora.webp'
   },
   {
     id: 'cat-777g',
@@ -68,8 +68,8 @@ export const MACHINES: Machine[] = [
     model: '777G',
     code: 'EQ-020',
     category: 'CAMIÓN DE ACARREO',
-    imageUrl: '/maquinaria/camion.png',
-    iconUrl: '/maquinaria/iconos/camion.png'
+    imageUrl: './maquinaria/camion.webp',
+    iconUrl: './maquinaria/iconos/camion.webp'
   }
 ]
 

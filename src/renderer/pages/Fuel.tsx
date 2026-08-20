@@ -73,7 +73,7 @@ export default function Fuel() {
           onRangeChange={r => updateDisplay({ timeRange: r })}
         />
         <ConsumptionModeChart data={modes} total={total} />
-        <FuelFlow supply={fuel.supplyFlow} supplyImg="/combustible/flujometro.png" returnFlow={fuel.returnFlow} returnImg="/combustible/flujometro.png" />
+        <FuelFlow supply={fuel.supplyFlow} supplyImg="./combustible/flujometro.webp" returnFlow={fuel.returnFlow} returnImg="./combustible/flujometro.webp" />
         <ConsumptionDistribution data={modes} />
         <DailyHistory data={fuel.dailyHistory} />
       </div>

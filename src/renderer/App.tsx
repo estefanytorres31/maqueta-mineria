@@ -1,17 +1,18 @@
-import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom'
-import { useEffect, useRef } from 'react'
+import { HashRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom'
+import { useEffect, useRef, lazy, Suspense } from 'react'
 import { useNavigationStore } from './stores/navigationStore'
 import { useSimulator } from './hooks/useSimulator'
 import MachineSelector from './pages/MachineSelector'
-import Dashboard from './pages/Dashboard'
-import Fuel from './pages/Fuel'
-import Operation from './pages/Operation'
-import Productivity from './pages/Productivity'
-import Gps from './pages/Gps'
-import Alerts from './pages/Alerts'
-import Settings from './pages/Settings'
-import MainLayout from './layouts/MainLayout'
 import type { Page } from './types'
+
+const Dashboard = lazy(() => import('./pages/Dashboard'))
+const Fuel = lazy(() => import('./pages/Fuel'))
+const Operation = lazy(() => import('./pages/Operation'))
+const Productivity = lazy(() => import('./pages/Productivity'))
+const Gps = lazy(() => import('./pages/Gps'))
+const Alerts = lazy(() => import('./pages/Alerts'))
+const Settings = lazy(() => import('./pages/Settings'))
+const MainLayout = lazy(() => import('./layouts/MainLayout'))
 
 type PageKey = Page
 
@@ -65,8 +66,8 @@ function AppInner() {
   useEffect(() => {
     if (initialized.current) return
     initialized.current = true
-    const pathname = window.location.pathname
-    const mapped = ROUTE_TO_PAGE[pathname]
+    const hashPath = window.location.hash.replace('#', '') || '/'
+    const mapped = ROUTE_TO_PAGE[hashPath]
     const store = useNavigationStore.getState()
     if (!mapped) return
     // If URL implies a dashboard page but store has no machine, force selector to avoid blank page
@@ -108,21 +109,27 @@ function AppInner() {
 
   return (
     <div className="w-screen h-screen bg-industrial-950 overflow-hidden text-white">
-      {renderPage()}
+      <Suspense fallback={
+        <div className="w-full h-full flex items-center justify-center bg-industrial-950 text-electric-400 font-bold">
+          Cargando...
+        </div>
+      }>
+        {renderPage()}
+      </Suspense>
     </div>
   )
 }
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/login" element={<AppInner />} />
         <Route path="/" element={<AppInner />} />
         <Route path="/:page" element={<AppInner />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 

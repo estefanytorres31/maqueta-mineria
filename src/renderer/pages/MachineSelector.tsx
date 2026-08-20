@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigationStore } from '../stores/navigationStore'
 import { MACHINES } from '../data/machines'
 import { Machine } from '../types'
@@ -12,28 +12,24 @@ const getInitialSelected = (): Machine => {
 }
 
 export default function MachineSelector() {
-  const initialRef = useRef<Machine>(getInitialSelected())
+  const persistedInitial = getInitialSelected()
+  const [selected, setSelected] = useState<Machine | null>(persistedInitial)
   const globalSelectedMachine = useNavigationStore(s => s.selectedMachine)
   const goToDashboard = useNavigationStore(s => s.goToDashboard)
   const setMachine = useNavigationStore(s => s.setMachine)
 
-  const [selected, setSelected] = useState<Machine | null>(initialRef.current)
-  const [useGrid, setUseGrid] = useState(false)
-
   useEffect(() => {
-    const update = () => {
-      const match = window.matchMedia('(min-width: 1200px)')
-      setUseGrid(match.matches)
-    }
-    update()
-    const mql = window.matchMedia('(min-width: 1200px)')
-    mql.addEventListener('change', update)
-    return () => mql.removeEventListener('change', update)
+    // Precargar todas las imágenes e íconos en memoria en segundo plano
+    MACHINES.forEach(machine => {
+      const img = new Image()
+      img.src = machine.imageUrl
+      const icon = new Image()
+      icon.src = machine.iconUrl
+    })
   }, [])
 
   useEffect(() => {
-    if (!globalSelectedMachine) return
-    if (globalSelectedMachine.id !== selected?.id) {
+    if (globalSelectedMachine && globalSelectedMachine.id !== selected?.id) {
       setSelected(globalSelectedMachine)
     }
   }, [globalSelectedMachine, selected?.id])
@@ -59,27 +55,23 @@ export default function MachineSelector() {
         </div>
 
         <div className="flex-1 min-h-0 w-full flex items-center justify-center overflow-hidden">
-          {useGrid ? (
-            <div className="w-full h-auto max-h-full max-w-[2000px] 2xl:max-w-[2600px] mx-auto grid grid-cols-7 gap-3 xl:gap-4 2xl:gap-3 px-0 xl:px-6 2xl:px-0.5 place-content-center items-center">
-              {MACHINES.map((machine, idx) => (
-                <MachineCard
-                  key={machine.id}
-                  machine={machine}
-                  isSelected={selected?.id === machine.id}
-                  onClick={() => handleCardClick(machine)}
-                  variant="grid"
-                  priority={idx === 0 || machine.id === initialRef.current.id}
-                />
-              ))}
-            </div>
-          ) : (
-            <MachineCarousel
-              machines={MACHINES}
-              selected={selected}
-              onSelect={handleCardClick}
-              initialId={initialRef.current.id}
-            />
-          )}
+          <div className="hidden xl:grid xl:grid-cols-7 w-full h-auto max-h-full max-w-[2000px] 2xl:max-w-[2600px] mx-auto gap-3 xl:gap-4 2xl:gap-3 px-0 xl:px-6 2xl:px-0.5 place-content-center items-center">
+            {MACHINES.map(machine => (
+              <MachineCard
+                key={machine.id}
+                machine={machine}
+                isSelected={selected?.id === machine.id}
+                onClick={() => handleCardClick(machine)}
+                variant="grid"
+              />
+            ))}
+          </div>
+
+          <MachineCarousel
+            machines={MACHINES}
+            selected={selected}
+            onSelect={handleCardClick}
+          />
         </div>
       </main>
     </div>
