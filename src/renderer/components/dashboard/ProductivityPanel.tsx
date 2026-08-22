@@ -327,7 +327,7 @@ function ExcavatorProductivityContent({ productivity }: Pick<ProductivityPanelPr
       <div className="grid grid-cols-2 w-full h-full min-h-0">
         {/* COLUMNA IZQUIERDA: EFICIENCIA */}
         <div className="flex flex-col items-center justify-center min-w-0 px-[2px] md:px-[4px] lg:px-2 h-full relative">
-          <div className="text-[10px] md:text-[11px] lg:text-[13px] xl:text-[16px] text-gray-200 uppercase tracking-widest font-black whitespace-nowrap mb-[4px] md:mb-[6px] lg:mb-2">
+          <div className="text-[10px] md:text-[11px] lg:text-lg xl:text-2xl text-gray-200 uppercase tracking-widest font-black whitespace-nowrap mb-[4px] md:mb-[6px] lg:mb-2">
             EFICIENCIA
           </div>
           <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0">
@@ -342,7 +342,7 @@ function ExcavatorProductivityContent({ productivity }: Pick<ProductivityPanelPr
 
         {/* COLUMNA DERECHA: RENDIMIENTO */}
         <div className="flex flex-col items-center justify-center min-w-0 px-[2px] md:px-[4px] lg:px-2 h-full relative">
-          <div className="text-[10px] md:text-[11px] lg:text-[13px] xl:text-[16px] text-gray-200 uppercase tracking-widest font-black whitespace-nowrap mb-[4px] md:mb-[6px] lg:mb-2">
+          <div className="text-[10px] md:text-[11px] lg:text-lg xl:text-2xl text-gray-200 uppercase tracking-widest font-black whitespace-nowrap mb-[4px] md:mb-[6px] lg:mb-2">
             RENDIMIENTO
           </div>
           <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0">
@@ -506,6 +506,7 @@ export default function ProductivityPanel({ productivity, machine }: Productivit
       titleColorClass="text-status-warning"
       borderClass="border-status-warning/60"
       grow
+      centerTitle
     >
       <div className="p-[2px] md:p-[2px] lg:p-[3px] xl:p-1 h-full flex flex-col min-h-0 gap-[2px]">
         {machine.type === 'loader'

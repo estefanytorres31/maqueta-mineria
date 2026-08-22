@@ -11,6 +11,7 @@ export default function EfficiencyPanel({ productivity }: EfficiencyPanelProps) 
   return (
     <SectionPanel
       title="EFICIENCIA"
+      centerTitle
       icon={<BarChart3 size={14} className="text-status-warning md:size-[18px] lg:size-[22px] xl:size-[24px]" />}
     >
       <div className="p-0.5 md:p-0.5 lg:p-0.75 xl:p-1 h-full flex flex-col min-h-0 gap-0.25 md:gap-0.25 lg:gap-0.5">

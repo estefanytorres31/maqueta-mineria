@@ -54,6 +54,7 @@ export default function Co2Panel({ fuel }: Co2PanelProps) {
       titleColorClass="text-gray-200"
       borderClass="border-industrial-600"
       grow
+      centerTitle
     >
       <div className="p-1 md:p-1.5 lg:p-2 xl:p-3 h-full flex flex-col min-h-0 gap-2 md:gap-2 lg:gap-3">
         <div className="flex items-center justify-between gap-2 md:gap-2 lg:gap-3 flex-1 min-h-0">

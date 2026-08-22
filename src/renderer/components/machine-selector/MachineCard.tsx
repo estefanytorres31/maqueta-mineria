@@ -14,10 +14,11 @@ export default function MachineCard({ machine, isSelected, onClick, variant = 'g
     <button
       type="button"
       data-machine-card={isGrid ? undefined : true}
+      data-machine-id={machine.id}
       onClick={onClick}
       className={`group snap-center ${isGrid ? 'my-0' : 'shrink-0'} ${isGrid ? 'w-full h-auto aspect-[3/4] xl:aspect-[1/1] 2xl:aspect-[1/2]' : 'w-[44%] sm:w-[38%] md:w-[30%] lg:w-[25%] h-full min-h-0'} relative rounded-lg md:rounded-xl border-2 p-1 sm:p-1.5 md:p-2 lg:p-2.5 xl:p-2 2xl:p-2.5 flex flex-col items-center justify-between gap-0.5 sm:gap-1 md:gap-1.5 xl:gap-1 2xl:gap-1.5 transition-all overflow-hidden ${
         isSelected
-          ? `bg-industrial-800/80 border-electric-500 shadow-glow-blue shadow-[0_0_28px_rgba(20,184,255,0.35)] ${isGrid ? 'border-[3px]' : 'scale-[1.02]'}`
+          ? `bg-industrial-800/80 border-electric-500 shadow-[0_0_28px_rgba(20,184,255,0.35)] ${isGrid ? 'border-[3px]' : 'scale-[1.02]'}`
           : 'bg-industrial-850/60 border-industrial-700 hover:border-industrial-500 hover:bg-industrial-800/80'
       }`}
     >

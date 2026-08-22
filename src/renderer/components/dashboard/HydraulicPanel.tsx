@@ -14,6 +14,7 @@ export default function HydraulicPanel({ hydraulic }: HydraulicPanelProps) {
       title="HIDRÁULICA"
       icon={<Droplets size={14} className="text-electric-500 md:size-[14px] lg:size-[15px] xl:size-[16px]" />}
       grow
+      centerTitle
     >
       <div className="p-0.5 md:p-0.5 lg:p-1 xl:p-1 h-full flex flex-col min-h-0">
         <div className="grid grid-cols-3 divide-x divide-industrial-700/60">

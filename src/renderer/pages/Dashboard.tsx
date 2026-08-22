@@ -40,6 +40,7 @@ export default function Dashboard() {
 
   // Variable clave que decide el layout: si el tipo del estado global hidratado es loader → FOTO1
   const isLoaderLayout = selectedMachine?.type === 'loader'
+  const isExcavatorLayout = selectedMachine?.type === 'excavator'
 
   return (
     <div className="w-full h-full flex flex-col gap-[3px] md:gap-[4px] lg:gap-[5px] min-h-0 p-[3px] md:p-[4px] lg:p-[5px]">
@@ -47,14 +48,16 @@ export default function Dashboard() {
       <div className="flex-shrink-0 w-full max-w-md mx-auto mb-[2px] md:mb-[3px]">
         <div className="rounded-lg border border-status-warning/60 bg-industrial-900/80 shadow-[0_0_32px_-10px_rgba(245,158,11,0.15)] px-2 md:px-2 py-[3px] md:py-[4px] flex items-center justify-center gap-1 md:gap-1.5 min-w-0">
           <User size={14} className="text-white md:size-[14px] lg:size-[16px] flex-shrink-0" strokeWidth={1.5} />
-          <span className="text-[8px] md:text-[9px] lg:text-[10px] uppercase font-black tracking-[0.18em] text-white whitespace-nowrap">
+          <span className="text-[8px] md:text-[9px] lg:text-sm xl:text-lg uppercase font-black tracking-[0.18em] text-white whitespace-nowrap">
             OPERADOR: OP-0245
           </span>
         </div>
       </div>
 
       {/* Grid 2×3: misma estructura, items/gap en los 7 layouts — SOLO se estira la COLUMNA CENTRAL (1.3fr) respecto a laterales (1fr c/u) — JSX interno de 3 slots sigue siendo variable */}
-      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.75fr)_minmax(0,1fr)] xl:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)_minmax(0,1fr)] gap-[3px] md:gap-[4px] lg:gap-[5px] flex-1 min-h-0 lg:items-stretch lg:auto-rows-fr">
+      <div className={`grid grid-cols-1 gap-[2px] md:gap-[4px] lg:gap-[5px] flex-1 min-h-0 lg:items-stretch ${
+        isExcavatorLayout ? 'lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)_minmax(0,1fr)] xl:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)_minmax(0,1fr)] lg:grid-rows-[minmax(0,1.4fr)_minmax(0,1fr)]' : 'lg:auto-rows-fr lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)_minmax(0,1fr)] xl:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)_minmax(0,1fr)]'
+      }`}>
         {/* ============== FILA 1 COL 1: MOTOR (INVARIABLE 7/7) ============== */}
         {selectedMachine && <EnginePanel engine={engine} machine={selectedMachine} />}
 

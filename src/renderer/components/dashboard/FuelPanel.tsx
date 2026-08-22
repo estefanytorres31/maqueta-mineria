@@ -131,11 +131,6 @@ function LargeFuelPanel({ fuel, machine }: { fuel: FuelPanelProps['fuel']; machi
         <img
           src={machine.imageUrl}
           alt={machine ? `${machine.name} ${machine.model}` : 'CAT mining vehicle'}
-          width={1200}
-          height={800}
-          decoding="async"
-          fetchPriority="high"
-          loading="eager"
           className="absolute right-[8%] md:right-[-1%] lg:right-[0%] bottom-[-5%] md:bottom-[-5%] lg:bottom-[-2%] w-[60%] md:w-[42%] lg:w-[32%] object-contain pointer-events-none z-0"
         />
       )}
@@ -148,14 +143,14 @@ function LargeFuelPanel({ fuel, machine }: { fuel: FuelPanelProps['fuel']; machi
         <div className="pr-[4px] md:pr-[6px] lg:pr-2.5 flex flex-col justify-between min-h-0 h-full relative z-40 overflow-hidden">
           {/* 1/4 CONSUMO INSTANTÁNEO */}
           <div className="flex flex-col min-w-0 py-[1px] md:py-[1.5px] lg:py-[2px]">
-            <div className="text-[8px] md:text-[7px] lg:text-[9px] xl:text-[11px] text-gray-300 uppercase tracking-widest font-bold whitespace-nowrap mb-[1px] md:mb-[2px] lg:mb-[2px]">
+            <div className={`${isExcavator ? 'text-[10px] md:text-[9px] lg:text-[11px] xl:text-sm' : 'text-[9px] md:text-[7px] lg:text-[9px] xl:text-[11px]'}  text-gray-300 uppercase tracking-widest font-bold whitespace-nowrap mb-[1px] md:mb-[2px] lg:mb-[2px]`}>
               CONSUMO INST.
             </div>
             <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0">
-              <span className="font-mono font-black text-2xl md:text-sm lg:text-[16px] xl:text-3xl text-white leading-none tracking-tighter">
+              <span className={`${isExcavator ? 'text-2xl md:text-sm lg:text-[26px] xl:text-3xl' : 'text-2xl md:text-sm lg:text-[16px] xl:text-3xl'}  font-mono font-black text-white leading-none tracking-tighter`}>
                 {instantCons}
               </span>
-              <span className="text-[9px] md:text-[9px] lg:text-[10px] text-status-ok font-black leading-none mb-0.5">gal/h</span>
+              <span className="text-[9px] md:text-[9px] lg:text-sm xl:text-lg text-status-ok font-black leading-none mb-0.5">gal/h</span>
             </div>
           </div>
 
@@ -163,14 +158,14 @@ function LargeFuelPanel({ fuel, machine }: { fuel: FuelPanelProps['fuel']; machi
 
           {/* 2/4 CONSUMO ACUMULADO */}
           <div className="flex flex-col min-w-0 py-[1px] md:py-[1.5px] lg:py-[2px]">
-            <div className="text-[8px] md:text-[7px] lg:text-[9px] xl:text-[11px] text-gray-300 uppercase tracking-widest font-bold whitespace-nowrap mb-[1px] md:mb-[2px] lg:mb-[2px]">
+            <div className={`${isExcavator ? 'text-[10px] md:text-[9px] lg:text-[11px] xl:text-sm' : 'text-[9px] md:text-[7px] lg:text-[9px] xl:text-[11px]'}  text-gray-300 uppercase tracking-widest font-bold whitespace-nowrap mb-[1px] md:mb-[2px] lg:mb-[2px]`}>
               CONSUMO ACUMULADO
             </div>
             <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0">
-              <span className="font-mono font-black text-xl md:text-sm lg:text-[16px] xl:text-3xl text-white leading-none tracking-tighter">
+              <span className={`${isExcavator ? 'text-2xl md:text-sm lg:text-[26px] xl:text-3xl' : 'text-2xl md:text-sm lg:text-[16px] xl:text-3xl'}  font-mono font-black text-white leading-none tracking-tighter`}>
                 {Math.round(accumulatedLarge).toLocaleString()}
               </span>
-              <span className="text-[9px] md:text-[9px] lg:text-[10px] text-status-ok font-black leading-none mb-0.5">gal</span>
+              <span className="text-[9px] md:text-[9px] lg:text-sm xl:text-lg text-status-ok font-black leading-none mb-0.5">gal</span>
             </div>
           </div>
 
@@ -178,14 +173,14 @@ function LargeFuelPanel({ fuel, machine }: { fuel: FuelPanelProps['fuel']; machi
 
           {/* 3/4 CONSUMO HOY */}
           <div className="flex flex-col min-w-0 py-[1px] md:py-[1.5px] lg:py-[2px]">
-            <div className="text-[8px] md:text-[7px] lg:text-[9px] xl:text-[11px] text-gray-300 uppercase tracking-widest font-bold whitespace-nowrap mb-[1px] md:mb-[2px] lg:mb-[2px]">
+            <div className={`${isExcavator ? 'text-[10px] md:text-[9px] lg:text-[11px] xl:text-sm' : 'text-[9px] md:text-[7px] lg:text-[9px] xl:text-[11px]'}  text-gray-300 uppercase tracking-widest font-bold whitespace-nowrap mb-[1px] md:mb-[2px] lg:mb-[2px]`}>
               CONSUMO HOY
             </div>
             <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0">
-              <span className="font-mono font-black text-2xl md:text-sm lg:text-[16px] xl:text-3xl text-white leading-none tracking-tighter">
+              <span className={`${isExcavator ? 'text-2xl md:text-sm lg:text-[26px] xl:text-3xl' : 'text-2xl md:text-sm lg:text-[16px] xl:text-3xl'}  font-mono font-black text-white leading-none tracking-tighter`}>
                 {consumptionToday}
               </span>
-              <span className="text-[9px] md:text-[9px] lg:text-[10px] text-status-ok font-black leading-none mb-0.5">gal</span>
+              <span className="text-[9px] md:text-[9px] lg:text-sm xl:text-lg text-status-ok font-black leading-none mb-0.5">gal</span>
             </div>
           </div>
 
@@ -193,14 +188,14 @@ function LargeFuelPanel({ fuel, machine }: { fuel: FuelPanelProps['fuel']; machi
 
           {/* 4/4 RELENTÍ HOY */}
           <div className="flex flex-col min-w-0 py-[1px] md:py-[1.5px] lg:py-[2px]">
-            <div className="text-[8px] md:text-[7px] lg:text-[9px] xl:text-[11px] text-gray-300 uppercase tracking-widest font-bold whitespace-nowrap mb-[1px] md:mb-[2px] lg:mb-[2px]">
+            <div className={`${isExcavator ? 'text-[10px] md:text-[9px] lg:text-[11px] xl:text-sm' : 'text-[9px] md:text-[7px] lg:text-[9px] xl:text-[11px]'}  text-gray-300 uppercase tracking-widest font-bold whitespace-nowrap mb-[1px] md:mb-[2px] lg:mb-[2px]`}>
               RELENTÍ HOY
             </div>
             <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0">
-              <span className="font-mono font-black text-2xl md:text-sm lg:text-[16px] xl:text-3xl text-white leading-none tracking-tighter">
+              <span className={`${isExcavator ? 'text-2xl md:text-sm lg:text-[26px] xl:text-3xl' : 'text-2xl md:text-sm lg:text-[16px] xl:text-3xl'}  font-mono font-black text-white leading-none tracking-tighter`}>
                 {idleToday.toFixed(1)}
               </span>
-              <span className="text-[9px] md:text-[9px] lg:text-[10px] text-status-ok font-black leading-none mb-0.5">gal</span>
+              <span className="text-[9px] md:text-[9px] lg:text-sm xl:text-lg text-status-ok font-black leading-none mb-0.5">gal</span>
             </div>
           </div>
         </div>
@@ -211,12 +206,12 @@ function LargeFuelPanel({ fuel, machine }: { fuel: FuelPanelProps['fuel']; machi
         <div className={`${isExcavator ? 'pl-[10px] md:pl-[10px] lg:pl-5' : 'pl-[5px] md:pl-[7px] lg:pl-3'} flex flex-col justify-between min-h-0 h-full relative z-40`}>
           {/* PARTE SUPERIOR: NIVEL TANQUE */}
           <div className={`flex flex-col min-w-0 ${isExcavator ? 'py-[2px] md:py-[2px] lg:py-[4px] xl:py-1' : 'py-[1px] md:py-[1px] lg:py-[2px]'} relative z-40`}>
-            <div className={`text-[8px] md:text-[7px] lg:text-[9px] xl:text-[11px] text-gray-200 uppercase tracking-widest font-black whitespace-nowrap`}>
+            <div className={`${isExcavator ? 'text-[10px] md:text-[9px] lg:text-sm xl:text-lg' : 'text-[9px] md:text-[7px] lg:text-[9px] xl:text-[11px]'} text-gray-200 uppercase tracking-widest font-black whitespace-nowrap`}>
               NIVEL TANQUE
             </div>
             <div className={`flex items-baseline justify-between ${isExcavator ? 'gap-1.5' : 'gap-1'} min-w-0`}>
               <div className={`flex items-baseline ${isExcavator ? 'gap-[4px] md:gap-1' : 'gap-[3px] md:gap-0.5'} min-w-0`}>
-                <span className={`font-mono font-black ${isExcavator ? 'text-3xl md:text-lg lg:text-[24px] xl:text-3xl' : 'text-2xl md:text-sm lg:text-[16px] xl:text-3xl'} text-white leading-[0.9] tracking-tighter`}>
+                <span className={`font-mono font-black ${isExcavator ? 'text-3xl md:text-lg lg:text-4xl xl:text-5xl' : 'text-2xl md:text-sm lg:text-[16px] xl:text-3xl'} text-white leading-[0.9] tracking-tighter`}>
                   {pct}
                 </span>
                 <span className={`${isExcavator ? 'text-xl md:text-[11px] lg:text-sm xl:text-base mb-2.5' : 'text-lg md:text-[9px] lg:text-xs mb-2.5'} text-gray-300 font-black leading-none`}>%</span>
@@ -246,23 +241,35 @@ function LargeFuelPanel({ fuel, machine }: { fuel: FuelPanelProps['fuel']; machi
 
           {/* PARTE INFERIOR: AUTONOMÍA + reloj circular verde (encima img CAT Z-40) */}
           <div className={`flex flex-col min-w-0 ${isExcavator ? 'py-[2px] md:py-[4px] lg:py-[6px] xl:py-2' : 'py-[1px] md:py-[1px] lg:py-[2px]'} relative z-40`}>
-            <div className={`text-[8px] md:text-[7px] lg:text-[9px] xl:text-[11px] text-gray-200 uppercase tracking-widest font-black whitespace-nowrap mb-2`}>
+            <div className={`${isExcavator ? 'text-[10px] md:text-[9px] lg:text-sm xl:text-lg' : 'text-[9px] md:text-[7px] lg:text-[9px] xl:text-[11px]'} text-gray-200 uppercase tracking-widest font-black whitespace-nowrap mb-2`}>
               AUTONOMÍA
             </div>
-            <div className={`flex items-start justify-between ${isExcavator ? 'gap-2' : 'gap-1'} min-w-0`}>
+            <div className={`flex ${isExcavator ? 'items-center justify-start gap-3 md:gap-4 lg:gap-6' : 'items-start justify-between gap-1'} min-w-0`}>
               <div className={`flex items-start ${isExcavator ? 'gap-[5px] md:gap-1' : 'gap-[1px] md:gap-0.5'} min-w-0`}>
-                <span className={`font-mono font-black ${isExcavator ? 'text-3xl md:text-lg lg:text-[24px] xl:text-3xl' : 'text-2xl md:text-sm lg:text-[16px] xl:text-3xl'} text-white leading-none tracking-tighter`}>
+                <span className={`font-mono font-black ${isExcavator ? 'text-3xl md:text-lg lg:text-4xl xl:text-5xl' : 'text-2xl md:text-sm lg:text-[16px] xl:text-3xl'} text-white leading-none tracking-tighter`}>
                   {autonomy}
                 </span>
                 <span className={`${isExcavator ? 'text-xl md:text-[11px] lg:text-sm xl:text-base mb-2' : 'text-base md:text-[9px] lg:text-xs mb-1'} text-status-ok font-black leading-none`}>h</span>
               </div>
+              
+              {isExcavator && (
+                <div className="w-12 h-12 md:w-12 md:h-12 lg:w-15 lg:h-15 xl:w-18 xl:h-18 flex items-center justify-center rounded-full shrink-0">
+                  <ClockIcon
+                    size={24}
+                    className="text-status-ok md:size-[22px] lg:size-[28px] xl:size-[32px]"
+                  />
+                </div>
+              )}
             </div>
-            <div className={`${isExcavator ? 'w-12 h-12 md:w-12 md:h-12 lg:w-15 lg:h-15 xl:w-18 xl:h-18' : 'w-10 h-10 md:w-11 md:h-11 lg:w-14 lg:h-14'} rounded-full ${isExcavator ? 'mt-[2px] lg:mt-0.25' : ''} flex items-start justify-start bg-status-ok/7 shrink-0`}>
-              <ClockIcon
-                size={isExcavator ? 24 : 18}
-                className={`text-status-ok ${isExcavator ? 'md:size-[22px] lg:size-[22px] xl:size-[32px]' : 'md:size-[18px] lg:size-[24px]'}`}
-              />
-            </div>
+            
+            {!isExcavator && (
+              <div className="w-10 h-10 md:w-11 md:h-11 lg:w-14 lg:h-14 flex items-start justify-start bg-status-ok/7 shrink-0 rounded-full mt-2">
+                <ClockIcon
+                  size={18}
+                  className="text-status-ok md:size-[18px] lg:size-[24px]"
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -282,6 +289,7 @@ export default function FuelPanel({ variant = 'compact', fuel, totalHours, machi
       titleColorClass="text-status-ok"
       borderClass="border-status-ok/60"
       grow
+      centerTitle
     >
       {variantMode === 'compact' ? (
         <CompactFuelPanel fuel={fuel} />

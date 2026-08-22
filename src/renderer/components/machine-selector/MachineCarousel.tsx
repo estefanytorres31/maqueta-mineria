@@ -6,11 +6,32 @@ interface MachineCarouselProps {
   machines: Machine[]
   selected: Machine | null
   onSelect: (m: Machine) => void
-  initialId?: string
 }
 
-export default function MachineCarousel({ machines, selected, onSelect, initialId }: MachineCarouselProps) {
+export default function MachineCarousel({ machines, selected, onSelect }: MachineCarouselProps) {
   const carouselRef = useRef<HTMLDivElement | null>(null)
+  
+  useEffect(() => {
+    if (selected && carouselRef.current) {
+      const selectedEl = carouselRef.current.querySelector(`[data-machine-id="${selected.id}"]`) as HTMLElement
+      if (selectedEl) {
+        const container = carouselRef.current
+        const containerRect = container.getBoundingClientRect()
+        const elRect = selectedEl.getBoundingClientRect()
+        
+        // Calculate target scroll to center the element
+        const targetScrollLeft = container.scrollLeft + elRect.left - containerRect.left - (containerRect.width / 2) + (elRect.width / 2)
+        
+        // Disable smooth behavior on first mount (when startScrollLeft is 0 and it's the first render) to prevent visible jumping, but smooth otherwise. 
+        // For simplicity, we just scroll it. If they want smooth, they can use behavior: 'smooth'.
+        container.scrollTo({
+          left: targetScrollLeft,
+          behavior: 'smooth'
+        })
+      }
+    }
+  }, [selected])
+
   const dragState = useRef({
     isDown: false,
     startX: 0,
@@ -19,20 +40,6 @@ export default function MachineCarousel({ machines, selected, onSelect, initialI
     movedDistance: 0
   })
   const suppressNextClickRef = useRef(false)
-  const scrolledInitialRef = useRef(false)
-
-  useEffect(() => {
-    if (scrolledInitialRef.current) return
-    const el = carouselRef.current
-    if (!el || !initialId) { scrolledInitialRef.current = true; return }
-    const idx = machines.findIndex(m => m.id === initialId)
-    if (idx < 0) { scrolledInitialRef.current = true; return }
-    const child = el.children[idx] as HTMLElement | undefined
-    if (child) {
-      el.scrollTo({ left: child.offsetLeft - Math.max(0, (el.clientWidth - child.clientWidth) / 2), behavior: 'auto' })
-    }
-    scrolledInitialRef.current = true
-  }, [initialId, machines])
 
   const handlePointerDown = (e: React.PointerEvent) => {
     if (!carouselRef.current) return
@@ -74,7 +81,7 @@ export default function MachineCarousel({ machines, selected, onSelect, initialI
   }
 
   return (
-    <div className="w-full h-full min-h-0">
+    <div className="xl:hidden w-full h-full min-h-0">
       <div
         ref={carouselRef}
         className="w-full h-full flex overflow-x-auto snap-x snap-mandatory gap-2 sm:gap-2.5 md:gap-3 xl:gap-4 px-2 sm:px-3 md:px-4 xl:px-6 py-1 sm:py-1.5 md:py-2 xl:py-3 no-scrollbar touch-pan-y select-none cursor-grab active:cursor-grabbing"
@@ -88,14 +95,13 @@ export default function MachineCarousel({ machines, selected, onSelect, initialI
         }}
         onClickCapture={handleClickCapture}
       >
-        {machines.map((machine, idx) => (
+        {machines.map(machine => (
           <MachineCard
             key={machine.id}
             machine={machine}
             isSelected={selected?.id === machine.id}
             onClick={() => onSelect(machine)}
             variant="carousel"
-            priority={machine.id === initialId || (idx === 0 && !initialId)}
           />
         ))}
       </div>

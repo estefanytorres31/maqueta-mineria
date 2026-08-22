@@ -25,6 +25,7 @@ export default function LoaderPanel({ productivity, operation, fuel, machine }: 
       titleColorClass="text-status-warning"
       borderClass="border-status-warning/60"
       grow
+      centerTitle
     >
       <div className="p-[2px] md:p-[2px] lg:p-[3px] xl:p-1 h-full flex flex-col min-h-0 gap-[2px] md:gap-[3px] lg:gap-0.5">
         <div className="grid grid-cols-2 flex-1 min-h-0 gap-[2px] md:gap-[3px] lg:gap-0.5">
@@ -105,12 +106,8 @@ export default function LoaderPanel({ productivity, operation, fuel, machine }: 
               <img
                 src={machine.imageUrl}
                 alt={`${machine.name} ${machine.model}`}
-                width={1200}
-                height={800}
-                decoding="async"
-                fetchPriority="high"
                 className="absolute right-[8%] md:right-[-1%] lg:right-[6%] bottom-[-5%] md:bottom-[-5%] lg:bottom-[-2%] w-[60%] md:w-[42%] lg:w-[65%] object-contain pointer-events-none z-0"
-                loading="eager"
+                loading="lazy"
               />
             </div>
           </div>

@@ -35,10 +35,10 @@ export default function Header() {
       <div className="h-7 md:h-8 w-px bg-industrial-700 mx-0.5 md:mx-1 lg:mx-2" />
 
       <div className="flex items-center gap-2 md:gap-3">
-        <div className="text-amber-500 font-black text-base md:text-lg lg:text-[26px] leading-tight tracking-wide">{selectedMachine.model}</div>
+        <div className="text-amber-500 font-black text-base md:text-lg lg:text-[28px] xl:text-3xl leading-tight tracking-wide">{selectedMachine.model}</div>
         <div className="flex flex-col leading-tight">
-          <span className="text-gray-200 text-[10px] md:text-xs lg:text-xs font-medium">{selectedMachine.category}</span>
-          <span className="text-gray-500 font-mono text-[10px] md:text-[10px] lg:text-[11.5px] xl:text-[12px]">{selectedMachine.code}</span>
+          <span className="text-gray-200 text-[10px] md:text-xs lg:text-lg xl:text-2xl font-medium">{selectedMachine.category}</span>
+          <span className="text-gray-500 font-mono text-[10px] md:text-[13px] lg:text-sm xl:text-xl">{selectedMachine.code}</span>
         </div>
       </div>
 

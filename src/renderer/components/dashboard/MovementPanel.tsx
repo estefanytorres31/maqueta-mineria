@@ -20,6 +20,7 @@ export default function MovementPanel({ imu }: MovementPanelProps) {
       headerBgClass=""
       borderClass="border-[#8B5CF6]/60"
       grow
+      centerTitle
     >
       <div className="p-[2px] md:p-[2px] lg:p-[3px] xl:p-1 h-full flex flex-col min-h-0 gap-[2px]">
         <div className="grid grid-cols-2 divide-x flex-1 min-h-0" style={{ columnRuleColor: 'rgba(139,92,246,0.35)' }}>
@@ -32,7 +33,7 @@ export default function MovementPanel({ imu }: MovementPanelProps) {
               PITCH
             </div>
             <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0 mt-[2px]">
-              <span className="font-mono font-black text-xl md:text-xl lg:text-xl xl:text-3xl text-white leading-none tracking-tighter whitespace-nowrap mb-2">
+              <span className="font-mono font-black text-xl md:text-xl lg:text-2xl xl:text-3xl text-white leading-none tracking-tighter whitespace-nowrap mb-2">
                 {imu.pitch > 0 ? '+' : ''}{imu.pitch.toFixed(1)}
               </span>
               <span className="text-[10px] md:text-[11px] lg:text-[12px] text-gray-300 font-bold leading-none">°</span>
@@ -55,7 +56,7 @@ export default function MovementPanel({ imu }: MovementPanelProps) {
               ROLL
             </div>
             <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0 mt-[2px]">
-              <span className="font-mono font-black text-xl md:text-xl lg:text-xl xl:text-3xl text-white leading-none tracking-tighter whitespace-nowrap mb-2">
+              <span className="font-mono font-black text-xl md:text-xl lg:text-2xl xl:text-3xl text-white leading-none tracking-tighter whitespace-nowrap mb-2">
                 {imu.roll > 0 ? '+' : ''}{imu.roll.toFixed(1)}
               </span>
               <span className="text-[10px] md:text-[11px] lg:text-[12px] text-gray-300 font-bold leading-none">°</span>

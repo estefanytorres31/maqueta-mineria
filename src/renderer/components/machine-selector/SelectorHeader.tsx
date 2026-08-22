@@ -8,22 +8,22 @@ export default function SelectorHeader() {
     <header className="flex items-center justify-between px-3 md:px-6 xl:px-10 py-2 md:py-3 xl:py-4 border-b border-industrial-800 bg-industrial-900/50 backdrop-blur flex-shrink-0">
       <div className="flex items-center gap-3 md:gap-4 xl:gap-6">
         <div className="flex flex-col rounded px-0.5 py-0.5">
-          <div className="font-black text-lg md:text-xl lg:text-2xl xl:text-3xl tracking-tight leading-none">
+          <div className="font-black text-lg md:text-xl lg:text-3xl xl:text-4xl tracking-tight leading-none">
             <span className="text-white">EDGE</span>
           </div>    
-          <div className="font-black text-xs md:text-xs lg:text-sm xl:text-lg tracking-tight leading-none text-end">
+          <div className="font-black text-xs md:text-xs lg:text-lg xl:text-xl tracking-tight leading-none text-end">
             <span className="text-blue-700">SMART</span>
           </div> 
         </div>
-        <div className="hidden md:block h-8 xl:h-12 w-px bg-industrial-700" />
+        <div className="hidden md:block h-12 xl:h-24 w-px bg-industrial-700" />
         <div className="hidden md:block">
-          <div className="text-gray-200 font-semibold text-xs md:text-sm xl:text-base tracking-wider">MONITOREO INTELIGENTE</div>
-          <div className="text-electric-400 text-[10px] md:text-xs xl:text-sm font-medium tracking-wide">PARA MAQUINARIA MINERA</div>
+          <div className="text-gray-200 font-semibold text-xs md:text-sm lg:text-[17px] xl:text-3xl tracking-wider">MONITOREO INTELIGENTE</div>
+          <div className="text-electric-400 text-[10px] md:text-xs lg:text-[14px] xl:text-[16px] font-medium tracking-wide">PARA MAQUINARIA MINERA</div>
         </div>
       </div>
 
       <div className="hidden md:flex items-center justify-center flex-1 min-w-0">
-        <div className="text-white font-black text-sm md:text-base xl:text-2xl tracking-widest uppercase leading-none">
+        <div className="text-white font-black text-sm md:text-base lg:text-xl xl:text-2xl tracking-widest uppercase leading-none">
           Peru Controls System S.A.C.
         </div>
       </div>

@@ -45,8 +45,8 @@ export default {
         }
       },
       fontFamily: {
-        'sans': ['"Segoe UI Variable"', '"Segoe UI"', 'Inter', 'system-ui', '-apple-system', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif'],
-        'mono': ['Cascadia Mono', 'Cascadia Code', '"JetBrains Mono"', 'Consolas', '"Courier New"', 'monospace'],
+        'sans': ['Inter', 'Roboto', 'Segoe UI', 'sans-serif'],
+        'mono': ['JetBrains Mono', 'Consolas', 'monospace'],
       },
       boxShadow: {
         'glow-blue': '0 0 20px rgba(30, 136, 229, 0.35)',
