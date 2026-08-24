@@ -14,24 +14,27 @@ const projectRoot = path.resolve(__dirname, '..')
 const distDir = path.join(projectRoot, 'dist')
 const publicDir = path.join(projectRoot, 'public')
 
-const sandboxRoot = path.resolve(
-  process.env.EDGE_SANDBOX_ROOT || path.join(projectRoot, '.sandbox')
-)
-const userDataDir = path.join(sandboxRoot, 'electron-userdata')
-const appDataDir = path.join(sandboxRoot, 'AppData')
-const localAppDataDir = path.join(sandboxRoot, 'LocalAppData')
+if (!app.isPackaged) {
+  const sandboxRoot = path.resolve(
+    process.env.EDGE_SANDBOX_ROOT || path.join(projectRoot, '.sandbox')
+  )
+  const userDataDir = path.join(sandboxRoot, 'electron-userdata')
+  const appDataDir = path.join(sandboxRoot, 'AppData')
+  const localAppDataDir = path.join(sandboxRoot, 'LocalAppData')
 
-for (const p of [sandboxRoot, userDataDir, appDataDir, localAppDataDir]) {
-  if (!fs.existsSync(p)) fs.mkdirSync(p, { recursive: true })
+  for (const p of [sandboxRoot, userDataDir, appDataDir, localAppDataDir]) {
+    if (!fs.existsSync(p)) fs.mkdirSync(p, { recursive: true })
+  }
+
+  try { app.setPath('userData', userDataDir) } catch {}
+  try { app.setPath('appData', appDataDir) } catch {}
+  try { app.setPath('localAppData', localAppDataDir) } catch {}
+
+  process.env.LOCALAPPDATA = localAppDataDir
+  process.env.APPDATA = appDataDir
 }
 
 try { app.setName('Sistema de maquinaria minera') } catch {}
-try { app.setPath('userData', userDataDir) } catch {}
-try { app.setPath('appData', appDataDir) } catch {}
-try { app.setPath('localAppData', localAppDataDir) } catch {}
-
-process.env.LOCALAPPDATA = localAppDataDir
-process.env.APPDATA = appDataDir
 
 let mainWindow: BrowserWindow | null = null
 
