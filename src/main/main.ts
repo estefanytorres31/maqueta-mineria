@@ -10,6 +10,8 @@ try { app.commandLine.appendSwitch('high-dpi-support', '1') } catch {}
 try { app.commandLine.appendSwitch('disable-pinch') } catch {}
 try { app.commandLine.appendSwitch('disable-accelerated-2d-canvas', '0') } catch {}
 
+
+
 const projectRoot = path.resolve(__dirname, '..')
 const distDir = path.join(projectRoot, 'dist')
 const publicDir = path.join(projectRoot, 'public')
@@ -56,8 +58,8 @@ function resolvePreload(): string {
 function resolveIcon(): string | undefined {
   const isWin = process.platform === 'win32'
   const candidates = isWin
-    ? [path.join(publicDir, 'logopcs.ico'), path.join(publicDir, 'logopcs.png')]
-    : [path.join(publicDir, 'logopcs.png'), path.join(publicDir, 'logopcs.ico')]
+    ? [path.join(publicDir, 'icon.ico'), path.join(publicDir, 'icon.png')]
+    : [path.join(publicDir, 'icon.png'), path.join(publicDir, 'icon.ico')]
   for (const p of candidates) if (fs.existsSync(p)) return p
   return undefined
 }
@@ -65,19 +67,21 @@ function resolveIcon(): string | undefined {
 function createWindow() {
   // Toma la resolución REAL del monitor (workArea = sin barra de tareas)
   const primary = screen.getPrimaryDisplay()
-  const workArea = primary.workAreaSize
+  const { width, height } = primary.workAreaSize
 
   mainWindow = new BrowserWindow({
-    width: workArea.width || 1920,
-    height: workArea.height || 1080,
-    minWidth: 1024,
-    minHeight: 640,
+    width,
+    height,
+    minWidth: 800,
+    minHeight: 480,
     show: false,
     backgroundColor: '#06080C',
     title: 'Sistema de maquinaria minera',
     icon: resolveIcon(),
-    autoHideMenuBar: true,
-    useContentSize: true,            // width/height = tamaño CONTENIDO, no ventana
+    useContentSize: true,
+    autoHideMenuBar: false,
+    frame: true,
+    titleBarStyle: 'default',
     maximizable: true,
     resizable: true,
     fullscreenable: true,
@@ -94,17 +98,14 @@ function createWindow() {
 
   Menu.setApplicationMenu(null)
 
-  // MAXIMIZA a TAMAÑO REAL del workarea (sin barra de tareas)
-  try {
-    mainWindow.setBounds({
-      x: primary.workArea.x,
-      y: primary.workArea.y,
-      width: workArea.width,
-      height: workArea.height
-    })
-  } catch {}
-  mainWindow.maximize()
-  mainWindow.once('ready-to-show', () => mainWindow!.show())
+  mainWindow.once('ready-to-show', () => {
+    mainWindow!.show()
+    setTimeout(() => {
+      if (mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.maximize()
+      }
+    }, 150)
+  })
 
   if (isDev) {
     // DevTools EN VENTANA SEPARADA, NUNCA dentro del panel de la app

@@ -14,10 +14,10 @@ function Kpi({ label, value, unit, sub, labelColor = 'text-fuel-primary', childr
     <div className="min-w-0 flex flex-col justify-center rounded-lg border border-industrial-700 bg-industrial-800 px-1.5 py-1 xl:px-3 xl:py-2">
       <div className={`truncate text-[9px] md:text-[9px] lg:text-[11px] xl:text-[15px] 2xl:text-[15px] font-semibold ${labelColor}`}>{label}</div>
       <div className="flex items-baseline gap-1">
-        <span className="font-mono font-bold leading-none text-white text-lg lg:text-2xl xl:text-[28px] 2xl:text-3xl">{value}</span>
-        {unit && <span className="text-xs lg:text-lg xl:text-xl 2xl:text-[22px] text-gray-400">{unit}</span>}
+        <span className="font-mono font-bold leading-none text-white text-lg lg:text-[22px] xl:text-[28px] 2xl:text-3xl">{value}</span>
+        {unit && <span className="text-xs lg:text-[17px] xl:text-xl 2xl:text-[22px] text-gray-400">{unit}</span>}
       </div>
-      {sub && <div className="mt-0.5 text-[10px] lg:text-[14px] xl:text-[15px] 2xl:text-[19px] text-gray-500">{sub}</div>}
+      {sub && <div className="text-[10px] lg:text-[13px] xl:text-[15px] 2xl:text-[19px] text-gray-500">{sub}</div>}
       {children}
     </div>
   )
@@ -51,7 +51,7 @@ export default function FuelKPIs({
       <Kpi label="CONSUMO RALENTÍ HOY" value={idleToday.toFixed(1)} unit="gal" sub={`(${idlePct.toFixed(1)}%)`} />
       <Kpi label="AUTONOMÍA ESTIMADA" value={autonomy.toFixed(1)} unit="h" labelColor="text-gray-300" />
       <Kpi label="NIVEL TANQUE" value={tankLevel.toFixed(0)} unit="%">
-        <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-industrial-700">
+        <div className="h-1 overflow-hidden rounded-full bg-industrial-700">
           <div className="h-full rounded-full bg-fuel-primary shadow-glow-orange" style={{ width: `${tankLevel}%` }} />
         </div>
       </Kpi>

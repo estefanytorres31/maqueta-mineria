@@ -23,12 +23,12 @@ export default function EnginePanel({ engine, machine }: EnginePanelProps) {
       grow
     >
       <div className="p-[2px] md:p-[2px] lg:p-[3px] xl:p-1 h-full flex flex-col min-h-0 gap-[2px] md:gap-[3px] lg:gap-0.5">
-        <div className="flex items-center justify-between gap-1 flex-shrink-0 h-28">
+        <div className="flex items-center justify-between gap-1 flex-shrink-0 h-[96px]">
           <div className="flex flex-col justify-center flex-1 min-w-0 pl-[2px] md:px-1 lg:pl-2">
-            <div className="font-mono font-black text-2xl md:text-3xl lg:text-5xl xl:text-6xl text-white leading-[0.9] tracking-tighter mt-[2px]">
+            <div className="font-mono font-black text-2xl md:text-3xl lg:text-[42px] xl:text-6xl text-white leading-[0.9] tracking-tighter mt-[2px]">
               {engine.rpm.toLocaleString()}
             </div>
-            <div className="text-[8px] md:text-[9px] lg:text-sm text-gray-400 font-bold tracking-[0.15em] uppercase mt-[1px]">RPM</div>
+            <div className="text-[8px] md:text-[9px] lg:text-lg text-gray-400 font-bold  uppercase mt-[1px]">RPM</div>
           </div>
           <div className="flex-shrink-0 px-1 md:px-2 lg:px-3 xl:px-4">
             <TachoGauge value={engine.rpm} size={70} className="md:hidden lg:hidden" />
@@ -42,7 +42,7 @@ export default function EnginePanel({ engine, machine }: EnginePanelProps) {
           <div className="flex flex-col items-center justify-center gap-[1px] px-[2px] py-[1px] min-w-0 h-full border-r border-industrial-700/50">
             <Thermometer size={12} className="text-electric-400 md:size-[12px] lg:size-[16px] flex-shrink-0" />
             <div className={`${isExcavator ? 'text-[6px] md:text-[6.5px] lg:text-[10px] xl:text-sm' : 'text-[6px] md:text-[6.5px] lg:text-[8px] xl:text-[10px]'}  text-gray-300 uppercase tracking-wider font-bold text-center whitespace-nowrap`}>TEMP. REFR.</div>
-            <div className={`${isExcavator ? 'text-2xl md:text-3xl lg:text-5xl xl:text-6xl' : 'text-base md:text-lg lg:text-2xl xl:text-3xl'} font-mono font-black  text-white leading-[0.9] tracking-tighter mt-[2px]`}>
+            <div className={`${isExcavator ? 'text-2xl md:text-3xl lg:text-5xl xl:text-6xl' : 'text-base md:text-lg lg:text-[22px] xl:text-3xl'} font-mono font-black  text-white leading-[0.9] tracking-tighter mt-[2px]`}>
               {Math.round(engine.coolantTemp)}
             </div>
             <div className="text-[7px] md:text-[8px] lg:text-[11px] text-electric-400 font-semibold leading-none">°C</div>
@@ -51,7 +51,7 @@ export default function EnginePanel({ engine, machine }: EnginePanelProps) {
           <div className="flex flex-col items-center justify-center gap-[1px] px-[2px] py-[1px] min-w-0 h-full border-r border-industrial-700/50">
             <Droplets size={12} className="text-electric-400 md:size-[12px] lg:size-[16px] flex-shrink-0" />
             <div className={`${isExcavator ? 'text-[6px] md:text-[6.5px] lg:text-[10px] xl:text-sm' : 'text-[6px] md:text-[6.5px] lg:text-[8px] xl:text-[10px]'}  text-gray-300 uppercase tracking-wider font-bold text-center whitespace-nowrap`}>TEMP. ACEITE</div>
-            <div className={`${isExcavator ? 'text-2xl md:text-3xl lg:text-5xl xl:text-6xl' : 'text-base md:text-lg lg:text-2xl xl:text-3xl'} font-mono font-black  text-white leading-[0.9] tracking-tighter mt-[2px]`}>
+            <div className={`${isExcavator ? 'text-2xl md:text-3xl lg:text-5xl xl:text-6xl' : 'text-base md:text-lg lg:text-[22px] xl:text-3xl'} font-mono font-black  text-white leading-[0.9] tracking-tighter mt-[2px]`}>
               {Math.round(engine.oilTemp)}
             </div>
             <div className="text-[7px] md:text-[8px] lg:text-[11px] text-electric-400 font-semibold leading-none">°C</div>
@@ -60,7 +60,7 @@ export default function EnginePanel({ engine, machine }: EnginePanelProps) {
           <div className={`flex flex-col items-center justify-center gap-[1px] px-[2px] py-[1px] min-w-0 h-full ${isExcavator ? '' : 'border-r border-industrial-700/50'}`}>
             <Gauge size={12} className="text-electric-400 md:size-[12px] lg:size-[16px] flex-shrink-0" />
             <div className={`${isExcavator ? 'text-[6px] md:text-[6.5px] lg:text-[10px] xl:text-sm' : 'text-[6px] md:text-[6.5px] lg:text-[8px] xl:text-[10px]'}  text-gray-300 uppercase tracking-wider font-bold text-center whitespace-nowrap`}>PRES. ACEITE</div>
-            <div className={`${isExcavator ? 'text-2xl md:text-3xl lg:text-5xl xl:text-6xl' : 'text-base md:text-lg lg:text-2xl xl:text-3xl'} font-mono font-black  text-white leading-[0.9] tracking-tighter mt-[2px]`}>
+            <div className={`${isExcavator ? 'text-2xl md:text-3xl lg:text-5xl xl:text-6xl' : 'text-base md:text-lg lg:text-[22px] xl:text-3xl'} font-mono font-black  text-white leading-[0.9] tracking-tighter mt-[2px]`}>
               {engine.oilPressure.toFixed(1)}
             </div>
             <div className="text-[7px] md:text-[8px] lg:text-[11px] text-electric-400 font-semibold leading-none">bar</div>
@@ -70,7 +70,7 @@ export default function EnginePanel({ engine, machine }: EnginePanelProps) {
             <div className="flex flex-col items-center justify-center gap-[1px] px-[2px] py-[1px] min-w-0 h-full">
               <Battery size={12} className="text-electric-400 md:size-[12px] lg:size-[16px] flex-shrink-0" />
               <div className="text-[6px] md:text-[6.5px] lg:text-[8px] xl:text-[10px] text-gray-300 uppercase tracking-wider font-bold text-center whitespace-nowrap">VOLTAJE</div>
-              <div className="font-mono font-black text-base md:text-lg lg:text-2xl xl:text-3xl text-white leading-none tracking-tight">
+              <div className="font-mono font-black text-base md:text-lg lg:text-[22px] xl:text-3xl text-white leading-none tracking-tight">
                 {engine.voltage.toFixed(1)}
               </div>
               <div className="text-[7px] md:text-[8px] lg:text-[11px] text-electric-400 font-semibold leading-none">V</div>

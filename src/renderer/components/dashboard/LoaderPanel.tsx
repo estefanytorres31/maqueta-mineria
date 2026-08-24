@@ -35,7 +35,7 @@ export default function LoaderPanel({ productivity, operation, fuel, machine }: 
               <div className="text-[6.5px] md:text-[7px] lg:text-[7.5px] xl:text-[8.5px] text-gray-300 uppercase tracking-wider font-semibold whitespace-nowrap">MODO ACTUAL</div>
               <div className="flex items-center gap-0.5 min-w-0">
                 <div className="w-1.5 h-1.5 rounded-full bg-status-ok animate-pulse shadow-[0_0_6px_rgba(16,185,129,0.7)]" />
-                <span className="text-base md:text-lg lg:text-xl xl:text-2xl font-black uppercase tracking-wide leading-none" style={{ color: '#10B981' }}>
+                <span className="text-base md:text-sm lg:text-lg xl:text-2xl font-black uppercase  leading-none" style={{ color: '#10B981' }}>
                   {actualMode}
                 </span>
               </div>
@@ -46,7 +46,7 @@ export default function LoaderPanel({ productivity, operation, fuel, machine }: 
             <div className="flex flex-col gap-[1px] min-w-0">
               <div className="text-[6.5px] md:text-[7px] lg:text-[7.5px] xl:text-[8.5px] text-gray-300 uppercase tracking-wider font-semibold whitespace-nowrap">CICLO ACTUAL</div>
               <div className="flex items-baseline gap-0.5 min-w-0">
-                <span className="font-mono font-black text-xl md:text-2xl lg:text-3xl xl:text-4xl text-white leading-none tracking-tighter">
+                <span className="font-mono font-black text-xl md:text-2xl lg:text-2xl xl:text-4xl text-white leading-none tracking-tighter">
                   {productivity.cyclesCompleted % 100}
                 </span>
               </div>
@@ -57,7 +57,7 @@ export default function LoaderPanel({ productivity, operation, fuel, machine }: 
             <div className="flex flex-col gap-[1px] min-w-0">
               <div className="text-[6.5px] md:text-[7px] lg:text-[7.5px] xl:text-[8.5px] text-gray-300 uppercase tracking-wider font-semibold whitespace-nowrap">CARGA ÚTIL ESTIMADA</div>
               <div className="flex items-baseline gap-0.5 min-w-0">
-                <span className="font-mono font-black text-xl md:text-2xl lg:text-3xl xl:text-4xl text-white leading-none tracking-tighter">
+                <span className="font-mono font-black text-xl md:text-2xl lg:text-2xl xl:text-4xl text-white leading-none tracking-tighter">
                   {currentPayload.toFixed(1)}
                 </span>
                 <span className="text-[10px] md:text-xs lg:text-sm font-bold leading-none mb-0.5" style={{ color: '#F59E0B' }}>ton</span>
@@ -69,7 +69,7 @@ export default function LoaderPanel({ productivity, operation, fuel, machine }: 
             <div className="flex flex-col gap-[1px] min-w-0">
               <div className="text-[6.5px] md:text-[7px] lg:text-[7.5px] xl:text-[8.5px] text-gray-300 uppercase tracking-wider font-semibold whitespace-nowrap">TIEMPO CICLO</div>
               <div className="flex items-baseline gap-0.5 min-w-0">
-                <span className="font-mono font-black text-xl md:text-2xl lg:text-3xl xl:text-4xl text-white leading-none tracking-tighter">
+                <span className="font-mono font-black text-xl md:text-2xl lg:text-2xl xl:text-4xl text-white leading-none tracking-tighter">
                   {Math.round(productivity.avgCycleTime)}
                 </span>
                 <span className="text-[10px] md:text-xs lg:text-sm text-gray-400 font-bold leading-none mb-0.5">seg</span>
@@ -106,7 +106,7 @@ export default function LoaderPanel({ productivity, operation, fuel, machine }: 
               <img
                 src={machine.imageUrl}
                 alt={`${machine.name} ${machine.model}`}
-                className="absolute right-[8%] md:right-[-1%] lg:right-[6%] bottom-[-5%] md:bottom-[-5%] lg:bottom-[-2%] w-[60%] md:w-[42%] lg:w-[65%] object-contain pointer-events-none z-0"
+                className="absolute right-[8%] md:right-[-1%] lg:right-[6%] md:bottom-[-5%] lg:bottom-[8%] w-[60%] md:w-[42%] lg:w-[65%] object-contain pointer-events-none z-0"
                 loading="lazy"
               />
             </div>

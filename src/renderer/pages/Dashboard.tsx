@@ -56,7 +56,7 @@ export default function Dashboard() {
 
       {/* Grid 2×3: misma estructura, items/gap en los 7 layouts — SOLO se estira la COLUMNA CENTRAL (1.3fr) respecto a laterales (1fr c/u) — JSX interno de 3 slots sigue siendo variable */}
       <div className={`grid grid-cols-1 gap-[2px] md:gap-[4px] lg:gap-[5px] flex-1 min-h-0 lg:items-stretch ${
-        isExcavatorLayout ? 'lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)_minmax(0,1fr)] xl:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)_minmax(0,1fr)] lg:grid-rows-[minmax(0,1.4fr)_minmax(0,1fr)]' : 'lg:auto-rows-fr lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)_minmax(0,1fr)] xl:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)_minmax(0,1fr)]'
+        isExcavatorLayout ? 'lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)_minmax(0,1fr)] xl:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)_minmax(0,1fr)] lg:grid-rows-[minmax(0,1.4fr)_minmax(0,1fr)]' : 'lg:grid-rows-[minmax(0,1.25fr)_minmax(0,1fr)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)_minmax(0,1fr)] xl:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)_minmax(0,1fr)]'
       }`}>
         {/* ============== FILA 1 COL 1: MOTOR (INVARIABLE 7/7) ============== */}
         {selectedMachine && <EnginePanel engine={engine} machine={selectedMachine} />}
