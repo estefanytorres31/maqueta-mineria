@@ -33,7 +33,7 @@ export default function FuelStatusFooter({
         {sensors.map(s => (
           <div key={s.label}>
             <div className="text-[9px] tracking-wider text-gray-400 xl:text-[10px]">{s.label}</div>
-            <div className="mt-0.5 flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5">
               <CheckCircle2 size={12} className={s.state === 'OK' ? 'text-status-ok' : 'text-status-warning'} />
               <span className={`text-[11px] font-bold ${s.state === 'OK' ? 'text-status-ok' : 'text-status-warning'}`}>{s.state}</span>
             </div>

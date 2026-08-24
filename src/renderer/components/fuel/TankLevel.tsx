@@ -20,7 +20,7 @@ export default function TankLevel({ level, capacity = 3000, lastCalibration = '1
               return (
                 <g key={pct}>
                   <line x1={36} y1={y} x2={42} y2={y} stroke="#4B5563" strokeWidth={2} />
-                  <text x={32} y={y + 3} textAnchor="end" className="fill-gray-400" style={{ fontSize: 14, fontFamily: 'monospace' }}>
+                  <text x={32} y={y + 3} textAnchor="end" className="fill-gray-400" style={{ fontSize: 15, fontFamily: 'monospace' }}>
                     {pct}%
                   </text>
                 </g>
@@ -60,18 +60,18 @@ export default function TankLevel({ level, capacity = 3000, lastCalibration = '1
             <div className="flex items-baseline gap-1">
               <span className="font-mono text-xl md:text-sm lg:text-base xl:text-2xl font-bold leading-none text-white">{level.toFixed(0)}</span>
               <span className="text-sm font-semibold text-gray-400">%</span>
+              <div className="ml-2 text-[10px] text-gray-500">({current.toLocaleString()} gal)</div>
             </div>
-            <div className="text-[10px] text-gray-500">({current.toLocaleString()} gal)</div>
 
-            <dl className="py-0.5 flex flex-col gap-0.5">
+            <dl className="py-2 flex flex-col gap-0.5">
               {[
                 ['CAPACIDAD TANQUE', capacity],
                 ['COMBUSTIBLE ACTUAL', current],
                 ['DISPONIBLE', capacity - current]
               ].map(([label, val]) => (
                 <div key={label as string} className="flex items-center justify-between gap-2">
-                  <dt className="shrink-0 whitespace-nowrap text-[9px] lg:text-[8px] xl:text-xs tracking-wider text-gray-500">{label}</dt>
-                  <dd className="shrink-0 whitespace-nowrap font-mono text-[10px] font-semibold text-white lg:text-[9px] xl:text-xs">
+                  <dt className="shrink-0 whitespace-nowrap text-[9px] lg:text-[9px] xl:text-xs text-gray-500">{label}</dt>
+                  <dd className="shrink-0 whitespace-nowrap font-mono text-[10px] font-semibold text-white lg:text-[10px] xl:text-xs">
                     {(val as number).toLocaleString()} <span className="text-[10px] font-normal text-gray-400">gal</span>
                   </dd>
                 </div>
