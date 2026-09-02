@@ -17,7 +17,7 @@ interface BottomNavigationProps {
 export default function BottomNavigation({ className = '' }: BottomNavigationProps) {
   const { currentPage, setPage } = useNavigationStore()
   const selectedMachine = useNavigationStore(s => s.selectedMachine)
-  const alertsCount = useTelemetryStore(s => s.getUnresolvedAlertsCount())
+  const alertsCount = useTelemetryStore(s => s.alerts)
 
   const isExcavator = selectedMachine?.type === 'excavator'
   // Si no es excavadora (o cargador, dependiendo de la regla exacta, asumimos todas excepto excavadora)

@@ -47,8 +47,8 @@ export default function FuelKPIs({
         )}
       </Kpi>
       <Kpi label="CONSUMO PROMEDIO" value={average.toFixed(1)} unit="gal/h" sub="(Últ. 1 hora)" />
-      <Kpi label="CONSUMO HOY" value={today.toFixed(1)} unit="gal" sub="(Total día)" />
-      <Kpi label="CONSUMO RALENTÍ HOY" value={idleToday.toFixed(1)} unit="gal" sub={`(${idlePct.toFixed(1)}%)`} />
+      <Kpi label="CONSUMO HOY" value={today.toFixed(2)} unit="gal" sub="(Total día)" />
+      <Kpi label="CONSUMO RALENTÍ HOY" value={idleToday.toFixed(2)} unit="gal" sub={`(${idlePct.toFixed(1)}%)`} />
       <Kpi label="AUTONOMÍA ESTIMADA" value={autonomy.toFixed(1)} unit="h" labelColor="text-gray-300" />
       <Kpi label="NIVEL TANQUE" value={tankLevel.toFixed(0)} unit="%">
         <div className="h-1 overflow-hidden rounded-full bg-industrial-700">

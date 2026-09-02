@@ -47,7 +47,7 @@ interface SettingsState {
 
 export const useSettingsStore = create<SettingsState>((set) => ({
   general: {
-    machineName: 'CAT 375L',
+    machineName: '375L',
     equipmentId: 'EQ-002',
     unitSystem: 'imperial'
   },
@@ -78,7 +78,7 @@ export const useSettingsStore = create<SettingsState>((set) => ({
     timeRange: '1H',
     alertsFilter: 'ALL',
     autoRefresh: true,
-    refreshInterval: 2000,
+    refreshInterval: 5000,
     theme: 'dark'
   },
   updateGeneral: (data) => set((s) => ({

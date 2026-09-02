@@ -2,7 +2,7 @@ import { Machine, MachineType } from '../types'
 
 export const MACHINES: Machine[] = [
   {
-    id: 'cat-375l',
+    id: '375l',
     type: 'excavator',
     name: 'EXCAVADORA',
     model: '3754L',
@@ -12,7 +12,7 @@ export const MACHINES: Machine[] = [
     iconUrl: './maquinaria/iconos/excavadora.webp'
   },
   {
-    id: 'cat-980k',
+    id: '980k',
     type: 'loader',
     name: 'CARGADOR FRONTAL',
     model: '6540K',
@@ -22,7 +22,7 @@ export const MACHINES: Machine[] = [
     iconUrl: './maquinaria/iconos/cargador frontal.webp'
   },
   {
-    id: 'cat-r1700',
+    id: 'r1700',
     type: 'scoop',
     name: 'SCOOP / LHD',
     model: 'R4000',
@@ -32,7 +32,7 @@ export const MACHINES: Machine[] = [
     iconUrl: './maquinaria/iconos/scoop.webp'
   },
   {
-    id: 'cat-d11t',
+    id: 'd11t',
     type: 'tractor',
     name: 'TRACTOR ORUGA',
     model: 'D178T',
@@ -42,7 +42,7 @@ export const MACHINES: Machine[] = [
     iconUrl: './maquinaria/iconos/tractor oruga.webp'
   },
   {
-    id: 'cat-md6200',
+    id: 'md6200',
     type: 'drill',
     name: 'PERFORADORA',
     model: 'MD2020',
@@ -52,7 +52,7 @@ export const MACHINES: Machine[] = [
     iconUrl: './maquinaria/iconos/perforadora.webp'
   },
   {
-    id: 'cat-378l',
+    id: '378l',
     type: 'retroexcavator',
     name: 'RETROEXCAVADORA',
     model: '3658L',
@@ -62,7 +62,7 @@ export const MACHINES: Machine[] = [
     iconUrl: './maquinaria/iconos/retroexcavadora.webp'
   },
   {
-    id: 'cat-777g',
+    id: '777g',
     type: 'other',
     name: 'CAMIÓN MINERO',
     model: '767G',

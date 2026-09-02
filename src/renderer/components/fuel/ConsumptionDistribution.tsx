@@ -5,8 +5,9 @@ interface Props {
   axisMax?: number
 }
 
-export default function ConsumptionDistribution({ data, axisMax = 100 }: Props) {
-  const ticks = [0, 20, 40, 60, 80, 100]
+export default function ConsumptionDistribution({ data, axisMax }: Props) {
+  const maxVal = axisMax || Math.max(...data.map(d => d.value), 100)
+  const ticks = [0, maxVal * 0.25, maxVal * 0.5, maxVal * 0.75, maxVal]
 
   return (
     <section className="flex min-h-0 flex-col overflow-hidden rounded-lg border border-industrial-700 bg-industrial-800 md:col-span-5">
@@ -22,18 +23,18 @@ export default function ConsumptionDistribution({ data, axisMax = 100 }: Props) 
             <div className="h-4 min-w-0 flex-1 overflow-hidden rounded border border-industrial-700 bg-industrial-750 xl:h-[18px]">
               <div
                 className="h-full transition-all duration-700"
-                style={{ width: `${(item.value / axisMax) * 100}%`, backgroundColor: item.color, boxShadow: `0 0 10px ${item.color}66` }}
+                style={{ width: `${(item.value / maxVal) * 100}%`, backgroundColor: item.color, boxShadow: `0 0 10px ${item.color}66` }}
               />
             </div>
             <span className="w-24 flex-none font-mono text-[10px] text-gray-300 xl:text-[11px]">
-              {item.value.toFixed(1)} gal ({item.pct.toFixed(1)}%)
+              {item.value.toFixed(2)} gal ({item.pct.toFixed(2)}%)
             </span>
           </div>
         ))}
         <div className="flex items-center gap-2 xl:gap-3">
           <span className="w-20 flex-none xl:w-24" />
           <div className="flex min-w-0 flex-1 justify-between font-mono text-[9px] text-gray-500">
-            {ticks.map(t => <span key={t}>{t}</span>)}
+            {ticks.map((t, i) => <span key={i}>{t.toFixed(0)}</span>)}
           </div>
           <span className="w-24 flex-none font-mono text-[9px] text-gray-500">gal</span>
         </div>

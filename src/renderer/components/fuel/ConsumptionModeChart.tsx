@@ -24,7 +24,8 @@ export default function ConsumptionModeChart({ data, total }: Props) {
           <svg viewBox="0 0 200 200" className="h-full max-h-[170px] w-auto">
             <g transform="rotate(-90 100 100)">
               {data.map(s => {
-                const len = (s.pct / 100) * C - 4
+                if (s.pct <= 0) return null
+                const len = Math.max(0, (s.pct / 100) * C - 4)
                 const dash = `${len} ${C - len}`
                 const dashOffset = -offset
                 offset += (s.pct / 100) * C
@@ -42,7 +43,7 @@ export default function ConsumptionModeChart({ data, total }: Props) {
                 <div className="min-w-0">
                   <div className="text-[10px] font-bold tracking-wide xl:text-[11px]" style={{ color: s.color }}>{s.name}</div>
                   <div className="font-mono text-[10px] text-gray-400 xl:text-[11px]">
-                    {s.value.toFixed(1)} gal ({s.pct.toFixed(1)}%)
+                    {s.value.toFixed(2)} gal ({s.pct.toFixed(2)}%)
                   </div>
                 </div>
               </li>
@@ -52,7 +53,7 @@ export default function ConsumptionModeChart({ data, total }: Props) {
         <div className="mt-1 flex items-baseline justify-center gap-2 border-t border-industrial-700 pt-1">
           <span className="text-[10px] tracking-widest text-gray-400">TOTAL</span>
           <span className="font-mono text-base font-bold text-white md:text-[10px] lg:text-xs xl:text-lg">
-            {total.toFixed(1)} <span className="text-[11px] font-medium text-gray-400">gal</span>
+            {total.toFixed(2)} <span className="text-[11px] font-medium text-gray-400">gal</span>
           </span>
         </div>
       </div>

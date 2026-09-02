@@ -47,32 +47,39 @@ export const generateInitialTelemetry = (): TelemetryData => {
   const dailyDates = generateDailyDates(7)
   
   const baseRpm = randomInRange(1650, 1850, 0)
+  const initialCycles = randomInRange(130, 138, 0)
+  const initialTons = initialCycles * randomInRange(11.5, 12.5)
+  const initialEngineHours = randomInRange(7.8, 8.8)
+  
+  const initialWorkingFuel = randomInRange(150, 180)
+  const initialIdleFuel = randomInRange(10, 15)
+  const initialInopFuel = randomInRange(3, 8) // Consumo ficticio para maqueta
   
   return {
     engine: {
       rpm: baseRpm,
       coolantTemp: randomInRange(80, 88),
       oilPressure: randomInRange(3.8, 4.8),
-      oilTemp: randomInRange(70, 78),
+      oilTemp: randomInRange(90, 105),
       voltage: randomInRange(26.8, 28.2, 1),
       status: 'OK'
     },
     fuel: {
-      instantConsumption: randomInRange(8.2, 9.8),
-      avgConsumption: randomInRange(8.5, 9.5),
+      instantConsumption: randomInRange(38, 45),
+      avgConsumption: randomInRange(39, 42),
       tankLevel: randomInRange(60, 68, 0),
-      tankCapacity: 3000,
-      todayConsumption: randomInRange(37.2, 39.8),
-      idleTodayConsumption: randomInRange(3, 5),
+      tankCapacity: 1500,
+      todayConsumption: initialWorkingFuel + initialIdleFuel + initialInopFuel,
+      idleTodayConsumption: initialIdleFuel,
       autonomy: randomInRange(18, 24),
-      supplyFlow: randomInRange(9, 11),
-      returnFlow: randomInRange(0.2, 0.6),
-      workingConsumption: 30.4,
-      idleConsumption: 4.2,
-      inoperativeConsumption: 4.0,
+      supplyFlow: randomInRange(20, 25),
+      returnFlow: randomInRange(2.0, 4.0),
+      workingConsumption: initialWorkingFuel,
+      idleConsumption: initialIdleFuel,
+      inoperativeConsumption: initialInopFuel,
       consumptionHistory: consumptionTimeLabels.map(t => ({
         time: t,
-        value: randomInRange(8, 22)
+        value: randomInRange(10, 45)
       })),
       dailyHistory: dailyDates.map(d => ({
         date: d,
@@ -99,23 +106,23 @@ export const generateInitialTelemetry = (): TelemetryData => {
       status: 'OK'
     },
     imu: {
-      pitch: randomInRange(-3, 3),
-      roll: randomInRange(-3, 3),
+      pitch: randomInRange(-12, 12),
+      roll: randomInRange(-12, 12),
       yaw: randomInRange(0, 360, 1),
       status: 'OK'
     },
     productivity: {
-      cyclesCompleted: randomInRange(130, 138, 0),
-      tonsMoved: randomInRange(180, 192, 0),
-      performance: randomInRange(7.5, 8.5),
+      cyclesCompleted: initialCycles,
+      tonsMoved: Number(initialTons.toFixed(1)),
+      performance: Number((initialTons / initialEngineHours).toFixed(1)),
       avgCycleTime: randomInRange(32, 40, 0),
       consumptionPerTon: randomInRange(0.085, 0.105),
       consumptionPerCycle: randomInRange(1.2, 1.5),
       unproductiveFuel: randomInRange(7, 10),
       hourlyProductivity: hourlyLabels.slice(6, 12).map((h, i) => ({
         hour: h,
-        tons: randomInRange(8 + i, 12 + i, 0),
-        cycles: randomInRange(2 + i, 4 + i, 0)
+        tons: randomInRange(100 + (i * 10), 140 + (i * 10), 0),
+        cycles: randomInRange(8 + i, 12 + i, 0)
       })),
       dailyProductivity: dailyDates.slice(0, 5).map(d => ({
         day: d,
@@ -123,7 +130,7 @@ export const generateInitialTelemetry = (): TelemetryData => {
       }))
     },
     operation: {
-      engineHours: randomInRange(7.8, 8.8),
+      engineHours: initialEngineHours,
       effectiveHours: randomInRange(5.8, 6.8),
       idleHours: randomInRange(0.9, 1.5),
       inoperativeHours: randomInRange(0.4, 0.9),
@@ -217,6 +224,83 @@ export const generateAlerts = (): Alert[] => {
       priority: 2,
       value: '0.8 bar',
       threshold: '1.0 bar'
+    },
+    {
+      id: 'alert-4',
+      timestamp: new Date(now.getTime() - 2 * 3600000),
+      type: 'ADVERTENCIA',
+      sensor: 'Filtro Combustible',
+      description: 'Filtro de combustible requiere monitoreo - diferencia de presión',
+      status: 'PENDIENTE',
+      priority: 2,
+      value: '0.8 bar',
+      threshold: '1.0 bar'
+    },
+    {
+      id: 'alert-5',
+      timestamp: new Date(now.getTime() - 2 * 3600000),
+      type: 'ADVERTENCIA',
+      sensor: 'Filtro Combustible',
+      description: 'Filtro de combustible requiere monitoreo - diferencia de presión',
+      status: 'PENDIENTE',
+      priority: 2,
+      value: '0.8 bar',
+      threshold: '1.0 bar'
+    },
+    {
+      id: 'alert-6',
+      timestamp: new Date(now.getTime() - 2 * 3600000),
+      type: 'ADVERTENCIA',
+      sensor: 'Filtro Combustible',
+      description: 'Filtro de combustible requiere monitoreo - diferencia de presión',
+      status: 'PENDIENTE',
+      priority: 2,
+      value: '0.8 bar',
+      threshold: '1.0 bar'
+    },
+    {
+      id: 'alert-7',
+      timestamp: new Date(now.getTime() - 2 * 3600000),
+      type: 'ADVERTENCIA',
+      sensor: 'Filtro Combustible',
+      description: 'Filtro de combustible requiere monitoreo - diferencia de presión',
+      status: 'PENDIENTE',
+      priority: 2,
+      value: '0.8 bar',
+      threshold: '1.0 bar'
+    },
+    {
+      id: 'alert-8',
+      timestamp: new Date(now.getTime() - 2 * 3600000),
+      type: 'ADVERTENCIA',
+      sensor: 'Filtro Combustible',
+      description: 'Filtro de combustible requiere monitoreo - diferencia de presión',
+      status: 'PENDIENTE',
+      priority: 2,
+      value: '0.8 bar',
+      threshold: '1.0 bar'
+    },
+    {
+      id: 'alert-9',
+      timestamp: new Date(now.getTime() - 2 * 3600000),
+      type: 'ADVERTENCIA',
+      sensor: 'Filtro Combustible',
+      description: 'Filtro de combustible requiere monitoreo - diferencia de presión',
+      status: 'PENDIENTE',
+      priority: 2,
+      value: '0.8 bar',
+      threshold: '1.0 bar'
+    },
+    {
+      id: 'alert-10',
+      timestamp: new Date(now.getTime() - 2 * 3600000),
+      type: 'ADVERTENCIA',
+      sensor: 'Filtro Combustible',
+      description: 'Filtro de combustible requiere monitoreo - diferencia de presión',
+      status: 'PENDIENTE',
+      priority: 2,
+      value: '0.8 bar',
+      threshold: '1.0 bar'
     }
   ]
 }
@@ -225,6 +309,7 @@ export class TelemetrySimulator {
   private state: TelemetryData
   private onChangeCallback: ((data: TelemetryData) => void) | null = null
   private intervalId: ReturnType<typeof setInterval> | null = null
+  private intervalMs: number = 2000
   private mode: OperationMode = 'TRABAJANDO'
   private modeTimer = 0
 
@@ -255,7 +340,7 @@ export class TelemetrySimulator {
       ? [1650, 1850] 
       : this.mode === 'RALENTÍ' 
         ? [850, 1100] 
-        : [600, 750]
+        : [0, 0]
 
     const newRpm = this.smoothUpdate(this.state.engine.rpm, rpmBase[0], rpmBase[1], 40, 0)
     const rpmFactor = clamp((newRpm - 600) / 1250, 0, 1)
@@ -263,36 +348,50 @@ export class TelemetrySimulator {
     const newEngine = {
       ...this.state.engine,
       rpm: newRpm,
-      coolantTemp: this.smoothUpdate(this.state.engine.coolantTemp, 78 + rpmFactor * 10, 82 + rpmFactor * 8, 0.3),
-      oilPressure: this.smoothUpdate(this.state.engine.oilPressure, 3.6 + rpmFactor * 0.4, 4.2 + rpmFactor * 0.6, 0.05, 2),
-      oilTemp: this.smoothUpdate(this.state.engine.oilTemp, 68 + rpmFactor * 8, 72 + rpmFactor * 8, 0.2)
+      coolantTemp: this.mode === 'INOPERATIVO' ? this.smoothUpdate(this.state.engine.coolantTemp, 40, 50, 0.5) : this.smoothUpdate(this.state.engine.coolantTemp, 78 + rpmFactor * 10, 82 + rpmFactor * 8, 0.3),
+      oilPressure: this.mode === 'INOPERATIVO' ? this.smoothUpdate(this.state.engine.oilPressure, 0, 0, 0.2) : this.smoothUpdate(this.state.engine.oilPressure, 3.6 + rpmFactor * 0.4, 4.2 + rpmFactor * 0.6, 0.05, 2),
+      oilTemp: this.mode === 'INOPERATIVO' ? this.smoothUpdate(this.state.engine.oilTemp, 40, 50, 0.5) : this.smoothUpdate(this.state.engine.oilTemp, 90 + rpmFactor * 10, 95 + rpmFactor * 10, 0.2)
     }
 
     const instantFuel = this.mode === 'TRABAJANDO'
-      ? 7 + rpmFactor * 2
+      ? 35 + rpmFactor * 15
       : this.mode === 'RALENTÍ'
-        ? 1.2 + rpmFactor * 0.8
-        : 0.3
+        ? 8 + rpmFactor * 4
+        : 2.5 // Consumo irreal inyectado para rellenar la maqueta
     
+    const hourFrac = this.intervalMs / 3600000
+    const consumed = instantFuel * hourFrac
+
+    const newInstantConsumption = this.smoothUpdate(this.state.fuel.instantConsumption, instantFuel * 0.85, instantFuel * 1.15, 1.5)
+
     const newFuel = {
       ...this.state.fuel,
-      instantConsumption: this.smoothUpdate(this.state.fuel.instantConsumption, instantFuel * 0.85, instantFuel * 1.15, 0.3),
-      avgConsumption: this.smoothUpdate(this.state.fuel.avgConsumption, 11.5, 13.2, 0.05),
-      tankLevel: Math.max(20, this.state.fuel.tankLevel - 0.008),
+      instantConsumption: newInstantConsumption,
+      avgConsumption: this.smoothUpdate(this.state.fuel.avgConsumption, 38, 42, 0.1),
+      tankLevel: Math.max(0, this.state.fuel.tankLevel - (consumed / this.state.fuel.tankCapacity * 100)),
       autonomy: clamp((this.state.fuel.tankLevel / 100 * this.state.fuel.tankCapacity) / Math.max(this.state.fuel.avgConsumption, 0.1), 0, 50),
-      todayConsumption: this.state.fuel.todayConsumption + (instantFuel / 1800),
-      supplyFlow: this.smoothUpdate(this.state.fuel.supplyFlow, 14.5, 15.8, 0.1),
-      returnFlow: this.smoothUpdate(this.state.fuel.returnFlow, 0.25, 0.55, 0.02)
+      todayConsumption: this.state.fuel.todayConsumption + consumed,
+      idleTodayConsumption: this.mode === 'RALENTÍ' ? this.state.fuel.idleTodayConsumption + consumed : this.state.fuel.idleTodayConsumption,
+      workingConsumption: this.mode === 'TRABAJANDO' ? this.state.fuel.workingConsumption + consumed : this.state.fuel.workingConsumption,
+      idleConsumption: this.mode === 'RALENTÍ' ? this.state.fuel.idleConsumption + consumed : this.state.fuel.idleConsumption,
+      inoperativeConsumption: this.mode === 'INOPERATIVO' ? this.state.fuel.inoperativeConsumption + consumed : this.state.fuel.inoperativeConsumption,
+      supplyFlow: this.mode === 'INOPERATIVO' ? 0 : this.smoothUpdate(this.state.fuel.supplyFlow, 20, 25, 0.5),
+      returnFlow: this.mode === 'INOPERATIVO' ? 0 : this.smoothUpdate(this.state.fuel.returnFlow, 2, 4, 0.1),
+      consumptionHistory: this.state.fuel.consumptionHistory.map((item, index, arr) => 
+        index === arr.length - 1 
+          ? { ...item, value: newInstantConsumption } 
+          : item
+      )
     }
 
-    const hydFactor = this.mode === 'TRABAJANDO' ? 1 : 0.2
+    const hydFactor = this.mode === 'TRABAJANDO' ? 1 : this.mode === 'RALENTÍ' ? 0.2 : 0
     const newHydraulic = {
       ...this.state.hydraulic,
-      mainPressure: this.smoothUpdate(this.state.hydraulic.mainPressure, 200 + hydFactor * 80, 220 + hydFactor * 80, 5, 0),
-      armPressure: this.smoothUpdate(this.state.hydraulic.armPressure, 190 + hydFactor * 80, 210 + hydFactor * 75, 5, 0),
-      swingPressure: this.smoothUpdate(this.state.hydraulic.swingPressure, 160 + hydFactor * 55, 180 + hydFactor * 50, 4, 0),
-      oilTemp: this.smoothUpdate(this.state.hydraulic.oilTemp, 54 + hydFactor * 6, 58 + hydFactor * 6, 0.15),
-      load: clamp(50 + hydFactor * randomInRange(10, 40, 0), 0, 100)
+      mainPressure: this.mode === 'INOPERATIVO' ? this.smoothUpdate(this.state.hydraulic.mainPressure, 0, 0, 10, 0) : this.smoothUpdate(this.state.hydraulic.mainPressure, 200 + hydFactor * 80, 220 + hydFactor * 80, 5, 0),
+      armPressure: this.mode === 'INOPERATIVO' ? this.smoothUpdate(this.state.hydraulic.armPressure, 0, 0, 10, 0) : this.smoothUpdate(this.state.hydraulic.armPressure, 190 + hydFactor * 80, 210 + hydFactor * 75, 5, 0),
+      swingPressure: this.mode === 'INOPERATIVO' ? this.smoothUpdate(this.state.hydraulic.swingPressure, 0, 0, 10, 0) : this.smoothUpdate(this.state.hydraulic.swingPressure, 160 + hydFactor * 55, 180 + hydFactor * 50, 4, 0),
+      oilTemp: this.mode === 'INOPERATIVO' ? this.smoothUpdate(this.state.hydraulic.oilTemp, 40, 50, 0.5) : this.smoothUpdate(this.state.hydraulic.oilTemp, 54 + hydFactor * 6, 58 + hydFactor * 6, 0.15),
+      load: this.mode === 'INOPERATIVO' ? 0 : clamp(50 + hydFactor * randomInRange(10, 40, 0), 0, 100)
     }
 
     const speedFactor = this.mode === 'TRABAJANDO' ? randomInRange(0.4, 1) : 0
@@ -325,7 +424,6 @@ export class TelemetrySimulator {
     const workingPct = this.mode === 'TRABAJANDO' ? 1 : 0
     const idlePct = this.mode === 'RALENTÍ' ? 1 : 0
     const inopPct = this.mode === 'INOPERATIVO' ? 1 : 0
-    const hourFrac = 1 / 1800
     const newOperation = {
       ...this.state.operation,
       mode: this.mode,
@@ -359,6 +457,7 @@ export class TelemetrySimulator {
 
   start(interval = 2000) {
     if (this.intervalId) return
+    this.intervalMs = interval
     this.intervalId = setInterval(() => this.tick(), interval)
   }
 
