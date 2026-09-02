@@ -368,7 +368,7 @@ export class TelemetrySimulator {
       ...this.state.fuel,
       instantConsumption: newInstantConsumption,
       avgConsumption: this.smoothUpdate(this.state.fuel.avgConsumption, 38, 42, 0.1),
-      tankLevel: Math.max(0, this.state.fuel.tankLevel - (consumed / this.state.fuel.tankCapacity * 100)),
+      tankLevel: Math.max(0, this.state.fuel.tankLevel - (consumed / this.state.fuel.tankCapacity * 100) + (Math.random() - 0.5) * 0.05),
       autonomy: clamp((this.state.fuel.tankLevel / 100 * this.state.fuel.tankCapacity) / Math.max(this.state.fuel.avgConsumption, 0.1), 0, 50),
       todayConsumption: this.state.fuel.todayConsumption + consumed,
       idleTodayConsumption: this.mode === 'RALENTÍ' ? this.state.fuel.idleTodayConsumption + consumed : this.state.fuel.idleTodayConsumption,

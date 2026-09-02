@@ -58,7 +58,7 @@ export default function TankLevel({ level, capacity = 3000, lastCalibration = '1
 
           <div className="flex min-w-0 flex-1 flex-col justify-center">
             <div className="flex items-baseline gap-1">
-              <span className="font-mono text-xl md:text-sm lg:text-base xl:text-2xl font-bold leading-none text-white">{level.toFixed(0)}</span>
+              <span className="font-mono text-xl md:text-sm lg:text-base xl:text-2xl font-bold leading-none text-white">{level.toFixed(2)}</span>
               <span className="text-sm font-semibold text-gray-400">%</span>
               <div className="ml-2 text-[10px] text-gray-500">({current.toLocaleString()} gal)</div>
             </div>
