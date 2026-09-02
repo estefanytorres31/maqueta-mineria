@@ -24,7 +24,7 @@ export default function MachineCard({ machine, isSelected, onClick, variant = 'g
     >
 
       <div className="w-full text-left flex-shrink-0 px-1 sm:px-1.5 md:px-1.5 lg:px-1.5 xl:px-2 2xl:px-2.5">
-        <div className={`${isGrid ? 'text-[9px] sm:text-[10px] md:text-xs lg:text-xs xl:text-[12px] 2xl:text-[12px]' : 'text-[8px] sm:text-[10px] md:text-xs xl:text-sm 2xl:text-base'} font-bold text-gray-200 uppercase tracking-wide sm:tracking-wider md:tracking-[0.08em] xl:tracking-wide 2xl:tracking-wide truncate leading-tight`}>
+        <div className={`${isGrid ? 'text-[9px] sm:text-[10px] md:text-xs lg:text-xs xl:text-[12px] 2xl:text-[12px]' : 'text-[8px] sm:text-[10px] md:text-xs xl:text-sm 2xl:text-base'} font-bold text-gray-200 uppercase tracking-wide sm:tracking-wider md:tracking-[0.08em] xl:tracking-wide 2xl:tracking-wide line-clamp-2 leading-tight break-words`}>
           {machine.name} 
         </div>
       </div>

@@ -4,10 +4,10 @@ export const MACHINES: Machine[] = [
   {
     id: '375l',
     type: 'excavator',
-    name: 'EXCAVADORA',
+    name: 'RETROEXCAVADORA HIDRÁULICA',
     model: '3754L',
     code: 'EQ-002',
-    category: 'EXCAVADORA HIDRÁULICA',
+    category: 'RETROEXCAVADORA HIDRÁULICA',
     imageUrl: './maquinaria/excavadora.webp',
     iconUrl: './maquinaria/iconos/excavadora.webp'
   },
