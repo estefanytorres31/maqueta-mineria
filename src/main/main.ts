@@ -10,7 +10,11 @@ try { app.commandLine.appendSwitch('high-dpi-support', '1') } catch {}
 try { app.commandLine.appendSwitch('disable-pinch') } catch {}
 try { app.commandLine.appendSwitch('disable-accelerated-2d-canvas', '0') } catch {}
 
-
+// Sincronizar WM_CLASS en Linux con el StartupWMClass del .desktop (evita el engranaje genérico)
+if (process.platform === 'linux') {
+  app.setName('Edge Smart')
+  ;(app as any).setDesktopName('edgesmart.desktop')
+}
 
 const projectRoot = path.resolve(__dirname, '..')
 const distDir = path.join(projectRoot, 'dist')
@@ -76,7 +80,7 @@ function createWindow() {
     minHeight: 480,
     show: false,
     backgroundColor: '#06080C',
-    title: 'Sistema de maquinaria minera',
+    title: 'Edge Smart',
     icon: resolveIcon(),
     useContentSize: true,
     autoHideMenuBar: true,

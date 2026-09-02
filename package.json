@@ -2,7 +2,7 @@
   "name": "maquetamina",
   "private": true,
   "version": "1.0.0",
-  "description": "Sistema de control de maquinaria minera.",
+  "description": "Sistema de maquinaria minera.",
   "author": "Estefany Torres <estefanyt3101@gmail.com>",
   "license": "MIT",
   "type": "module",
@@ -25,7 +25,7 @@
   },
   "build": {
     "appId": "com.perucontrols.maquetamina",
-    "productName": "Sistema de maquinaria minera",
+    "productName": "Edge Smart",
     "icon": "public/icon.png",
     "win": {
       "target": [
@@ -41,6 +41,7 @@
       ],
       "category": "Utility",
       "icon": "public/icons",
+      "executableName": "edgesmart",
       "executableArgs": [
         "--no-sandbox"
       ]
