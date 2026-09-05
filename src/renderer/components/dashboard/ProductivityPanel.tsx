@@ -28,21 +28,22 @@ function HourlyBarChart({ hourly, color = '#F59E0B' }: { hourly: ProductivityDat
     { hour: '10:00', tons: 9, cycles: 4 },
     { hour: '11:00', tons: 12, cycles: 5 },
   ]
-  const maxTons = 15
+  const maxVal = Math.max(15, ...pts.map(p => p.tons))
+  const maxTons = Math.ceil(maxVal / 5) * 5
   const w = 260
   const h = 140
   const barGap = 8
-  const totalBars = pts.length
-  const barWidth = (w - barGap * (totalBars + 1)) / totalBars
   const axisMarginBottom = 24
   const axisMarginLeft = 28
-  const chartW = w - axisMarginLeft - 4
+  const chartW = w - axisMarginLeft - 8
   const chartH = h - axisMarginBottom - 8
+  const totalBars = pts.length
+  const barWidth = Math.max(6, (chartW - barGap * (totalBars + 1)) / totalBars)
 
   const xFor = (i: number) => axisMarginLeft + barGap + i * (barWidth + barGap)
   const yFor = (tons: number) => 8 + chartH - (tons / maxTons) * chartH
   const hFor = (tons: number) => (tons / maxTons) * chartH
-  const yTickVals = [0, 5, 10, 15]
+  const yTickVals = [0, Math.round(maxTons * 0.33), Math.round(maxTons * 0.66), maxTons]
 
   return (
     <svg viewBox={`0 0 ${w} ${h}`} className="w-full h-full" preserveAspectRatio="none">
@@ -53,7 +54,7 @@ function HourlyBarChart({ hourly, color = '#F59E0B' }: { hourly: ProductivityDat
         </linearGradient>
       </defs>
       {yTickVals.map((t, i) => {
-        const y = 8 + chartH - (t / 15) * chartH
+        const y = 8 + chartH - (t / maxTons) * chartH
         return (
           <g key={i}>
             <line x1={axisMarginLeft} x2={axisMarginLeft + chartW} y1={y} y2={y} stroke="rgba(75,85,99,0.25)" strokeDasharray="2 3" />
@@ -109,14 +110,14 @@ function LoaderProductivityContent({ productivity }: Pick<ProductivityPanelProps
       <div className="col-span-2 min-w-0 h-full px-[2px] md:px-[3px] lg:px-1 py-[1px] md:py-[2px] flex flex-col gap-[2px] md:gap-[3px] lg:gap-0.5">
         {kpis.map((k, i) => (
           <div key={i} className={`flex flex-col min-w-0 flex-1 min-h-0 justify-center ${i > 0 ? 'pt-[1px] md:pt-[2px] border-t border-industrial-700/50' : ''}`}>
-            <div className="text-[6px] md:text-[6.5px] lg:text-[7.5px] xl:text-[8.5px] text-gray-300 uppercase tracking-wider font-semibold whitespace-nowrap">
+            <div className="text-[6px] md:text-[6.5px] lg:text-[7.5px] xl:text-[7.5px] 2xl:text-[8.5px] text-gray-300 uppercase tracking-wider font-semibold whitespace-nowrap">
               {k.label}
             </div>
             <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0 mt-[1px]">
-              <span className="font-mono font-black text-lg md:text-xl lg:text-2xl xl:text-3xl text-white leading-none tracking-tighter whitespace-nowrap">
+              <span className="font-mono font-black text-lg md:text-xl lg:text-xl xl:text-xl 2xl:text-2xl text-white leading-none tracking-tighter whitespace-nowrap">
                 {k.value}
               </span>
-              <span className="text-[9px] md:text-[10px] lg:text-[11px] xl:text-xs text-status-warning font-bold leading-none whitespace-nowrap mb-0.5">
+              <span className="text-[9px] md:text-[10px] lg:text-[10px] xl:text-[10px] 2xl:text-xs text-status-warning font-bold leading-none whitespace-nowrap mb-0.5">
                 {k.unit}
               </span>
             </div>
@@ -327,14 +328,14 @@ function ExcavatorProductivityContent({ productivity }: Pick<ProductivityPanelPr
       <div className="grid grid-cols-2 w-full h-full min-h-0">
         {/* COLUMNA IZQUIERDA: EFICIENCIA */}
         <div className="flex flex-col items-center justify-center min-w-0 px-[2px] md:px-[4px] lg:px-2 h-full relative">
-          <div className="text-[10px] md:text-[11px] lg:text-lg xl:text-2xl text-gray-200 uppercase tracking-widest font-black whitespace-nowrap mb-[4px] md:mb-[6px] lg:mb-2">
+          <div className="text-[10px] md:text-[11px] lg:text-lg xl:text-xl 2xl:text-2xl text-gray-200 uppercase tracking-widest font-black whitespace-nowrap mb-[4px] md:mb-[6px] lg:mb-2">
             EFICIENCIA
           </div>
           <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0">
-            <span className="font-mono font-black text-[36px] md:text-[32px] lg:text-[36px] xl:text-[48px] text-status-warning leading-[0.9] tracking-tighter">
+            <span className="font-mono font-black text-[36px] md:text-[32px] lg:text-[36px] xl:text-[36px] 2xl:text-[48px] text-status-warning leading-[0.9] tracking-tighter">
               {eficiencia}
             </span>
-            <span className="text-[14px] md:text-[16px] lg:text-[20px] xl:text-[26px] text-status-warning font-black leading-none mb-1">
+            <span className="text-[14px] md:text-[16px] lg:text-[20px] xl:text-[20px] 2xl:text-[26px] text-status-warning font-black leading-none mb-1">
               gal/ton
             </span>
           </div>
@@ -342,14 +343,14 @@ function ExcavatorProductivityContent({ productivity }: Pick<ProductivityPanelPr
 
         {/* COLUMNA DERECHA: RENDIMIENTO */}
         <div className="flex flex-col items-center justify-center min-w-0 px-[2px] md:px-[4px] lg:px-2 h-full relative">
-          <div className="text-[10px] md:text-[11px] lg:text-lg xl:text-2xl text-gray-200 uppercase tracking-widest font-black whitespace-nowrap mb-[4px] md:mb-[6px] lg:mb-2">
+          <div className="text-[10px] md:text-[11px] lg:text-lg xl:text-xl 2xl:text-2xl text-gray-200 uppercase tracking-widest font-black whitespace-nowrap mb-[4px] md:mb-[6px] lg:mb-2">
             RENDIMIENTO
           </div>
           <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0">
-            <span className="font-mono font-black text-[36px] md:text-[32px] lg:text-[36px] xl:text-[48px] text-status-warning leading-[0.9] tracking-tighter">
+            <span className="font-mono font-black text-[36px] md:text-[32px] lg:text-[36px] xl:text-[36px] 2xl:text-[48px] text-status-warning leading-[0.9] tracking-tighter">
               {rendimiento}
             </span>
-            <span className="text-[14px] md:text-[16px] lg:text-[20px] xl:text-[26px] text-status-warning font-black leading-none mb-1">
+            <span className="text-[14px] md:text-[16px] lg:text-[20px] xl:text-[20px] 2xl:text-[26px] text-status-warning font-black leading-none mb-1">
               ton/h
             </span>
           </div>

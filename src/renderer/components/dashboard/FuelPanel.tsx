@@ -147,10 +147,10 @@ function LargeFuelPanel({ fuel, machine }: { fuel: FuelPanelProps['fuel']; machi
               CONSUMO INST.
             </div>
             <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0">
-              <span className={`${isExcavator ? 'text-2xl md:text-sm lg:text-[26px] xl:text-3xl' : 'text-2xl md:text-sm lg:text-[16px] xl:text-3xl'}  font-mono font-black text-white leading-none tracking-tighter`}>
+              <span className={`${isExcavator ? 'text-2xl md:text-sm lg:text-[26px] xl:text-xl 2xl:text-3xl' : 'text-2xl md:text-sm lg:text-[16px] xl:text-xl 2xl:text-3xl'}  font-mono font-black text-white leading-none tracking-tighter`}>
                 {instantCons}
               </span>
-              <span className="text-[9px] md:text-[9px] lg:text-sm xl:text-lg text-status-ok font-black leading-none mb-0.5">gal/h</span>
+              <span className="text-[9px] md:text-[9px] lg:text-sm xl:text-sm 2xl:text-lg text-status-ok font-black leading-none mb-0.5">gal/h</span>
             </div>
           </div>
 
@@ -162,10 +162,10 @@ function LargeFuelPanel({ fuel, machine }: { fuel: FuelPanelProps['fuel']; machi
               CONSUMO ACUMULADO
             </div>
             <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0">
-              <span className={`${isExcavator ? 'text-2xl md:text-sm lg:text-[26px] xl:text-3xl' : 'text-2xl md:text-sm lg:text-[16px] xl:text-3xl'}  font-mono font-black text-white leading-none tracking-tighter`}>
+              <span className={`${isExcavator ? 'text-2xl md:text-sm lg:text-[26px] xl:text-xl 2xl:text-3xl' : 'text-2xl md:text-sm lg:text-[16px] xl:text-xl 2xl:text-3xl'}  font-mono font-black text-white leading-none tracking-tighter`}>
                 {Math.round(accumulatedLarge).toLocaleString()}
               </span>
-              <span className="text-[9px] md:text-[9px] lg:text-sm xl:text-lg text-status-ok font-black leading-none mb-0.5">gal</span>
+              <span className="text-[9px] md:text-[9px] lg:text-sm xl:text-sm 2xl:text-lg text-status-ok font-black leading-none mb-0.5">gal</span>
             </div>
           </div>
 
@@ -177,10 +177,10 @@ function LargeFuelPanel({ fuel, machine }: { fuel: FuelPanelProps['fuel']; machi
               CONSUMO HOY
             </div>
             <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0">
-              <span className={`${isExcavator ? 'text-2xl md:text-sm lg:text-[26px] xl:text-3xl' : 'text-2xl md:text-sm lg:text-[16px] xl:text-3xl'}  font-mono font-black text-white leading-none tracking-tighter`}>
+              <span className={`${isExcavator ? 'text-2xl md:text-sm lg:text-[26px] xl:text-xl 2xl:text-3xl' : 'text-2xl md:text-sm lg:text-[16px] xl:text-xl 2xl:text-3xl'}  font-mono font-black text-white leading-none tracking-tighter`}>
                 {consumptionToday}
               </span>
-              <span className="text-[9px] md:text-[9px] lg:text-sm xl:text-lg text-status-ok font-black leading-none mb-0.5">gal</span>
+              <span className="text-[9px] md:text-[9px] lg:text-sm xl:text-sm 2xl:text-lg text-status-ok font-black leading-none mb-0.5">gal</span>
             </div>
           </div>
 
@@ -192,10 +192,10 @@ function LargeFuelPanel({ fuel, machine }: { fuel: FuelPanelProps['fuel']; machi
               RELENTÍ HOY
             </div>
             <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0">
-              <span className={`${isExcavator ? 'text-2xl md:text-sm lg:text-[26px] xl:text-3xl' : 'text-2xl md:text-sm lg:text-[16px] xl:text-3xl'}  font-mono font-black text-white leading-none tracking-tighter`}>
+              <span className={`${isExcavator ? 'text-2xl md:text-sm lg:text-[26px] xl:text-xl 2xl:text-3xl' : 'text-2xl md:text-sm lg:text-[16px] xl:text-xl 2xl:text-3xl'}  font-mono font-black text-white leading-none tracking-tighter`}>
                 {idleToday.toFixed(1)}
               </span>
-              <span className="text-[9px] md:text-[9px] lg:text-sm xl:text-lg text-status-ok font-black leading-none mb-0.5">gal</span>
+              <span className="text-[9px] md:text-[9px] lg:text-sm xl:text-sm 2xl:text-lg text-status-ok font-black leading-none mb-0.5">gal</span>
             </div>
           </div>
         </div>
@@ -211,7 +211,7 @@ function LargeFuelPanel({ fuel, machine }: { fuel: FuelPanelProps['fuel']; machi
             </div>
             <div className={`flex items-baseline justify-between ${isExcavator ? 'gap-1.5' : 'gap-1'} min-w-0`}>
               <div className={`flex items-baseline ${isExcavator ? 'gap-[4px] md:gap-1' : 'gap-[3px] md:gap-0.5'} min-w-0`}>
-                <span className={`font-mono font-black ${isExcavator ? 'text-3xl md:text-lg lg:text-4xl xl:text-5xl' : 'text-2xl md:text-sm lg:text-[16px] xl:text-3xl'} text-white leading-[0.9] tracking-tighter`}>
+                <span className={`font-mono font-black ${isExcavator ? 'text-3xl md:text-lg lg:text-4xl xl:text-4xl 2xl:text-5xl' : 'text-2xl md:text-sm lg:text-[16px] xl:text-2xl 2xl:text-3xl'} text-white leading-[0.9] tracking-tighter`}>
                   {pct}
                 </span>
                 <span className={`${isExcavator ? 'text-xl md:text-[11px] lg:text-sm xl:text-base mb-2.5' : 'text-lg md:text-[9px] lg:text-xs mb-2.5'} text-gray-300 font-black leading-none`}>%</span>
@@ -246,7 +246,7 @@ function LargeFuelPanel({ fuel, machine }: { fuel: FuelPanelProps['fuel']; machi
             </div>
             <div className={`flex ${isExcavator ? 'items-center justify-start gap-3 md:gap-4 lg:gap-6' : 'items-start justify-between gap-1'} min-w-0`}>
               <div className={`flex items-start ${isExcavator ? 'gap-[5px] md:gap-1' : 'gap-[1px] md:gap-0.5'} min-w-0`}>
-                <span className={`font-mono font-black ${isExcavator ? 'text-3xl md:text-lg lg:text-4xl xl:text-5xl' : 'text-2xl md:text-sm lg:text-[16px] xl:text-3xl'} text-white leading-none tracking-tighter`}>
+                <span className={`font-mono font-black ${isExcavator ? 'text-3xl md:text-lg lg:text-4xl xl:text-4xl 2xl:text-5xl' : 'text-2xl md:text-sm lg:text-[16px] xl:text-2xl 2xl:text-3xl'} text-white leading-none tracking-tighter`}>
                   {autonomy}
                 </span>
                 <span className={`${isExcavator ? 'text-xl md:text-[11px] lg:text-sm xl:text-base mb-2' : 'text-base md:text-[9px] lg:text-xs mb-1'} text-status-ok font-black leading-none`}>h</span>

@@ -14,10 +14,10 @@ export default function ConsumptionDistribution({ data, axisMax }: Props) {
       <header className="border-b border-industrial-700 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-widest text-gray-200 xl:text-[11px]">
         Distribución de consumo hoy
       </header>
-      <div className="flex min-h-0 flex-1 flex-col justify-center gap-3 p-2 xl:gap-4 xl:p-3">
+      <div className="flex min-h-0 flex-1 flex-col justify-center gap-3 p-2 xl:gap-1.5 2xl:gap-4 xl:p-2 2xl:p-3">
         {data.map(item => (
           <div key={item.name} className="flex items-center gap-2 xl:gap-3">
-            <span className="w-20 flex-none text-right text-[10px] font-semibold tracking-wide text-gray-300 xl:w-24">
+            <span className="w-20 flex-none text-right text-[10px] font-semibold tracking-wide text-gray-300 xl:w-20 2xl:w-24">
               {item.name}
             </span>
             <div className="h-4 min-w-0 flex-1 overflow-hidden rounded border border-industrial-700 bg-industrial-750 xl:h-[18px]">
@@ -26,17 +26,17 @@ export default function ConsumptionDistribution({ data, axisMax }: Props) {
                 style={{ width: `${(item.value / maxVal) * 100}%`, backgroundColor: item.color, boxShadow: `0 0 10px ${item.color}66` }}
               />
             </div>
-            <span className="w-24 flex-none font-mono text-[10px] text-gray-300 xl:text-[11px]">
+            <span className="w-24 flex-none font-mono text-[10px] text-gray-300 xl:text-[10px] 2xl:text-[11px] xl:w-32 2xl:w-32">
               {item.value.toFixed(2)} gal ({item.pct.toFixed(2)}%)
             </span>
           </div>
         ))}
         <div className="flex items-center gap-2 xl:gap-3">
-          <span className="w-20 flex-none xl:w-24" />
+          <span className="w-20 flex-none xl:w-20 2xl:w-24" />
           <div className="flex min-w-0 flex-1 justify-between font-mono text-[9px] text-gray-500">
             {ticks.map((t, i) => <span key={i}>{t.toFixed(0)}</span>)}
           </div>
-          <span className="w-24 flex-none font-mono text-[9px] text-gray-500">gal</span>
+          <span className="w-24 flex-none font-mono text-[9px] text-gray-500 xl:w-32 2xl:w-32">gal</span>
         </div>
       </div>
     </section>

@@ -10,7 +10,7 @@ export default function DailyHistory({ data }: Props) {
       <header className="border-b border-industrial-700 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-widest text-gray-200 xl:text-[11px]">
         Historial de consumo diario (gal)
       </header>
-      <div className="flex min-h-0 flex-1 flex-col justify-around p-2 xl:p-3">
+      <div className="flex min-h-0 flex-1 flex-col justify-around gap-0.5 xl:gap-0 2xl:gap-1 p-2 xl:p-1.5 2xl:p-3">
         {data.map((d, i) => (
           <div key={d.date} className="flex items-center gap-2">
             <span className={`w-16 flex-none text-[10px] xl:text-[11px] ${i === 0 ? 'text-gray-200' : 'font-mono text-gray-400'}`}>

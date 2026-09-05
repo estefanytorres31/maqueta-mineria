@@ -55,7 +55,7 @@ export default function MachineSelector() {
         </div>
 
         <div className="flex-1 min-h-0 w-full flex items-center justify-center overflow-hidden">
-          <div className="hidden xl:grid xl:grid-cols-7 w-full h-auto max-h-full max-w-[2000px] 2xl:max-w-[2600px] mx-auto gap-3 xl:gap-4 2xl:gap-3 px-0 xl:px-6 2xl:px-0.5 place-content-center items-center">
+          <div className="hidden xl:grid xl:grid-cols-7 w-full h-auto max-h-full max-w-[2000px] 2xl:max-w-[2600px] mx-auto gap-3 xl:gap-2 2xl:gap-3 px-0 xl:px-2 2xl:px-0.5 place-content-center items-center">
             {MACHINES.map(machine => (
               <MachineCard
                 key={machine.id}

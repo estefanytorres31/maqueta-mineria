@@ -12,9 +12,9 @@ export default function TankLevel({ level, capacity = 3000, lastCalibration = '1
       <header className="border-b border-industrial-700 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-widest text-gray-200 xl:text-[11px]">
         Nivel de combustible
       </header>
-      <div className="flex min-h-0 flex-1 flex-col p-2 xl:p-3">
+      <div className="flex min-h-0 flex-1 flex-col p-2 xl:p-2 2xl:p-3">
         <div className="flex min-h-0 flex-1 items-start gap-2 lg:gap-1.5 xl:gap-3">
-          <svg viewBox="0 0 122 200" preserveAspectRatio="xMidYMid meet" className="h-full w-auto max-h-[150px] lg:max-h-[110px] xl:max-h-[150px] shrink-0">
+          <svg viewBox="0 0 122 200" preserveAspectRatio="xMidYMid meet" className="h-full w-auto max-h-[150px] lg:max-h-[110px] xl:max-h-[110px] 2xl:max-h-[150px] shrink-0">
             {[0, 25, 50, 75, 100].map((pct) => {
               const y = 190 - (pct / 100) * 170
               return (
@@ -58,20 +58,20 @@ export default function TankLevel({ level, capacity = 3000, lastCalibration = '1
 
           <div className="flex min-w-0 flex-1 flex-col justify-center">
             <div className="flex items-baseline gap-1">
-              <span className="font-mono text-xl md:text-sm lg:text-base xl:text-2xl font-bold leading-none text-white">{level.toFixed(2)}</span>
+              <span className="font-mono text-xl md:text-sm lg:text-base xl:text-xl 2xl:text-2xl font-bold leading-none text-white">{level.toFixed(2)}</span>
               <span className="text-sm font-semibold text-gray-400">%</span>
               <div className="ml-2 text-[10px] text-gray-500">({current.toLocaleString()} gal)</div>
             </div>
 
-            <dl className="py-2 flex flex-col gap-0.5">
+            <dl className="py-1 xl:py-0 2xl:py-2 flex flex-col gap-0.5">
               {[
                 ['CAPACIDAD TANQUE', capacity],
                 ['COMBUSTIBLE ACTUAL', current],
                 ['DISPONIBLE', capacity - current]
               ].map(([label, val]) => (
-                <div key={label as string} className="flex items-center justify-between gap-2">
-                  <dt className="shrink-0 whitespace-nowrap text-[9px] lg:text-[9px] xl:text-xs text-gray-500">{label}</dt>
-                  <dd className="shrink-0 whitespace-nowrap font-mono text-[10px] font-semibold text-white lg:text-[10px] xl:text-xs">
+                <div key={label as string} className="flex items-center justify-between gap-1 xl:gap-1 2xl:gap-2">
+                  <dt className="shrink-0 whitespace-nowrap text-[9px] lg:text-[9px] xl:text-[9px] 2xl:text-xs text-gray-500">{label}</dt>
+                  <dd className="shrink-0 whitespace-nowrap font-mono text-[10px] font-semibold text-white lg:text-[10px] xl:text-[10px] 2xl:text-xs">
                     {(val as number).toLocaleString()} <span className="text-[10px] font-normal text-gray-400">gal</span>
                   </dd>
                 </div>
@@ -79,7 +79,7 @@ export default function TankLevel({ level, capacity = 3000, lastCalibration = '1
             </dl>
           </div>
         </div>
-        <div className="mt-1 flex items-center gap-1 border-t border-industrial-700 pt-2 text-[10px] tracking-wide text-gray-500">
+        <div className="mt-0.5 xl:mt-0 2xl:mt-1 flex items-center gap-1 border-t border-industrial-700 pt-1 xl:pt-1 2xl:pt-2 text-[10px] tracking-wide text-gray-500">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0">
             <rect x="3" y="4" width="18" height="18" rx="2" />
             <line x1="16" y1="2" x2="16" y2="6" />

@@ -21,13 +21,13 @@ export default function SelectorHeader() {
         </button>
         <div className="hidden md:block h-12 xl:h-24 w-px bg-industrial-700" />
         <div className="hidden md:block">
-          <div className="text-gray-200 font-semibold text-xs md:text-sm lg:text-[17px] xl:text-3xl tracking-wider">MONITOREO INTELIGENTE</div>
-          <div className="text-electric-400 text-[10px] md:text-xs lg:text-[14px] xl:text-[16px] font-medium tracking-wide">PARA MAQUINARIA MINERA</div>
+          <div className="text-gray-200 font-semibold text-xs md:text-sm lg:text-[17px] xl:text-xl 2xl:text-3xl tracking-wider">MONITOREO INTELIGENTE</div>
+          <div className="text-electric-400 text-[10px] md:text-xs lg:text-[14px] xl:text-[14px] 2xl:text-[16px] font-medium tracking-wide">PARA MAQUINARIA MINERA</div>
         </div>
       </div>
 
       <div className="hidden md:flex items-center justify-center flex-1 min-w-0">
-        <div className="text-white font-black text-sm md:text-base lg:text-xl xl:text-2xl tracking-widest uppercase leading-none">
+        <div className="text-white font-black text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl tracking-widest uppercase leading-none text-center">
           Peru Controls System S.A.C.
         </div>
       </div>

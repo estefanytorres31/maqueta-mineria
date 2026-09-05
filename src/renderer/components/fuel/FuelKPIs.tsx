@@ -12,12 +12,12 @@ interface KpiProps {
 function Kpi({ label, value, unit, sub, labelColor = 'text-fuel-primary', children }: KpiProps) {
   return (
     <div className="min-w-0 flex flex-col justify-center rounded-lg border border-industrial-700 bg-industrial-800 px-1.5 py-1 xl:px-3 xl:py-2">
-      <div className={`truncate text-[9px] md:text-[9px] lg:text-[11px] xl:text-[15px] 2xl:text-[15px] font-semibold ${labelColor}`}>{label}</div>
+      <div className={`truncate text-[9px] md:text-[9px] lg:text-[11px] xl:text-[11px] 2xl:text-[15px] font-semibold ${labelColor}`}>{label}</div>
       <div className="flex items-baseline gap-1">
-        <span className="font-mono font-bold leading-none text-white text-lg lg:text-[22px] xl:text-[28px] 2xl:text-3xl">{value}</span>
-        {unit && <span className="text-xs lg:text-[17px] xl:text-xl 2xl:text-[22px] text-gray-400">{unit}</span>}
+        <span className="font-mono font-bold leading-none text-white text-lg lg:text-[22px] xl:text-[22px] 2xl:text-3xl">{value}</span>
+        {unit && <span className="text-xs lg:text-[17px] xl:text-[15px] 2xl:text-[22px] text-gray-400">{unit}</span>}
       </div>
-      {sub && <div className="text-[10px] lg:text-[13px] xl:text-[15px] 2xl:text-[19px] text-gray-500">{sub}</div>}
+      {sub && <div className="text-[10px] lg:text-[13px] xl:text-[11px] 2xl:text-[19px] text-gray-500">{sub}</div>}
       {children}
     </div>
   )

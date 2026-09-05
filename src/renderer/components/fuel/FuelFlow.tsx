@@ -21,14 +21,14 @@ export default function FuelFlow({ supply, supplyImg, returnFlow, returnImg }: F
           <div key={c.key} className="flex min-h-0 flex-col justify-between rounded-md border border-industrial-700 bg-industrial-850 p-2 xl:p-3">
             <div className="flex flex-1 min-h-0 flex-row items-center justify-between gap-1">
               <div className="flex flex-col h-full justify-center">
-                <div className="text-[9px] xl:text-[11px] font-bold tracking-wider" style={{ color: c.key === 'in' ? c.color : '#C6D0DC' }}>
+                <div className="text-[9px] xl:text-[9px] 2xl:text-[11px] font-bold tracking-wider" style={{ color: c.key === 'in' ? c.color : '#C6D0DC' }}>
                   {c.title} {c.hint && <span className="text-gray-400">{c.hint}</span>}
                 </div>
-                <div className="mt-1 flex flex-col items-start gap-0.5 xl:gap-1">
-                  <span className="font-mono text-2xl font-bold leading-none md:text-xl lg:text-2xl xl:text-4xl" style={{ color: c.color }}>
+                <div className="mt-1 flex flex-col items-start gap-0.5 xl:gap-0.5 2xl:gap-1">
+                  <span className="font-mono text-2xl font-bold leading-none md:text-xl lg:text-2xl xl:text-2xl 2xl:text-4xl" style={{ color: c.color }}>
                     {c.value.toFixed(1)}
                   </span>
-                  <span className="text-[9px] lg:text-[10px] xl:text-[12px] font-bold text-gray-400">gal/h</span>
+                  <span className="text-[9px] lg:text-[10px] xl:text-[10px] 2xl:text-[12px] font-bold text-gray-400">gal/h</span>
                 </div>
               </div>
               <div className="flex-1 min-w-0 h-full max-w-[50%] flex items-center justify-center">

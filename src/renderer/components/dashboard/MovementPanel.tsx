@@ -33,12 +33,12 @@ export default function MovementPanel({ imu }: MovementPanelProps) {
               PITCH
             </div>
             <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0 mt-[2px]">
-              <span className="font-mono font-black text-xl md:text-xl lg:text-2xl xl:text-3xl text-white leading-none tracking-tighter whitespace-nowrap mb-2">
+              <span className="font-mono font-black text-xl md:text-xl lg:text-2xl xl:text-2xl 2xl:text-3xl text-white leading-none tracking-tighter whitespace-nowrap mb-2">
                 {imu.pitch > 0 ? '+' : ''}{imu.pitch.toFixed(1)}
               </span>
               <span className="text-[10px] md:text-[11px] lg:text-[12px] text-gray-300 font-bold leading-none">°</span>
             </div>
-            <div className="w-12 h-12 md:w-18 md:h-18 lg:w-24 lg:h-24 xl:w-32 xl:h-32 min-w-0 mb-[1px]">
+            <div className="w-12 h-12 md:w-18 md:h-18 lg:w-24 lg:h-24 xl:w-24 xl:h-24 2xl:w-32 2xl:h-32 min-w-0 mb-[1px]">
               <NeedleDial
                 value={imu.pitch}
                 range={30}
@@ -56,12 +56,12 @@ export default function MovementPanel({ imu }: MovementPanelProps) {
               ROLL
             </div>
             <div className="flex items-baseline gap-[2px] md:gap-0.5 min-w-0 mt-[2px]">
-              <span className="font-mono font-black text-xl md:text-xl lg:text-2xl xl:text-3xl text-white leading-none tracking-tighter whitespace-nowrap mb-2">
+              <span className="font-mono font-black text-xl md:text-xl lg:text-2xl xl:text-2xl 2xl:text-3xl text-white leading-none tracking-tighter whitespace-nowrap mb-2">
                 {imu.roll > 0 ? '+' : ''}{imu.roll.toFixed(1)}
               </span>
               <span className="text-[10px] md:text-[11px] lg:text-[12px] text-gray-300 font-bold leading-none">°</span>
             </div>
-            <div className="w-12 h-12 md:w-18 md:h-18 lg:w-24 lg:h-24 xl:w-32 xl:h-32 min-w-0 mb-[1px]">
+            <div className="w-12 h-12 md:w-18 md:h-18 lg:w-24 lg:h-24 xl:w-24 xl:h-24 2xl:w-32 2xl:h-32 min-w-0 mb-[1px]">
               <NeedleDial
                 value={imu.roll}
                 range={30}
